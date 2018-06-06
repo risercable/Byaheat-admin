@@ -1,0 +1,184 @@
+<div id="content">
+    <div id="content-header">
+      <div id="breadcrumb"> <a href="#" title="Go to Home" class="tip-bottom"><i class="icon-home"></i> Home</a><a href="#" class="current">Reservations</a> </div>
+      <h1>Reservations</h1>
+    </div>
+    <div class="container-fluid">
+        <div class="row-fluid">
+          <div class="span12">
+            <div class="widget-box nopadding">
+              <div class="widget-title"> <span class="icon"><i class="icon-pencil"></i></span>
+                <h5>Reservations</h5>
+              </div>
+              <div class="widget-content">
+                <button (click)="printElement('basic-table')" class="btn btn-primary">PRINT</button>
+                  <!--<input type="text" [(ngModel)]="term" placeholder="Enter search term" style="float: right; margin: 4px auto;">-->
+                  <!--<table class="table table-bordered table-striped" id="basic-table">-->
+                      <!--<thead>-->
+                        <!--<tr>-->
+                          <!--<th hidden>Key</th>-->
+                          <!--<th [class.active]="order === 'customer_name'"-->
+                          <!--(click)="setOrder('customer_name')">Client Full name <span [class.hidden]="reverse">▼</span-->
+                            <!--&gt;<span [class.hidden]="!reverse">▲</span></th>-->
+                          <!--<th [class.active]="order === 'driver_name'"-->
+                          <!--(click)="setOrder('driver_name')">Driver Full name <span [hidden]="reverse">▼</span-->
+                            <!--&gt;<span [hidden]="!reverse">▲</span></th>-->
+                          <!--<th [class.active]="order === 'destination'"-->
+                          <!--(click)="setOrder('destination')">Destination <span [hidden]="reverse">▼</span-->
+                            <!--&gt;<span [hidden]="!reverse">▲</span></th>-->
+                          <!--<th [class.active]="order === 'rating'"-->
+                          <!--(click)="setOrder('rating')">Rating <span [hidden]="reverse">▼</span-->
+                            <!--&gt;<span [hidden]="!reverse">▲</span></th>-->
+                          <!--<th [class.active]="order === 'timestamp'"-->
+                          <!--(click)="setOrder('timestamp')">Date & Time <span [hidden]="reverse">▼</span-->
+                            <!--&gt;<span [hidden]="!reverse">▲</span></th>-->
+                        <!--</tr>-->
+                      <!--</thead>-->
+                      <!--<tbody>-->
+                        <!--<tr class="odd gradeX" *ngFor="let reserve of reserves | async | orderBy: order:reverse:'case-insensitive' | filter: term | paginate: { itemsPerPage: 10, currentPage: p }">-->
+                          <!--<td hidden>{{reserve.key}}</td>-->
+                          <!--<td>{{reserve.customer_name}}</td>-->
+                          <!--<td>{{reserve.driver_name}}</td>-->
+                          <!--<td>{{reserve.destination}}</td>-->
+                          <!--<td>{{reserve.rating}}</td>-->
+                          <!--<td>{{reserve.timestamp * 1000 | date:'yyyy-MM-dd HH:mm:ss Z'}}</td>-->
+                        <!--</tr>-->
+                      <!--</tbody>-->
+                    <!--</table>-->
+                    <!--<pagination-controls (pageChange)="p = $event"></pagination-controls>-->
+                <!--<table class="mdl-data-table mdl-js-data-table mdl-data-table&#45;&#45;selectable mdl-shadow&#45;&#45;2dp">-->
+                  <!--<thead>-->
+                  <!--<tr>-->
+                    <!--<th class="mdl-data-table__cell&#45;&#45;non-numeric">Material</th>-->
+                    <!--<th>Quantity</th>-->
+                    <!--<th>Unit price</th>-->
+                  <!--</tr>-->
+                  <!--</thead>-->
+                  <!--<tbody>-->
+                  <!--<tr>-->
+                    <!--<td class="mdl-data-table__cell&#45;&#45;non-numeric">Acrylic (Transparent)</td>-->
+                    <!--<td>25</td>-->
+                    <!--<td>$2.90</td>-->
+                  <!--</tr>-->
+                  <!--<tr>-->
+                    <!--<td class="mdl-data-table__cell&#45;&#45;non-numeric">Plywood (Birch)</td>-->
+                    <!--<td>50</td>-->
+                    <!--<td>$1.25</td>-->
+                  <!--</tr>-->
+                  <!--<tr>-->
+                    <!--<td class="mdl-data-table__cell&#45;&#45;non-numeric">Laminate (Gold on Blue)</td>-->
+                    <!--<td>10</td>-->
+                    <!--<td>$2.35</td>-->
+                  <!--</tr>-->
+                  <!--</tbody>-->
+                <!--</table>-->
+                <div class="mat-app-background basic-container">
+                  <div class="example-container mat-elevation-z8">
+                      <div class="example-header">
+                          <mat-form-field>
+                            <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filter">
+                          </mat-form-field>
+                        </div>
+                      <mat-table #table [dataSource]="dataSource" matSort id="basic-table">
+
+                        <!--- Note that these columns can be defined in any order.
+                              The actual rendered columns are set as a property on the row definition" -->
+
+                        <!-- Position Column -->
+                        <ng-container matColumnDef="customer name">
+                          <mat-header-cell *matHeaderCellDef mat-sort-header>Client Name</mat-header-cell>
+                          <mat-cell *matCellDef="let element"> {{element.customer_name}} </mat-cell>
+                        </ng-container>
+
+                        <!-- Name Column -->
+                        <ng-container matColumnDef="driver name">
+                          <mat-header-cell *matHeaderCellDef mat-sort-header>Driver Name </mat-header-cell>
+                          <mat-cell *matCellDef="let element"> {{element.driver_name}} </mat-cell>
+                        </ng-container>
+
+                        <!-- Weight Column -->
+                        <ng-container matColumnDef="destination">
+                          <mat-header-cell *matHeaderCellDef mat-sort-header> Destination </mat-header-cell>
+                          <mat-cell *matCellDef="let element"> {{element.destination}} </mat-cell>
+                        </ng-container>
+
+                        <!-- Symbol Column -->
+                        <ng-container matColumnDef="rating">
+                          <mat-header-cell *matHeaderCellDef mat-sort-header> Rating </mat-header-cell>
+                          <mat-cell *matCellDef="let element"> {{element.rating}} </mat-cell>
+                        </ng-container>
+
+                        <ng-container matColumnDef="time">
+                          <mat-header-cell *matHeaderCellDef mat-sort-header> Time </mat-header-cell>
+                          <mat-cell *matCellDef="let element"> {{element.timestamp}} </mat-cell>
+                        </ng-container>
+
+                        <ng-container matColumnDef="actions" class="hideX">
+                          <mat-header-cell *matHeaderCellDef> View </mat-header-cell>
+                          <mat-cell *matCellDef="let element">
+                            <button mat-icon-button color="accent" (click)="openDialog(element.destination)">View mofo
+                              </button>
+                          </mat-cell>
+                        </ng-container>
+
+                        <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+                        <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+
+                      </mat-table>
+                    <mat-card  *ngIf="noRecords" style="padding:100px;">
+                      <h3 style="text-align:center">We couldn't find data for
+                        <span style="color:red">"{{dataSource.filter}}"</span>
+                      </h3>
+                    </mat-card>
+                      <mat-paginator #paginator
+                                      [pageSize]="5"
+                                      [pageSizeOptions]="[5, 10, 20]"
+                                      [showFirstLastButtons]="true">
+                      </mat-paginator>
+                    </div>
+                </div>
+              </div>
+            </div>
+            </div>
+        </div>
+    </div>
+    <!-- Modal -->
+    <div id="selectReservation" class="modal fade" role="dialog" style="width: auto;">
+      <div class="modal-dialog">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal">&times;</button>
+            <h4 class="modal-title">More Details</h4>
+          </div>
+          <div class="modal-body">
+              <table class="table table-bordered table-striped">
+                  <thead>
+                    <tr>
+                      <th>Customer Name</th>
+                      <th>Driver</th>
+                      <th>Destination</th>
+                      <th>Rating</th>
+                      <th>Time</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr class="odd gradeX" *ngFor="let rs of more | async">
+                      <td>{{rs.customer_name}}</td>
+                      <!-- <td *ngFor="let rsd of more2 | async">{{rsd.user_firstname + " " + rsd.user_lastname}}</td>
+                      <td *ngFor="let rs of destination | async">{{rs.destination}}</td>
+                      <td *ngFor="let rs of destination | async">{{rs.rating}}</td>
+                      <td *ngFor="let rs of destination | async">{{rs.timestamp * 1000 | date:'yyyy-MM-dd HH:mm:ss Z'}}</td> -->
+                    </tr>
+                  </tbody>
+                </table>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>

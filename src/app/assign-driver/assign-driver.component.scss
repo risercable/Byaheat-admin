@@ -1,0 +1,14 @@
+.btn:focus{
+  outline: 0 !important;
+}
+.btn-not {
+  outline: 0;
+  color: black;
+}
+.btn-active  {
+  outline:0;
+  color: #fff;
+  background-color: #428bca;
+  border-color: #357ebd;
+}
+

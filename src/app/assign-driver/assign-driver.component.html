@@ -1,0 +1,141 @@
+<div id="content">
+  <div id="content-header">
+    <div id="breadcrumb"> <a href="#" title="Go to Home" class="tip-bottom"><i class="icon-home"></i> Home</a><a href="#" class="current">Table</a> </div>
+    <h1>Reservations</h1>
+  </div>
+  <div class="container-fluid">
+      <div class="row-fluid">
+        <div class="span12">
+          <div class="widget-box nopadding">
+            <div class="widget-title"> <span class="icon"><i class="icon-pencil"></i></span>
+              <h5>Reservations</h5>
+              <button class="btn btn-mini pull-right" [ngClass]="{'btn-active' : this.aha == 'clicked', 'btn-not' : this.aha == '!clicked'}" style="margin: 6px 1px; font-size: 10px;" (click)="changeAssigned(); clicked()">ASSIGNED</button>
+                <button class="btn btn-mini pull-right" style="margin: 6px 1px; font-size: 10px;" [ngClass]="{'btn-active' : this.aha3 == 'clicked', 'btn-not' : this.aha3 == '!clicked'}" (click)="changePending(); clicked3()">PENDING</button>
+                <button class="btn btn-mini pull-right" style="margin: 6px 1px; font-size: 10px;" [ngClass]="{'btn-active' : this.aha2 == 'clicked', 'btn-not' : this.aha2 == '!clicked'}" (click)="changeAll(); clicked2()">ALL</button>
+                <h6 class="pull-right" style="margin: 6px 1px;">TOGGLE RESULTS: </h6>
+            </div>
+            <div class="widget-content" *ngIf="this.wew == 'showAll'">
+                <br>
+                <hr>
+                <table class="table table-bordered table-striped">
+                    <thead>
+                      <tr>
+                        <th hidden>Key</th>
+                        <th>Client Name</th>
+                        <th>Car Reserved</th>
+                        <th>Date Reserved</th>
+                        <th>Status</th>
+                        <th>Assign</th>
+                      </tr>
+                    </thead>
+                    <tbody *ngFor="let reserve of reserves | async">
+                      <tr class="odd gradeX">
+                        <td hidden>{{reserve.key}}</td>
+                        <td>{{reserve.client_name}}</td>
+                        <td>{{reserve.car_reserved}}</td>
+                        <td>{{reserve.date_reserved}}</td>
+                        <td>{{reserve.status}}</td>
+                        <td *ngIf="reserve.assign == 'not yet assigned' ">{{reserve.assign }} <a href="" class="btn btn-mini btn-primary" (click)="passKey(reserve.key)" data-toggle="modal" data-target="#myModal">ASSIGN A DRIVER</a>
+                          </td>
+                          <td *ngIf="reserve.assign != 'not yet assigned' ">driver assigned <span class="label label-success"> SUCCESS</span></td>
+                      </tr>
+                    </tbody>
+                  </table>
+            </div>
+            <div class="widget-content" *ngIf="this.wew == 'showPending'">
+                <br>
+                <hr>
+                <table class="table table-bordered table-striped">
+                    <thead>
+                      <tr>
+                        <th hidden>Key</th>
+                        <th>Client Name</th>
+                        <th>Car Reserved</th>
+                        <th>Date Reserved</th>
+                        <th>Status</th>
+                        <th>Assign</th>
+                      </tr>
+                    </thead>
+                    <tbody *ngFor="let pending of pendings | async">
+                      <tr class="odd gradeX">
+                        <td hidden>{{pending.key}}</td>
+                        <td>{{pending.client_name}}</td>
+                        <td>{{pending.car_reserved}}</td>
+                        <td>{{pending.date_reserved}}</td>
+                        <td>{{pending.status}}</td>
+                        <td>{{pending.assign }} <a href="" class="btn btn-mini btn-primary" (click)="passKey(reserve.key)" data-toggle="modal" data-target="#myModal">ASSIGN A DRIVER</a>
+                          </td>
+                      </tr>
+                    </tbody>
+                  </table>
+            </div>
+            <div class="widget-content" *ngIf="this.wew == 'showAssigned'">
+                <br>
+                <hr>
+                <table class="table table-bordered table-striped">
+                    <thead>
+                      <tr>
+                        <th hidden>Key</th>
+                        <th>Client Name</th>
+                        <th>Car Reserved</th>
+                        <th>Date Reserved</th>
+                        <th>Status</th>
+                        <th>Assign</th>
+                      </tr>
+                    </thead>
+                    <tbody *ngFor="let assign of assigns | async">
+                      <tr class="odd gradeX">
+                        <td hidden>{{assign.key}}</td>
+                        <td>{{assign.client_name}}</td>
+                        <td>{{assign.car_reserved}}</td>
+                        <td>{{assign.date_reserved}}</td>
+                        <td>{{assign.status}}</td>
+                        <td>driver assigned <span class="label label-success"> SUCCESS</span></td>
+                      </tr>
+                    </tbody>
+                  </table>
+            </div>
+          </div>
+          </div>
+      </div>
+  </div>
+  <!-- Modal -->
+<div id="myModal" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">Select a Driver</h4>
+      </div>
+      <div class="modal-body">
+          <table class="table table-bordered table-striped">
+              <thead>
+                <tr>
+                  <th hidden>Key</th>
+                  <th>Driver Name</th>
+                  <th>Status</th>
+                  <th>Select</th>
+                </tr>
+              </thead>
+              <tbody *ngFor="let selection of selections | async">
+                <tr class="odd gradeX">
+                  <td hidden>{{selection.key}}</td>
+                  <td>{{selection.name}}</td>
+                  <td>{{selection.status}}</td>
+                  <td *ngIf="selection.status == 'available' ">{{selection.status }} <a href="" class="btn btn-mini btn-primary" (click)="selected(selection.key); assignNow(selection.name)" data-toggle="modal" data-target="#myModal">ASSIGN THIS DRIVER</a>
+                    </td>
+                    <td *ngIf="selection.status != 'available' ">Not Available</td>
+                </tr>
+              </tbody>
+            </table>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+
+  </div>
+</div>
+</div>

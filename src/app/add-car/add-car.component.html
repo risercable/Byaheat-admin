@@ -1,0 +1,107 @@
+<div id="content">
+    <div id="content-header">
+      <div id="breadcrumb"> <a href="#" title="Go to Home" class="tip-bottom"><i class="icon-home"></i> Home</a><a href="#" class="current">Drivers</a> </div>
+      <h1>Car Page</h1>
+    </div>
+    <div class="container-fluid">
+        <div class="row-fluid">
+          <div class="span8">
+            <div class="widget-box">
+              <div class="widget-title"> <span class="icon"><i class="icon-ok"></i></span>
+                <h5>Add Car</h5>
+              </div>
+              <div class="widget-content nopadding">
+                  <div class="alert alert-success" *ngIf="carService.incar == true">
+                      <button class="close" data-dismiss="alert">×</button>
+                      <strong>Success!</strong> Added car info</div>
+                  <form #carForm="ngForm" (ngSubmit)="onSubmit(carForm);" class="form-horizontal">
+                    <input type="hidden" name="$key" #$key="ngModel" [(ngModel)]="carService.selectedCar.$key" />
+                    <div class="control-group">
+                      <div class="controls">
+                        <mat-form-field>
+                          <mat-label>Car Plate Number</mat-label>
+                          <input matInput name="car_plate_number" [(ngModel)]="car_plate_number" [formControl]="car_pnE" placeholder="AAA-1111" required>
+                          <mat-error *ngIf="car_pnE.invalid">{{getErrorMessage4()}}</mat-error>
+                        </mat-form-field>
+                      </div>
+                  </div>
+                  <div class="control-group">
+                    <!-- <label class="control-label">car brand: </label>
+                    <div class="controls">
+                      <input type="text" class="form-control" name="car_brand" #name="ngModel" [(ngModel)]="carService.selectedCar.car_brand" placeholder="brand" />
+                    </div> -->
+                    <!--<label class="control-label">Car brand: </label>-->
+                    <div class="controls">
+                      <!--<select name="car_brand" id="car_brand" #name="ngModel" [(ngModel)]="carService.selectedCar.car_brand" (change)="onSelect($event.target.value)" required>-->
+                        <!--<option *ngFor="let brand of brands" [value]="brand.name">{{brand.name}}</option>-->
+                      <!--</select>-->
+                      <mat-form-field>
+                        <mat-label>Car brand</mat-label>
+                        <mat-select name="car_brand" id="car_brand" [(ngModel)]="car_brand" (selectionChange)="onSelect($event)" required>
+                          <mat-option *ngFor="let brand of brands" [value]="brand.name">{{brand.name}}</mat-option>
+                        </mat-select>
+                        <mat-error *ngIf="car_brandE.invalid">{{getErrorMessage3()}}</mat-error>
+                      </mat-form-field>
+                    </div>
+                    <!--<label class="control-label">Car model: </label>-->
+                    <!--<p>Selected: {{this.selectedBrand}}</p>-->
+                    <div class="controls">
+                      <mat-form-field>
+                        <mat-label>Car model</mat-label>
+                        <mat-select name="car_model" id="car_model" [(ngModel)]="car_model" required>
+                          <mat-option *ngFor="let model of models" [value]="model.name">{{model.name}}</mat-option>
+                        </mat-select>
+                        <mat-error *ngIf="car_brandE.invalid">{{getErrorMessage3()}}</mat-error>
+                      </mat-form-field>
+                      <!--<select name="car_model" id="car_model" #name="ngModel" [(ngModel)]="carService.selectedCar.car_model" required>-->
+                        <!--<option *ngFor="let model of models" [value]="model.name">{{model.name}}</option>-->
+                      <!--</select>-->
+                    </div>
+                  </div>
+                    <div class="control-group">
+                      <!--<label class="control-label">car color: </label>-->
+                      <div class="controls">
+                        <!--<input type="text" class="form-control" name="car_color" #name="ngModel" [(ngModel)]="carService.selectedCar.car_color" minlength="4" placeholder="color" />-->
+                        <mat-form-field>
+                          <mat-label>Car Color</mat-label>
+                          <input matInput name="car_color" [(ngModel)]="car_color" [formControl]="car_colorE" minlength="3" maxlength="20" placeholder="color" [pattern]="'[a-zA-Z ]*'" required>
+                          <mat-error *ngIf="car_colorE.invalid">{{getErrorMessage()}}</mat-error>
+                        </mat-form-field>
+                      </div>
+                    </div>
+                    <div class="control-group">
+                      <label class="control-label">car type: </label>
+                      <div class="controls">
+                        <!--<input type="radio" value="Single" class="form-control" name="car_type" [(ngModel)]="carService.selectedCar.car_type" (click)="onRadioClick(0)"/>Single<br>-->
+                        <!--<input type="radio" value="Family" class="form-control" name="car_type" [(ngModel)]="carService.selectedCar.car_type" (click)="onRadioClick(1)"/>Family<br>-->
+                        <!--<input type="radio" value="Barkada" class="form-control" name="car_type" [(ngModel)]="carService.selectedCar.car_type" (click)="onRadioClick(2)"/>Barkada-->
+                          <mat-radio-group name="car_type" [(ngModel)]="car_type" (change)="onRadioClick($event)" required>
+                            <mat-radio-button value="Single">Single</mat-radio-button>
+                            <mat-radio-button value="Family">Family</mat-radio-button>
+                            <mat-radio-button value="Barkada">Barkada </mat-radio-button>
+                          </mat-radio-group>
+                        <mat-error *ngIf="car_capacityE.invalid">{{getErrorMessage2()}}</mat-error>
+                      </div>
+                    </div>
+                    <div class="control-group">
+                      <!--<label class="control-label">car capacity: </label>-->
+                      <div class="controls">
+                        <mat-form-field>
+                          <mat-label>Car Capacity</mat-label>
+                          <input matInput name="car_capacity" [formControl]="car_capacityE" [(ngModel)]="car_capacity" readonly required>
+                          <mat-error *ngIf="car_capacityE.invalid">{{getErrorMessage2()}}</mat-error>
+                        </mat-form-field>
+                      </div>
+                    </div>
+                      <div class="form-actions">
+                        <button type="submit" mat-raised-button color="primary" [disabled]="!carForm.valid"><i class="fa fa-save"></i>Submit</button>
+                        <button type="button" class="btn btn-default" *ngIf="carService.selectedCar.$key!=null" (click)="onDelete(carForm)"><i class="fa fa-trash"></i>Delete</button>
+                        <button type="button" class="btn btn-warning" (click)="resetForm(carForm)"><i class="fa fa-repeat"></i>Reset</button>
+                      </div>
+                  </form>
+              </div>
+            </div>
+            </div>
+        </div>
+    </div>
+  </div>

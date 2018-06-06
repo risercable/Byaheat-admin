@@ -1,0 +1,5 @@
+<ul class="list-group hover">
+  <li class="list-group-item" *ngFor="let driver of driverlist" (click)="onItemClick(driver)">
+    {{driver.name}} - {{driver.position}}
+  </li>
+</ul>

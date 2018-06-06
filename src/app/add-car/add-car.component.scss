@@ -1,0 +1,11 @@
+button::-moz-focus-inner {
+  border: 0;
+}
+span:focus {
+  outline: none;
+  border: 0;
+}
+input:focus:invalid:focus {
+  border: 0;
+  box-shadow: none;
+}

@@ -1,0 +1,31 @@
+.highlight {
+  background-color: green;
+  color: green;
+}
+
+.h-default {
+  background-color: none;
+}
+
+.table tr.active td {
+  background-color:#EEEEEE !important;
+}
+
+.example-container {
+  display: flex;
+  flex-direction: column;
+}
+
+.example-container > * {
+  width: 100%;
+}
+
+.con {
+  float: left;
+  margin: 10px 20px;
+}
+
+.con2 {
+  float: right;
+  margin: 4px 20px;
+}
