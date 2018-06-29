@@ -1,9 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit, ViewChild} from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { Router } from '@angular/router';
-import {AngularFireAuth} from 'angularfire2/auth';
-import * as firebase from 'firebase/app';
-import { AngularFireAuthModule } from 'angularfire2/auth';
 import { AuthService } from '../auth.service';
 import { Title }     from '@angular/platform-browser';
 import { AngularFireDatabase } from 'angularfire2/database';
@@ -12,7 +8,7 @@ import { Observable } from 'rxjs/Observable';
 import { ClientService } from '../drivers/shared/client.service';
 import { Client } from '../drivers/shared/client.model';
 import { NgForm } from '@angular/forms/src/directives/ng_form';
-import { FilterPipe }from '../filter.pipe';
+import {MatPaginator, MatSort, MatTableDataSource} from "@angular/material";
 declare var jsPDF: any; // Important
 
 @Component({
@@ -29,13 +25,71 @@ export class AccountComponent implements OnInit {
   selectedClient: Client = new Client();
   ipp: any;
   optionSelected: any;
+  order: string = 'cfull_name';
+  reverse: boolean = false;
+  clientColumns = ['index_num', 'user_firstname', 'user_lastname', 'user_birthdate', 'user_mobile', 'actions'];
+  itemPrint: Perclient[];
+  itemList: Perclient[];
+  clientSource = new MatTableDataSource(this.itemPrint);
+  noRecords: boolean;
+
+  @ViewChild(MatPaginator) paginator: MatPaginator;
+
+  @ViewChild(MatSort) sort: MatSort;
+
+  ngAfterViewInit() {
+    this.clientSource.sort = this.sort;
+  }
+
+  applyFilter(filterValue: string) {
+    filterValue = filterValue.trim(); // Remove whitespace
+    filterValue = filterValue.toLowerCase(); // MatTableDataSource defaults to lowercase matches
+    this.clientSource.filter = filterValue;
+
+    if(this.clientSource.filteredData.length == 0) {
+      this.noRecords = true;
+    } else {
+      this.noRecords = false;
+    }
+  }
 
   constructor(private db: AngularFireDatabase,private clientService: ClientService, public authService: AuthService, private route: ActivatedRoute, private titleService: Title) {
-    this.clientList = db.list('clients');
-    this.clients = this.clientList.snapshotChanges().map(changes => {
-      return changes.map(c => ({ key: c.payload.key, ...c.payload.val() }));
+    // this.clientList = db.list('clients');
+    // this.clients = this.clientList.snapshotChanges().map(changes => {
+    //   return changes.map(c => ({ key: c.payload.key, ...c.payload.val() }));
+    // });
+
+    let data = db.list('clients');
+    this.itemList = [];
+
+    data.snapshotChanges().subscribe(item => {
+      let i = 1;
+
+      item.forEach(element => {
+        let json = element.payload.toJSON();
+        json["$key"] = element.key;
+        json['in1'] = i;
+        // this.itemList.push(json as Item);
+        this.itemList.push(json as Perclient);
+        // this.xD.push(json);
+
+        i++
+      });
+
+      this.clientSource = new MatTableDataSource(this.itemList);
+      this.clientSource.sort = this.sort;
+      this.clientSource.paginator = this.paginator;
+
     });
    }
+
+  setOrder(value: string) {
+    if (this.order === value) {
+      this.reverse = !this.reverse;
+    }
+
+    this.order = value;
+  }
 
   ngOnInit() {
     this.setTitle("Lakbay | Users");
@@ -103,11 +157,20 @@ export class AccountComponent implements OnInit {
   }
 
   onOptionSelected(event){
-    console.log(event) //option value will be sent as event
+    console.log(event); //option value will be sent as event
     this.ipp = event;
    }
    byId(item1: 10, item2: 10) {
     return item1 === item2;
   }
 
+}
+
+export interface Perclient {
+  in1: number;
+  user_firstname: string;
+  user_lastname: string;
+  user_birthdate: string;
+  user_mobile: string;
+  key: string;
 }

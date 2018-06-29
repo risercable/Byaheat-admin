@@ -1,4 +1,4 @@
-import {Component, OnInit, ViewChild, Inject} from '@angular/core';
+import {Component, OnInit, ViewChild, Inject, ViewEncapsulation} from '@angular/core';
 import {AngularFireDatabase,AngularFireList} from 'angularfire2/database';
 import { Observable } from 'rxjs/Observable';
 import { NgForm } from '@angular/forms/src/directives/ng_form';
@@ -27,9 +27,10 @@ export class ReservationComponent implements OnInit {
   order: string = 'cfull_name';
   reverse: boolean = false;
   keyx: string;
-  displayedColumns = ['customer name', 'driver name', 'destination', 'rating', 'time', 'actions'];
+  displayedColumns = ['in1', 'customer name', 'driver name', 'destination', 'rating', 'actions'];
   itemList: Item[];
   itemPrint: Item[];
+  xD = [];
   dataSource = new MatTableDataSource(this.itemList);
   noRecords: boolean;
 
@@ -59,18 +60,24 @@ export class ReservationComponent implements OnInit {
 
   constructor(public db: AngularFireDatabase, private orderPipe: OrderPipe, public dialog: MatDialog) {
     let data = db.list('history');
+    this.itemPrint = [];
+
     data.snapshotChanges().subscribe(item => {
       this.itemList = [];
-      this.itemPrint = [];
+      let i = 1;
 
       item.forEach(element => {
         let json = element.payload.toJSON();
         json["$key"] = element.key;
-        this.itemList.push(json as Item);
+        json['in1'] = i;
+        // this.itemList.push(json as Item);
         this.itemPrint.push(json as Item);
+        this.xD.push(json);
+
+        i++
       });
 
-      this.dataSource = new MatTableDataSource(this.itemList);
+      this.dataSource = new MatTableDataSource(this.itemPrint);
       this.dataSource.sort = this.sort;
       this.dataSource.paginator = this.paginator;
 
@@ -83,15 +90,13 @@ export class ReservationComponent implements OnInit {
         changes.map(c => ({ key: c.payload.key, ...c.payload.val() }))
       )
     );
-
-    this.sortedCollection = orderPipe.transform(this.reserves, 'cfull_name');
     // this.reserves = db.list('history').valueChanges();
    }
 
-   openDialog(i: string): void {
+   openDialog(i: any): void {
     let dialogRef = this.dialog.open(ViewDetailsDialog, {
-      width: '250px',
-      data: { destination: i }
+      width: 'auto',
+      data: { datarray: i }
     });
 
     dialogRef.afterClosed().subscribe(result => {
@@ -108,22 +113,25 @@ export class ReservationComponent implements OnInit {
   }
 
   ngOnInit() {
-    let data = this.db.list('history');
-    data.snapshotChanges().subscribe(item => {
-      this.itemList = [];
-      this.itemPrint = [];
+    // let data = this.db.list('history');
+    // this.itemPrint = [];
+    // data.snapshotChanges().subscribe(item => {
+    //   this.itemList = [];
 
-      item.forEach(element => {
-        let json = element.payload.toJSON();
-        json["$key"] = element.key;
-        this.itemList.push(json as Item);
-      });
+    //   item.forEach(element => {
+    //     let json = element.payload.toJSON();
+    //     json["$key"] = element.key;
+    //     this.itemList.push(json as Item);
+    //     this.itemPrint.push(json as Item);
+    //   });
 
-      this.dataSource = new MatTableDataSource(this.itemList);
-      this.dataSource.sort = this.sort;
-      this.dataSource.paginator = this.paginator;
+    //   this.dataSource = new MatTableDataSource(this.itemList);
+    //   this.dataSource.sort = this.sort;
+    //   this.dataSource.paginator = this.paginator;
 
-    });
+    // });
+
+    // console.log(this.itemPrint.slice());
   }
 
   viewThis(i: string) {
@@ -163,11 +171,19 @@ export class ReservationComponent implements OnInit {
   }
 
   onPrint(){
+    console.log(this.xD);
     var doc = new jsPDF('p', 'pt');
   doc.text("Cars List", 40, 50);
-  var res = this.dataSource[0];
-  var columns = this.displayedColumns.slice();
-  doc.autoTable(columns, this.itemList[0], {tableWidth: 'auto', startY: false, margin: {top: 100}, theme: 'grid'});
+  var columns = [
+    {title: "ID", dataKey: "in1"},
+    {title: "CusName", dataKey: "customer_name"},
+    {title: "Driver Name", dataKey: "driver_name"},
+    {title: "Destination", dataKey: "destination"},
+    {title: "Rating", dataKey: "rating"},
+    {title: "TimeStamp", dataKey: "timestamp"}
+  ];
+    var rows = this.xD;
+  doc.autoTable(columns, rows, {tableWidth: 'auto', startY: false, margin: {top: 100}, theme: 'grid'});
   var pdfUrl = doc.output('datauri').substring(doc.output('datauri').indexOf(',')+1);
   var binary = atob(pdfUrl.replace(/\s/g, ''));
   var len = binary.length;
@@ -186,12 +202,15 @@ export class ReservationComponent implements OnInit {
   printElement(id) {
     var printHtml = document.getElementById(id).outerHTML;
     var currentPage = document.body.innerHTML;
-    var elementPage = '<html><head><title></title></head><body>' + printHtml + '</body>';
-    //change the body
+
+    var elementPage = '<html><head><link rel="stylesheet" href="styles.scss" /><title></title></head><body>' + printHtml + '</body>';
+
+    document.getElementById('hideThis').style.visibility = 'hidden';
+
     document.body.innerHTML = elementPage;
-    //print
+
     window.print();
-    //go back to the original
+
     document.body.innerHTML = currentPage;
 
     window.location.reload();
@@ -203,12 +222,19 @@ export class ReservationComponent implements OnInit {
     // popupWin.document.open();
     // popupWin.document.write(elementPage);
     // popupWin.document.close();
+
+
+  }
+
+  printNow() {
+
   }
 
 }
 
 export interface Item {
   customer_name: string;
+  in1: number;
   driver_name: string;
   destination: string;
   rating: string;
@@ -219,6 +245,8 @@ export interface Item {
 @Component({
   selector: 'view-details-dialog',
   templateUrl: 'view-details-dialog.html',
+  styleUrls: ['reservation.component.scss'],
+  encapsulation: ViewEncapsulation.None,
 })
 export class ViewDetailsDialog {
 

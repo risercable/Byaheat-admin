@@ -20,10 +20,52 @@
 .mat-table {
   overflow: auto;
   max-height: 500px;
-}
 
-@media print {
   .hideX {
     display: none !important;
   }
 }
+
+.input1 {
+  width: auto;
+  background-color: white;    /* replace this color with your accent color hex code */
+}
+
+.mat-focused  {
+  background-color: white;    /* replace this color with your accent color hex code */
+}
+
+.mat-input-placeholder {
+  background-color: white;    /* replace this color with your accent color hex code */
+}
+
+.label1 {
+  color: royalblue;
+}
+
+.clear {
+  clear: both;
+}
+
+.separator {
+  height: 100%;
+  width: 1px;
+  background: black;
+  top: 0;
+  bottom: 0;
+  position: absolute;
+  left: 50%;
+}
+
+.container {
+  position: relative;
+}
+
+@media print {
+  .hideThis, .hideThis * {
+    display: none !important;
+  }
+}
+
+
+

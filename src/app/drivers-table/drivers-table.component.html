@@ -5,23 +5,79 @@
   </div>
   <div class="container-fluid">
       <div class="row-fluid">
-        <div class="span11">
-          <div class="widget-box">
+        <div class="span12">
+          <div class="widget-box nopadding">
             <div class="widget-title"> <span class="icon"><i class="icon-pencil"></i></span>
               <h5>Driver Table</h5>
             </div>
-            <div class="widget-content nopadding">
-                <div class="alert alert-success" *ngIf="driverService.emailadded == true">
-                    <button class="close" data-dismiss="alert" (click)="resetAlert()">×</button>
-                    <strong>Success!</strong> Added email address to the driver</div>
-                <div class="alert alert-success" *ngIf="driverService.deldriver == true">
-                    <button class="close" data-dismiss="alert" (click)="resetAlert()">×</button>
-                    <strong>Success!</strong> Driver info deleted</div>
-                <div class="alert alert-success" *ngIf="driverService.updriver == true">
-                    <button class="close" data-dismiss="alert" (click)="resetAlert()">×</button>
-                    <strong>Success!</strong> Updated driver info</div>
-                    <div class="con">
-                        <button (click)="onPrint()" class="btn btn-primary" style="margin-right: 10px;">PRINT</button>
+            <div class="widget-content">
+                <!--<div class="alert alert-success" *ngIf="driverService.emailadded == true">-->
+                    <!--<button class="close" data-dismiss="alert" (click)="resetAlert()">×</button>-->
+                    <!--<strong>Success!</strong> Added email address to the driver</div>-->
+                <!--<div class="alert alert-success" *ngIf="driverService.deldriver == true">-->
+                    <!--<button class="close" data-dismiss="alert" (click)="resetAlert()">×</button>-->
+                    <!--<strong>Success!</strong> Driver info deleted</div>-->
+                <!--<div class="alert alert-success" *ngIf="driverService.updriver == true">-->
+                    <!--<button class="close" data-dismiss="alert" (click)="resetAlert()">×</button>-->
+                    <!--<strong>Success!</strong> Updated driver info</div>-->
+                        <div class="mat-app-background basic-container">
+                            <div class="example-container mat-elevation-z8">
+                                <div class="example-header">
+                                    <mat-form-field>
+                                      <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filter">
+                                    </mat-form-field>
+                                  </div>
+                                <mat-table #table [dataSource]="dataSource" matSort id="basic-table">
+
+                                  <!--- Note that these columns can be defined in any order.
+                                        The actual rendered columns are set as a property on the row definition" -->
+                                  <ng-container matColumnDef="index">
+                                    <mat-header-cell *matHeaderCellDef mat-sort-header>No.</mat-header-cell>
+                                    <mat-cell *matCellDef="let element; let i = index;"> {{element.in1}} </mat-cell>
+                                  </ng-container>
+
+                                  <!-- Position Column -->
+                                  <ng-container matColumnDef="driver firstname">
+                                    <mat-header-cell *matHeaderCellDef mat-sort-header>Driver Firstname</mat-header-cell>
+                                    <mat-cell *matCellDef="let element"> {{element.user_firstname}} </mat-cell>
+                                  </ng-container>
+
+                                  <!-- Name Column -->
+                                  <ng-container matColumnDef="driver lastname">
+                                    <mat-header-cell *matHeaderCellDef mat-sort-header>Driver Lastname </mat-header-cell>
+                                    <mat-cell *matCellDef="let element"> {{element.user_lastname}} </mat-cell>
+                                  </ng-container>
+
+                                  <!-- Weight Column -->
+                                  <ng-container matColumnDef="driver email">
+                                    <mat-header-cell *matHeaderCellDef mat-sort-header> Driver Email </mat-header-cell>
+                                    <mat-cell *matCellDef="let element"> {{element.user_email}} </mat-cell>
+                                  </ng-container>
+
+                                  <ng-container matColumnDef="actions" class="hideX">
+                                    <mat-header-cell *matHeaderCellDef> Action </mat-header-cell>
+                                    <mat-cell *matCellDef="let element; let i = index">
+                                      <button mat-icon-button color="accent" (click)="openDialog(element, element.user_email)">View</button>
+                                    </mat-cell>
+                                  </ng-container>
+
+                                  <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+                                  <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+
+                                </mat-table>
+                              <mat-card  *ngIf="noRecords" style="padding:100px;">
+                                <h3 style="text-align:center">We couldn't find data for
+                                  <span style="color:red">"{{dataSource.filter}}"</span>
+                                </h3>
+                              </mat-card>
+                                <mat-paginator #paginator
+                                                [pageSize]="5"
+                                                [pageSizeOptions]="[5, 10, 20]"
+                                                [showFirstLastButtons]="true">
+                                </mat-paginator>
+                              </div>
+                          </div>
+                        <!-- <button (click)="onPrint()" class="btn btn-primary" style="margin-right: 10px;">PRINT</button> -->
                         <!-- Sort by:
                       <select class='select-option' [(ngModel)]='optionSelected' (ngModelChange)='onOptionSelected($event)' style="width: auto; margin-top: 10px;">
                         <option class='option' selected [value]="10">{{10}}</option>
@@ -29,7 +85,7 @@
                         <option class='option' [value]="30">{{50}}</option>
                         <option class='option' [value]="999">ALL</option>
                     </select> -->
-                        <mat-form-field  style="width: 100px;">
+                        <!-- <mat-form-field  style="width: 100px;">
                           <mat-select placeholder="Sort by" [(ngModel)]='optionSelected' (ngModelChange)='onOptionSelected($event)'>
                             <mat-option value="10">{{10}}</mat-option>
                             <mat-option value="20">{{20}}</mat-option>
@@ -37,9 +93,9 @@
                             <mat-option value="999">ALL</mat-option>
                           </mat-select>
                         </mat-form-field>
-                    </div>
+                    </div> -->
                     <!-- <input type="text" [(ngModel)]="term" placeholder="Enter search term" style="float: right; margin: 4px auto;"> -->
-                    <div class="con2">
+                    <!-- <div class="con2">
                       <mat-form-field>
                           <input matInput [(ngModel)]="term" placeholder="Enter search term" style="float: right; margin: 4px auto;">
                       </mat-form-field>
@@ -51,10 +107,10 @@
                         <th>First Name</th>
                         <th>Last Name</th>
                         <th>Email</th>
-                        <th>EDIT</th>
+                        <th>EDIT</th> -->
                         <!-- <th>Assigned Car</th>
                         <th>Edit</th> -->
-                      </tr>
+                      <!-- </tr>
                     </thead>
                     <tbody>
                       <tr class="odd gradeX" *ngFor="let driver of driverlist | filter: term | paginate: { itemsPerPage: this.ipp, currentPage: p } let i = index " (click)="onItemClick(driver)" (click)="setClickedRow(i)" [class.active]="i == selectedRow">
@@ -62,16 +118,15 @@
                         <td [ngClass]="[inlineOne]">{{driver.user_firstname}}</td>
                         <td [ngClass]="[inlineOne]">{{driver.user_lastname}}</td>
                         <td [ngClass]="[inlineOne]">{{driver.user_email}}</td>
-                        <td [ngClass]="[inlineOne]"><a class="btn btn-mini btn-primary" (click)="openDialog(driver.key)"><span class="fas fa-edit" ></span> EDIT INFO</a></td>
+                        <td [ngClass]="[inlineOne]"><a class="btn btn-mini btn-primary" (click)="openDialog(driver.key)"><span class="fas fa-edit" ></span> EDIT INFO</a></td> -->
                         <!-- <td *ngIf="driver.assigned_car == 'none'">{{driver.assigned_car}}</td>
                         <td *ngIf="driver.assigned_car != 'none'">{{driver.assigned_car.car_plate_number}}</td>
                         <td><a href="" class="btn btn-mini btn-primary" data-toggle="modal" data-target="#myModal" (click)="passKey(driver.key)"><span class="fas fa-edit" ></span> EDIT INFO</a></td>
                         <td *ngIf="driver.email == 'wala@gmail.com'"><a href="" data-toggle="modal" data-target="#addModal"><button class="btn btn-mini btn-success"><span class="icon"><i class="fas fa-plus-square"></i></span> ADD THIS DRIVER</button></a></td> -->
-                      </tr>
+                      <!-- </tr>
                     </tbody>
                   </table>
-                  <pagination-controls (pageChange)="p = $event"></pagination-controls>
-            </div>
+                  <pagination-controls (pageChange)="p = $event"></pagination-controls> -->
           </div>
         </div>
       </div>

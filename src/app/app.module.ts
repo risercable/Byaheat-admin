@@ -17,7 +17,7 @@ import {MatSnackBarModule} from '@angular/material/snack-bar';
 import { StarRatingModule } from 'angular-star-rating';
 import {MatTableModule} from '@angular/material/table';
 import {MatPaginatorModule} from '@angular/material';
-import {MatSortModule} from "@angular/material";
+import {MatSortModule} from "@angular/material"
 
 import { AppComponent }     from './app.component';
 import { AppRoutingModule } from './app-routing.module';
@@ -29,7 +29,6 @@ import { Ng2SearchPipeModule } from 'ng2-search-filter';
 import {MatButtonModule, MatCheckboxModule, MatNativeDateModule, MatCardModule} from '@angular/material';
 import {MatDatepickerModule} from '@angular/material/datepicker';
 
-import { AngularFireOfflineModule } from 'angularfire2-offline';
 import { AngularFireDatabaseModule } from 'angularfire2/database';
 import { HttpModule } from '@angular/http';
 
@@ -69,6 +68,8 @@ import { AddCarComponent } from './add-car/add-car.component';
 import { StorageService } from './storage.service';
 import { ReservationComponent } from './reservation/reservation.component';
 
+import { AngularFireStorageModule } from 'angularfire2/storage';
+
 import { OrderModule } from 'ngx-order-pipe';
 
 @NgModule({
@@ -88,7 +89,6 @@ import { OrderModule } from 'ngx-order-pipe';
     MatCheckboxModule,
     MatDatepickerModule,
     MatNativeDateModule,
-    AngularFireOfflineModule,
     AngularFireDatabaseModule,
     BrowserAnimationsModule,
     MatFormFieldModule,
@@ -101,6 +101,7 @@ import { OrderModule } from 'ngx-order-pipe';
     MatPaginatorModule,
     MatSortModule,
     MatCardModule,
+    AngularFireStorageModule,
     StarRatingModule.forRoot(),
     OrderModule
   ],

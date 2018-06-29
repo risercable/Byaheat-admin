@@ -11,90 +11,117 @@
             <h5>Users Table</h5>
           </div>
           <div class="widget-content nopadding">
-            <!-- <button (click)="onAll()">ALL</button> -->
-            <button (click)="onPrint()" class="btn btn-primary" download="...">PRINT</button>
-            Sort by:
-            <select class='select-option' [(ngModel)]='optionSelected' (ngModelChange)='onOptionSelected($event)' style="width: auto;">
-              <option class='option' [value]="10">{{10}}</option>
-              <option class='option' [value]="20">{{20}}</option>
-              <option class='option' [value]="30">{{50}}</option>
-              <option class='option' [value]="999">ALL</option>
-          </select>
-              <input type="text" [(ngModel)]="term" placeholder="Enter search term" style="float: right; margin: 4px auto;">
-            <table class="table table-bordered table-striped" id="basic-table">
-              <thead>
-                <tr>
-                  <th hidden></th>
-                  <th>User Firstname</th>
-                  <th>User Lastname</th>
-                  <th>User Birthdate</th>
-                  <th>User Mobile</th>
-                </tr>
-              </thead>
-              <tbody *ngFor="let client of clients | async | filter:term | paginate: { itemsPerPage: this.ipp, currentPage: p }" (click)="onItemClick(client)">
-                <tr class="odd gradeX">
-                  <td hidden><input type="hidden" name="$key" #$key="ngModel" [(ngModel)]="clientService.selectedClient.$key" /></td>
-                  <td>{{client.user_firstname}}</td>
-                  <td>{{client.user_lastname}}</td>
-                  <td>{{client.user_birthdate}}</td>
-                  <td>{{client.user_mobile}}</td>
-                </tr>
+            <!--&lt;!&ndash; <button (click)="onAll()">ALL</button> &ndash;&gt;-->
+            <!--<button (click)="onPrint()" class="btn btn-primary" download="...">PRINT</button>-->
+            <!--Sort by:-->
+            <!--<select class='select-option' [(ngModel)]='optionSelected' (ngModelChange)='onOptionSelected($event)' style="width: auto;">-->
+              <!--<option class='option' [value]="10">{{10}}</option>-->
+              <!--<option class='option' [value]="20">{{20}}</option>-->
+              <!--<option class='option' [value]="30">{{50}}</option>-->
+              <!--<option class='option' [value]="999">ALL</option>-->
+          <!--</select>-->
+              <!--<input type="text" [(ngModel)]="term" placeholder="Enter search term" style="float: right; margin: 4px auto;">-->
+            <!--<table class="table table-bordered table-striped" id="basic-table">-->
+              <!--<thead>-->
+                <!--<tr>-->
+                  <!--<th hidden></th>-->
+                  <!--<th>User Firstname</th>-->
+                  <!--<th>User Lastname</th>-->
+                  <!--<th>User Birthdate</th>-->
+                  <!--<th>User Mobile</th>-->
+                <!--</tr>-->
+              <!--</thead>-->
+              <!--<tbody *ngFor="let client of clients | async | filter:term | paginate: { itemsPerPage: this.ipp, currentPage: p }" (click)="onItemClick(client)">-->
+                <!--<tr class="odd gradeX">-->
+                  <!--<td hidden><input type="hidden" name="$key" #$key="ngModel" [(ngModel)]="clientService.selectedClient.$key" /></td>-->
+                  <!--<td>{{client.user_firstname}}</td>-->
+                  <!--<td>{{client.user_lastname}}</td>-->
+                  <!--<td>{{client.user_birthdate}}</td>-->
+                  <!--<td>{{client.user_mobile}}</td>-->
+                <!--</tr>-->
 
-              </tbody>
-            </table>
-            <pagination-controls (pageChange)="p = $event"></pagination-controls>
+              <!--</tbody>-->
+            <!--</table>-->
+            <!--<pagination-controls (pageChange)="p = $event"></pagination-controls>-->
+
+            <!-- Mat Table Starts here -->
+
+            <div class="mat-app-background basic-container">
+              <div class="example-container mat-elevation-z8">
+                <div class="example-header">
+                  <mat-form-field>
+                    <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filter">
+                  </mat-form-field>
+                </div>
+                <mat-table #table [dataSource]="clientSource" matSort id="basic-table">
+
+                  <!--- Note that these columns can be defined in any order.
+                        The actual rendered columns are set as a property on the row definition" -->
+
+                  <ng-container matColumnDef="index_num">
+                    <mat-header-cell *matHeaderCellDef mat-sort-header>No</mat-header-cell>
+                    <mat-cell *matCellDef="let celement"> {{celement.in1}} </mat-cell>
+                  </ng-container>
+
+                  <!-- Position Column -->
+                  <ng-container matColumnDef="user_firstname">
+                    <mat-header-cell *matHeaderCellDef mat-sort-header>Client Firstname</mat-header-cell>
+                    <mat-cell *matCellDef="let element"> {{element.user_firstname}} </mat-cell>
+                  </ng-container>
+
+                  <!-- Name Column -->
+                  <ng-container matColumnDef="user_lastname">
+                    <mat-header-cell *matHeaderCellDef mat-sort-header>Client Lastname </mat-header-cell>
+                    <mat-cell *matCellDef="let element"> {{element.user_lastname}} </mat-cell>
+                  </ng-container>
+
+                  <!-- Weight Column -->
+                  <ng-container matColumnDef="user_birthdate">
+                    <mat-header-cell *matHeaderCellDef mat-sort-header> Client Birthdate</mat-header-cell>
+                    <mat-cell *matCellDef="let element"> {{element.user_birthdate}} </mat-cell>
+                  </ng-container>
+
+                  <!-- Symbol Column -->
+                  <ng-container matColumnDef="user_mobile">
+                    <mat-header-cell *matHeaderCellDef mat-sort-header> Client Mobile Number </mat-header-cell>
+                    <mat-cell *matCellDef="let element"> {{element.user_mobile}} </mat-cell>
+                  </ng-container>
+
+                  <!--<ng-container matColumnDef="timestamp">-->
+                  <!--<mat-header-cell *matHeaderCellDef mat-sort-header> Time </mat-header-cell>-->
+                  <!--<mat-cell *matCellDef="let element"> {{element.timestamp * 1000 | date:'yyyy-MM-dd HH:mm:ss Z'}} </mat-cell>-->
+                  <!--</ng-container>-->
+
+                  <ng-container matColumnDef="actions">
+                    <mat-header-cell *matHeaderCellDef> Actions </mat-header-cell>
+                    <mat-cell *matCellDef="let element">
+                      <button mat-icon-button color="accent" id="hideThis">View Details
+                      </button>
+                    </mat-cell>
+                  </ng-container>
+
+                  <mat-header-row *matHeaderRowDef="clientColumns"></mat-header-row>
+                  <mat-row *matRowDef="let row; columns: clientColumns;"></mat-row>
+
+                </mat-table>
+                <mat-card  *ngIf="noRecords" style="padding:100px;">
+                  <h3 style="text-align:center">We couldn't find data for
+                    <span style="color:red">"{{clientSource.filter}}"</span>
+                  </h3>
+                </mat-card>
+                <mat-paginator #paginator
+                               [pageSize]="5"
+                               [pageSizeOptions]="[5, 10, 20]"
+                               [showFirstLastButtons]="true">
+                </mat-paginator>
+              </div>
+            </div>
+
+            <!-- end of Mat Table -->
+
           </div>
         </div>
   </div>
 </div>
   </div>
-  <!-- Modal -->
-<div id="myModal" class="modal fade" role="dialog">
-  <div class="modal-dialog">
-
-    <!-- Modal content-->
-    <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal">&times;</button>
-        <h4 class="modal-title"></h4>
-      </div>
-      <div class="modal-body">
-          <form #clientForm="ngForm" (ngSubmit)="onSubmit(clientForm)" class="form-horizontal">
-                <input type="hidden" name="$key" #$key="ngModel" [(ngModel)]="clientService.selectedClient.$key" />
-            <div class="control-group">
-                <label class="control-label">User Firstname: </label>
-                <div class="controls">
-                  <input type="text" name="user_firstname" #name="ngModel" [(ngModel)]="clientService.selectedClient.user_firstname"/>
-                </div>
-              </div>
-              <div class="control-group">
-                  <label class="control-label">User Lastname: </label>
-                  <div class="controls">
-                      <input type="text" class="form-control" name="user_lastname" #name="ngModel" [(ngModel)]="clientService.selectedClient.user_lastname" />
-                  </div>
-                </div>
-                <div class="control-group">
-                    <label class="control-label">User Birthdate: </label>
-                    <div class="controls">
-                        <input type="text" class="form-control" name="user_birthdate" #name="ngModel" [(ngModel)]="clientService.selectedClient.user_birthdate" />
-                    </div>
-                  </div>
-                <div class="control-group">
-                  <label class="control-label">User Mobilenumber: </label>
-                  <div class="controls">
-                      <input type="text" class="form-control" name="user_mobile" #name="ngModel" [(ngModel)]="clientService.selectedClient.user_mobile" />
-                  </div>
-                </div>
-                <div class="form-actions">
-                  <button type="submit" class="btn btn-success pull-right" [disabled]="!clientForm.valid" onclick="$('.modal').modal('hide')"><span class="icon"><i class="fa fa-save"></i></span> Submit</button>
-                </div>
-          </form>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-      </div>
-    </div>
-
-  </div>
-</div>
 </div>

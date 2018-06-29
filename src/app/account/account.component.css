@@ -54,5 +54,7 @@
 @media print {
   .hideThis, .hideThis * {
     display: none !important; } }
+.mat-column-index_num {
+  max-width: 100px; }
 
-/*# sourceMappingURL=reservation.component.css.map */
+/*# sourceMappingURL=account.component.css.map */

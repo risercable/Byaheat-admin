@@ -1,0 +1,57 @@
+<form #driverForm="ngForm" (ngSubmit)="onSubmit(driverForm)" class="form-horizontal">
+        <input type="hidden" name="$key" #$key="ngModel" [(ngModel)]="driverService.selectedDriver.$key" />
+    <div class="control-group">
+        <div class="controls">
+          <!-- <label>First Name: </label> -->
+          <!-- <input type="text" name="user_firstname" #name="ngModel" [(ngModel)]="driverService.selectedDriver.user_firstname" placeholder="First Name" /> -->
+          <div class="example-container">
+          <mat-form-field>
+              <input matInput name="user_firstname" #name="ngModel" [(ngModel)]="driverService.selectedDriver.user_firstname" placeholder="Firstname">
+            </mat-form-field>
+            </div>
+          <!-- <label>Last Name: </label>
+          <input type="text" name="user_lastname" #name="ngModel" [(ngModel)]="driverService.selectedDriver.user_lastname" placeholder="Last Name" /> -->
+          <div class="example-container">
+            <mat-form-field>
+              <input matInput name="user_lastname" #name="ngModel" [(ngModel)]="driverService.selectedDriver.user_lastname" placeholder="Last Name">
+            </mat-form-field>
+            </div>
+        </div>
+      </div>
+    <div class="control-group">
+      <!-- <label class="control-label">Birthdate: </label> -->
+      <div class="controls">
+        <mat-form-field>
+            <input matInput [min]="minDate" [max]="maxDate" [matDatepicker]="picker" name="user_birthdate" #name="ngModel" [(ngModel)]="driverService.selectedDriver.user_birthdate" placeholder="Choose a date">
+            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+            <mat-datepicker #picker></mat-datepicker>
+        </mat-form-field>
+      </div>
+    </div>
+    <div class="control-group">
+        <!-- <label class="control-label">Address: </label> -->
+        <div class="controls">
+            <!-- <input type="text" class="form-control" name="user_address" #name="ngModel" [(ngModel)]="driverService.selectedDriver.user_address" placeholder="Address" /> -->
+          <div class="example-container">
+            <mat-form-field>
+              <input matInput name="user_address" #name="ngModel" [(ngModel)]="driverService.selectedDriver.user_address" placeholder="Address">
+            </mat-form-field>
+            </div>
+        </div>
+        </div>
+    <div class="control-group">
+      <!-- <label class="control-label">Mobile: </label> -->
+      <div class="controls">
+        <!-- <input type="number" class="form-control" name="user_mobile" #name="ngModel" [(ngModel)]="driverService.selectedDriver.user_mobile" placeholder="Salary" /> -->
+      <div class="example-container">
+        <mat-form-field>
+          <input matInput class="form-control" name="user_mobile" #name="ngModel" [(ngModel)]="driverService.selectedDriver.user_mobile" placeholder="Mobile Number">
+        </mat-form-field>
+        </div>
+      </div>
+      </div>
+        <div class="form-actions">
+          <!-- <button type="submit" class="btn btn-success pull-right" [disabled]="!driverForm.valid" onclick="$('.modal').modal('hide')"><span class="icon"><i class="fa fa-save"></i></span> Submit</button> -->
+          <button type="submit" class="pull-right" mat-raised-button color="primary"><span class="icon"><i class="fa fa-save"></i></span> Submit</button>
+        </div>
+  </form>

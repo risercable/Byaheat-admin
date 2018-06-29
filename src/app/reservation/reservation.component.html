@@ -11,7 +11,7 @@
                 <h5>Reservations</h5>
               </div>
               <div class="widget-content">
-                <button (click)="printElement('basic-table')" class="btn btn-primary">PRINT</button>
+                <button (click)="onPrint()" class="btn btn-primary">PRINT</button>
                   <!--<input type="text" [(ngModel)]="term" placeholder="Enter search term" style="float: right; margin: 4px auto;">-->
                   <!--<table class="table table-bordered table-striped" id="basic-table">-->
                       <!--<thead>-->
@@ -84,6 +84,11 @@
                         <!--- Note that these columns can be defined in any order.
                               The actual rendered columns are set as a property on the row definition" -->
 
+                        <ng-container matColumnDef="in1">
+                          <mat-header-cell *matHeaderCellDef mat-sort-header>No</mat-header-cell>
+                          <mat-cell *matCellDef="let element"> {{element.in1}} </mat-cell>
+                        </ng-container>
+
                         <!-- Position Column -->
                         <ng-container matColumnDef="customer name">
                           <mat-header-cell *matHeaderCellDef mat-sort-header>Client Name</mat-header-cell>
@@ -108,15 +113,15 @@
                           <mat-cell *matCellDef="let element"> {{element.rating}} </mat-cell>
                         </ng-container>
 
-                        <ng-container matColumnDef="time">
-                          <mat-header-cell *matHeaderCellDef mat-sort-header> Time </mat-header-cell>
-                          <mat-cell *matCellDef="let element"> {{element.timestamp}} </mat-cell>
-                        </ng-container>
+                        <!--<ng-container matColumnDef="timestamp">-->
+                          <!--<mat-header-cell *matHeaderCellDef mat-sort-header> Time </mat-header-cell>-->
+                          <!--<mat-cell *matCellDef="let element"> {{element.timestamp * 1000 | date:'yyyy-MM-dd HH:mm:ss Z'}} </mat-cell>-->
+                        <!--</ng-container>-->
 
-                        <ng-container matColumnDef="actions" class="hideX">
-                          <mat-header-cell *matHeaderCellDef> View </mat-header-cell>
+                        <ng-container matColumnDef="actions">
+                          <mat-header-cell *matHeaderCellDef> Actions </mat-header-cell>
                           <mat-cell *matCellDef="let element">
-                            <button mat-icon-button color="accent" (click)="openDialog(element.destination)">View mofo
+                            <button mat-icon-button color="accent" (click)="openDialog(element)" id="hideThis">View Details
                               </button>
                           </mat-cell>
                         </ng-container>

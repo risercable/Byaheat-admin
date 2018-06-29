@@ -1,4 +1,4 @@
-import { Component, OnInit, Inject } from '@angular/core';
+import {Component, OnInit, Inject, ViewChild} from '@angular/core';
 import { DriverService } from '../drivers/shared/driver.service';
 import { AngularFireList, AngularFireDatabase } from 'angularfire2/database';
 import { Driver } from '../drivers/shared/driver.model';
@@ -9,12 +9,12 @@ import { Title } from '@angular/platform-browser';
 
 import {MatDatepickerModule} from '@angular/material/datepicker';
 import {MatDialogModule} from '@angular/material/dialog';
-import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material';
+import {MatDialog, MatDialogRef, MAT_DIALOG_DATA, MatTableDataSource, MatPaginator, MatSort} from '@angular/material';
 import {MatButtonModule} from '@angular/material/button';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
+import {Item} from "../reservation/reservation.component";
 
-import { AfoObjectObservable, AngularFireOfflineDatabase } from 'angularfire2-offline/database';
 declare var jsPDF: any; // Important
 
 @Component({
@@ -43,11 +43,59 @@ export class DriversTableComponent implements OnInit {
   minDate = new Date(2000, 0, 1);
   maxDate = new Date();
   options: FormGroup;
+  itemList: Item[];
+  dataSource = new MatTableDataSource(this.itemList);
+  displayedColumns = ['index', 'driver firstname', 'driver lastname', 'driver email', 'actions'];
+  noRecords: boolean;
+  order: string;
+  reverse: boolean = false;
 
-  constructor(public authService: AuthService, private driverService : DriverService, public db: AngularFireDatabase, private titleService: Title, public dialog: MatDialog, fb: FormBuilder) {
+  @ViewChild(MatPaginator) paginator: MatPaginator;
+
+  @ViewChild(MatSort) sort: MatSort;
+
+  ngAfterViewInit() {
+    this.dataSource.sort = this.sort;
+  }
+
+  applyFilter(filterValue: string) {
+    filterValue = filterValue.trim(); // Remove whitespace
+    filterValue = filterValue.toLowerCase(); // MatTableDataSource defaults to lowercase matches
+    this.dataSource.filter = filterValue;
+
+    if(this.dataSource.filteredData.length == 0) {
+      this.noRecords = true;
+    } else {
+      this.noRecords = false;
+    }
+  }
+
+  constructor(public authService: AuthService, public driverService : DriverService, public db: AngularFireDatabase, private titleService: Title, public dialog: MatDialog, fb: FormBuilder) {
     this.options = fb.group({
       'color': 'primary',
       'fontSize': [16, Validators.min(10)],
+    });
+
+    let data = db.list('drivers');
+    this.itemList = [];
+
+    data.snapshotChanges().subscribe(item => {
+      this.itemList = [];
+      let i = 1;
+      item.forEach(element => {
+        let json = element.payload.toJSON();
+        json["$key"] = element.key;
+        json["in1"] = i;
+        // this.itemList.push(json as Item);
+        this.itemList.push(json as Item);
+
+        i++;
+
+      });
+
+      this.dataSource = new MatTableDataSource(this.itemList);
+      this.dataSource.sort = this.sort;
+      this.dataSource.paginator = this.paginator;
     });
 
     this.driverList = db.list('drivers');
@@ -59,9 +107,9 @@ export class DriversTableComponent implements OnInit {
 
     this.setClickedRow = function(index){
       this.selectedRow = index;
-  }
+    }
 
-   }
+  }
 
   ngOnInit() {
 
@@ -86,10 +134,12 @@ export class DriversTableComponent implements OnInit {
     this.titleService.setTitle(newTitle);
   }
 
-  openDialog(theKey: string): void {
+  openDialog(f1: string, f2: string): void {
     let dialogRef = this.dialog.open(DialogOverviewExampleDialog, {
       width: '600px',
-      data: { theKey: this.theKey }
+      data: { theKey: f1,
+              theEmail: f2
+      }
     });
 
     dialogRef.afterClosed().subscribe(result => {
@@ -97,6 +147,14 @@ export class DriversTableComponent implements OnInit {
       this.theKey = result;
     });
 
+  }
+
+  setOrder(value: string) {
+    if (this.order === value) {
+      this.reverse = !this.reverse;
+    }
+
+    this.order = value;
   }
 
   onSubmit(form: NgForm) {
@@ -108,7 +166,7 @@ export class DriversTableComponent implements OnInit {
   }
 
   onSubmit2(form: NgForm) {
-      this.driverService.updateEmail(form.value);
+    this.driverService.updateEmail(form.value);
     this.resetForm(form);
   }
 
@@ -141,7 +199,7 @@ export class DriversTableComponent implements OnInit {
     this.driverList.update(drv.$key,{
       email: drv.email,
       password: drv.password});
-    }
+  }
 
   onDelete(form: NgForm) {
     if (confirm('Are you sure to delete this record ?') == true) {
@@ -163,24 +221,24 @@ export class DriversTableComponent implements OnInit {
 
   onPrint(){
     var doc = new jsPDF('p', 'pt');
-  doc.text("Drivers List", 40, 50);
-  var res = doc.autoTableHtmlToJson(document.getElementById("basic-table"));
-  var columns = [res.columns[0], res.columns[1], res.columns[2], res.columns[3], res.columns[4]];
-  doc.autoTable(columns, res.data, {tableWidth: 'auto', startY: false, margin: {top: 100}, theme: 'striped'});
-  var pdfUrl = doc.output('datauri').substring(doc.output('datauri').indexOf(',')+1);
-  var binary = atob(pdfUrl.replace(/\s/g, ''));
-  var len = binary.length;
-  var buffer = new ArrayBuffer(len);
-  var view = new Uint8Array(buffer);
-  for (var i = 0; i < len; i++) {
+    doc.text("Drivers List", 40, 50);
+    var res = doc.autoTableHtmlToJson(document.getElementById("basic-table"));
+    var columns = [res.columns[0], res.columns[1], res.columns[2], res.columns[3], res.columns[4]];
+    doc.autoTable(columns, res.data, {tableWidth: 'auto', startY: false, margin: {top: 100}, theme: 'striped'});
+    var pdfUrl = doc.output('datauri').substring(doc.output('datauri').indexOf(',')+1);
+    var binary = atob(pdfUrl.replace(/\s/g, ''));
+    var len = binary.length;
+    var buffer = new ArrayBuffer(len);
+    var view = new Uint8Array(buffer);
+    for (var i = 0; i < len; i++) {
       view[i] = binary.charCodeAt(i);
+    }
+
+    var blob = new Blob( [view], { type: "application/pdf" });
+    var url = URL.createObjectURL(blob);
+
+    window.open(url);
   }
-
-  var blob = new Blob( [view], { type: "application/pdf" });
-  var url = URL.createObjectURL(blob);
-
-  window.open(url);
-}
   onAll() {
     this.ipp = 9999;
   }
@@ -188,23 +246,30 @@ export class DriversTableComponent implements OnInit {
   onOptionSelected(event){
     console.log(event) //option value will be sent as event
     this.ipp = event;
-   }
+  }
 
-   passKey(theKey: string) {
+  passKey(theKey: string) {
     this.driverEdit = this.db.list('drivers');
     this.edits = this.driverEdit.snapshotChanges().map(changes => {
       return changes.map(c => ({ key: c.payload.key, ...c.payload.val() }));
     });
-   }
+  }
 
-   changeH() {
-     if(this.inlineOne == 'h-default') {
+  changeH() {
+    if(this.inlineOne == 'h-default') {
       this.inlineOne = 'highlight';
-     } else {
-       this.inlineOne = 'h-default';
-     }
-   }
+    } else {
+      this.inlineOne = 'h-default';
+    }
+  }
 
+}
+
+export interface Item {
+  in1: number;
+  user_firstname: string;
+  user_lastname: string;
+  user_email: string;
 }
 
 @Component({
@@ -214,10 +279,16 @@ export class DriversTableComponent implements OnInit {
 export class DialogOverviewExampleDialog {
   minDate = new Date(2000, 0, 1);
   maxDate = new Date();
+  f11: Driver[];
+  f1list: AngularFireList<any>;
+  f1ss: Observable<any[]>
 
   constructor(
     public dialogRef: MatDialogRef<DialogOverviewExampleDialog>,
-    @Inject(MAT_DIALOG_DATA) public data: any, private driverService : DriverService) { }
+    @Inject(MAT_DIALOG_DATA) public data: any, public driverService : DriverService, public db2: AngularFireDatabase) {
+
+    console.log(data.theKey);
+  }
 
   onNoClick(): void {
     this.dialogRef.close();

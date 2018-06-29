@@ -1,0 +1,45 @@
+<!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title"></h4>
+      </div>
+      <div class="modal-body">
+          <form #clientForm="ngForm" (ngSubmit)="onSubmit(clientForm)" class="form-horizontal">
+                <input type="hidden" name="$key" #$key="ngModel" [(ngModel)]="clientService.selectedClient.$key" />
+            <div class="control-group">
+                <label class="control-label">User Firstname: </label>
+                <div class="controls">
+                  <input type="text" name="user_firstname" #name="ngModel" [(ngModel)]="clientService.selectedClient.user_firstname"/>
+                </div>
+              </div>
+              <div class="control-group">
+                  <label class="control-label">User Lastname: </label>
+                  <div class="controls">
+                      <input type="text" class="form-control" name="user_lastname" #name="ngModel" [(ngModel)]="clientService.selectedClient.user_lastname" />
+                  </div>
+                </div>
+                <div class="control-group">
+                    <label class="control-label">User Birthdate: </label>
+                    <div class="controls">
+                        <input type="text" class="form-control" name="user_birthdate" #name="ngModel" [(ngModel)]="clientService.selectedClient.user_birthdate" />
+                    </div>
+                  </div>
+                <div class="control-group">
+                  <label class="control-label">User Mobilenumber: </label>
+                  <div class="controls">
+                      <input type="text" class="form-control" name="user_mobile" #name="ngModel" [(ngModel)]="clientService.selectedClient.user_mobile" />
+                  </div>
+                </div>
+                <div class="form-actions">
+                  <button type="submit" class="btn btn-success pull-right" [disabled]="!clientForm.valid" onclick="$('.modal').modal('hide')"><span class="icon"><i class="fa fa-save"></i></span> Submit</button>
+                </div>
+          </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+
+  </div>
+</div>

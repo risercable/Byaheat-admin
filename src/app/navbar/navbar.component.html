@@ -30,19 +30,13 @@
         </ul>
       </div>
       <!--close-top-Header-menu-->
-      <!--start-top-serch-->
-      <div id="search">
-        <input type="text" placeholder="Search here..."/>
-        <button type="submit" class="tip-bottom" title="Search"><i class="icon-search icon-white"></i></button>
-      </div>
-      <!--close-top-serch-->
       <!--sidebar-menu-->
     <div id="sidebar"><a href="#" class="visible-phone"><i class="icon icon-home"></i> Dashboard</a>
       <ul>
         <li routerLinkActive="active" [routerLinkActiveOptions]="{exact:
           true}"><a routerLink=""><i class="icon icon-home"></i> <span>Dashboard</span></a> </li>
         <li routerLinkActive="active" [routerLinkActiveOptions]="{exact:
-          true}" *ngIf="(authService.user | async) let user; else showLogin"> <a routerLink="users"><i class="icon icon-user"></i> <span>Clients</span></a> </li>
+          true}" *ngIf="(authService.user | async) let user; else showLogin"> <a routerLink="users/table"><i class="icon icon-user"></i> <span>Clients</span></a> </li>
           <ng-template #showLogin>
               <li><a routerLink="login">Login</a></li>
           </ng-template>
@@ -52,17 +46,17 @@
           <li class="submenu" [ngClass]="this.isaha ? 'open' : 'wew'"> <a (click)="clicked();"><i class="far fa-id-badge"></i> <span>Drivers</span></a>
             <ul>
               <li routerLinkActive="active" [routerLinkActiveOptions]="{exact:
-                true}"><a routerLink="drivers" (click)="clicked();"> <span>Add Driver</span></a></li>
+                true}"><a routerLink="drivers/add-driver" (click)="clicked();"> <span>Add Driver</span></a></li>
               <li routerLinkActive="active" [routerLinkActiveOptions]="{exact:
-                true}"><a routerLink="table" (click)="clicked();"> <span>Drivers Table</span></a></li>
+                true}"><a routerLink="drivers/table" (click)="clicked();"> <span>Drivers Table</span></a></li>
             </ul>
           </li>
           <li class="submenu" [ngClass]="this.isaha2 ? 'open' : 'wew'"> <a (click)="clicked2();"><i class="fa fa-car"></i> <span>Cars</span><span class="label label-important">5</span></a>
             <ul>
               <li routerLinkActive="active" [routerLinkActiveOptions]="{exact:
-                true}"><a routerLink="cars" (click)="clicked2();"> <span>Cars Table</span> <span class="label label-important">5</span></a></li>
+                true}"><a routerLink="cars/table" (click)="clicked2();"> <span>Cars Table</span> <span class="label label-important">5</span></a></li>
               <li routerLinkActive="active" [routerLinkActiveOptions]="{exact:
-                true}"><a routerLink="add-car" (click)="clicked2();"> <span>Add Car</span></a></li>
+                true}"><a routerLink="cars/add-car" (click)="clicked2();"> <span>Add Car</span></a></li>
             </ul>
           </li>
       </ul>
