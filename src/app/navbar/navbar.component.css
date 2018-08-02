@@ -1,0 +1,7 @@
+@media print {
+  .doNotPrint {
+    display: none !important; } }
+.active {
+  color: #2ab7f5 !important; }
+
+/*# sourceMappingURL=navbar.component.css.map */

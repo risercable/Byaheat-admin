@@ -11,14 +11,11 @@
   padding: 8px 24px 0; }
 
 .mat-form-field {
-  font-size: 14px;
-  width: 100%; }
+  font-size: 14px; }
 
 .mat-table {
   overflow: auto;
   max-height: 500px; }
-  .mat-table .hideX {
-    display: none !important; }
 
 .input1 {
   width: auto;
@@ -51,8 +48,14 @@
 .container {
   position: relative; }
 
-@media print {
-  .hideThis, .hideThis * {
-    display: none !important; } }
+.mat-column-rating, .mat-column-in1 {
+  flex: 0 0 80px; }
+
+.highlight {
+  background: #42A948;
+  /* green */ }
+
+.mat-row:hover, .mat-row:focus {
+  background-color: lightskyblue; }
 
 /*# sourceMappingURL=reservation.component.css.map */

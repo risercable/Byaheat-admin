@@ -9,6 +9,7 @@ import { Observable } from 'rxjs/Observable';
 import 'rxjs/Rx'
 import { AssignDriverComponent } from '../assign-driver/assign-driver.component';
 import { StorageService } from '../storage.service';
+import * as firebase from 'firebase';
 
 @Component({
   selector: 'app-home',
@@ -28,8 +29,15 @@ export class HomeComponent implements OnInit {
   ldrivers: number;
   lpending: number;
   message:string;
+  ediUser: string;
 
   constructor(private route: ActivatedRoute, location: Location, public authService: AuthService, private titleService: Title, private db: AngularFireDatabase, public storage: StorageService) {
+    var user = firebase.auth().currentUser;
+    if(user!=null) {
+      this.ediUser = user.displayName;
+    } else {
+      this.ediUser = 'null nga';
+    }
     this.location = location;
     this.usersList = db.list('clients');
     this.carsList = db.list('all_cars');
@@ -37,9 +45,7 @@ export class HomeComponent implements OnInit {
     this.forApproval = db.list('pending');
     this.getAssigned = db.list('history');
 
-    this.assigns = this.getAssigned.snapshotChanges().map(changes => {
-      return changes.map(c => ({ key: c.payload.key, ...c.payload.val() }));
-    });
+    this.assigns = db.list('history', ref => ref.orderByChild('timestamp').endAt(1532880205 ).limitToLast(5)).valueChanges();
 
 
     this.usersList.snapshotChanges().map(list => list.length).subscribe(length => this.length = length);

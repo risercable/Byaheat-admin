@@ -1,16 +1,23 @@
-<div id="content">
-  <div id="content-header">
-    <div id="breadcrumb"> <a href="#" title="Go to Home" class="tip-bottom"><i class="icon-home"></i> Home</a><a href="#" class="current">Table</a> </div>
-    <h1>Drivers Table</h1>
-  </div>
-  <div class="container-fluid">
-      <div class="row-fluid">
-        <div class="span12">
-          <div class="widget-box nopadding">
-            <div class="widget-title"> <span class="icon"><i class="icon-pencil"></i></span>
-              <h5>Driver Table</h5>
-            </div>
-            <div class="widget-content">
+<!-- Page wrapper  -->
+<!-- ============================================================== -->
+<div class="page-wrapper">
+  <!-- ============================================================== -->
+  <!-- Bread crumb and right sidebar toggle -->
+  <!-- ============================================================== -->
+  <div class="page-breadcrumb">
+    <div class="row">
+      <div class="col-12 d-flex no-block align-items-center">
+        <h4 class="page-title">Drivers List</h4>
+        <div class="ml-auto text-right">
+          <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+              <li class="breadcrumb-item"><a routerLink="../../home">Home</a></li>
+              <li class="breadcrumb-item active" aria-current="page">Drivers List</li>
+            </ol>
+          </nav>
+        </div>
+      </div>
+    </div>
                 <!--<div class="alert alert-success" *ngIf="driverService.emailadded == true">-->
                     <!--<button class="close" data-dismiss="alert" (click)="resetAlert()">×</button>-->
                     <!--<strong>Success!</strong> Added email address to the driver</div>-->
@@ -31,25 +38,25 @@
 
                                   <!--- Note that these columns can be defined in any order.
                                         The actual rendered columns are set as a property on the row definition" -->
-                                  <ng-container matColumnDef="index">
+                                  <ng-container matColumnDef="in1">
                                     <mat-header-cell *matHeaderCellDef mat-sort-header>No.</mat-header-cell>
                                     <mat-cell *matCellDef="let element; let i = index;"> {{element.in1}} </mat-cell>
                                   </ng-container>
 
                                   <!-- Position Column -->
-                                  <ng-container matColumnDef="driver firstname">
+                                  <ng-container matColumnDef="user_firstname">
                                     <mat-header-cell *matHeaderCellDef mat-sort-header>Driver Firstname</mat-header-cell>
                                     <mat-cell *matCellDef="let element"> {{element.user_firstname}} </mat-cell>
                                   </ng-container>
 
                                   <!-- Name Column -->
-                                  <ng-container matColumnDef="driver lastname">
+                                  <ng-container matColumnDef="user_lastname">
                                     <mat-header-cell *matHeaderCellDef mat-sort-header>Driver Lastname </mat-header-cell>
                                     <mat-cell *matCellDef="let element"> {{element.user_lastname}} </mat-cell>
                                   </ng-container>
 
                                   <!-- Weight Column -->
-                                  <ng-container matColumnDef="driver email">
+                                  <ng-container matColumnDef="user_email">
                                     <mat-header-cell *matHeaderCellDef mat-sort-header> Driver Email </mat-header-cell>
                                     <mat-cell *matCellDef="let element"> {{element.user_email}} </mat-cell>
                                   </ng-container>
@@ -57,7 +64,7 @@
                                   <ng-container matColumnDef="actions" class="hideX">
                                     <mat-header-cell *matHeaderCellDef> Action </mat-header-cell>
                                     <mat-cell *matCellDef="let element; let i = index">
-                                      <button mat-icon-button color="accent" (click)="openDialog(element, element.user_email)">View</button>
+                                      <button mat-icon-button color="accent" (click)="openDialog(element, element.user_email)"><i class="mdi mdi-pencil-box"></i> Edit</button>
                                     </mat-cell>
                                   </ng-container>
 
@@ -77,147 +84,5 @@
                                 </mat-paginator>
                               </div>
                           </div>
-                        <!-- <button (click)="onPrint()" class="btn btn-primary" style="margin-right: 10px;">PRINT</button> -->
-                        <!-- Sort by:
-                      <select class='select-option' [(ngModel)]='optionSelected' (ngModelChange)='onOptionSelected($event)' style="width: auto; margin-top: 10px;">
-                        <option class='option' selected [value]="10">{{10}}</option>
-                        <option class='option' [value]="20">{{20}}</option>
-                        <option class='option' [value]="30">{{50}}</option>
-                        <option class='option' [value]="999">ALL</option>
-                    </select> -->
-                        <!-- <mat-form-field  style="width: 100px;">
-                          <mat-select placeholder="Sort by" [(ngModel)]='optionSelected' (ngModelChange)='onOptionSelected($event)'>
-                            <mat-option value="10">{{10}}</mat-option>
-                            <mat-option value="20">{{20}}</mat-option>
-                            <mat-option value="30">{{30}}</mat-option>
-                            <mat-option value="999">ALL</mat-option>
-                          </mat-select>
-                        </mat-form-field>
-                    </div> -->
-                    <!-- <input type="text" [(ngModel)]="term" placeholder="Enter search term" style="float: right; margin: 4px auto;"> -->
-                    <!-- <div class="con2">
-                      <mat-form-field>
-                          <input matInput [(ngModel)]="term" placeholder="Enter search term" style="float: right; margin: 4px auto;">
-                      </mat-form-field>
-                    </div>
-                <table class="table table-bordered table-striped" id="basic-table">
-                    <thead>
-                      <tr>
-                        <th hidden>Key</th>
-                        <th>First Name</th>
-                        <th>Last Name</th>
-                        <th>Email</th>
-                        <th>EDIT</th> -->
-                        <!-- <th>Assigned Car</th>
-                        <th>Edit</th> -->
-                      <!-- </tr>
-                    </thead>
-                    <tbody>
-                      <tr class="odd gradeX" *ngFor="let driver of driverlist | filter: term | paginate: { itemsPerPage: this.ipp, currentPage: p } let i = index " (click)="onItemClick(driver)" (click)="setClickedRow(i)" [class.active]="i == selectedRow">
-                        <td hidden><input type="hidden" name="$key" #$key="ngModel" [(ngModel)]="driverService.selectedDriver.$key" /></td>
-                        <td [ngClass]="[inlineOne]">{{driver.user_firstname}}</td>
-                        <td [ngClass]="[inlineOne]">{{driver.user_lastname}}</td>
-                        <td [ngClass]="[inlineOne]">{{driver.user_email}}</td>
-                        <td [ngClass]="[inlineOne]"><a class="btn btn-mini btn-primary" (click)="openDialog(driver.key)"><span class="fas fa-edit" ></span> EDIT INFO</a></td> -->
-                        <!-- <td *ngIf="driver.assigned_car == 'none'">{{driver.assigned_car}}</td>
-                        <td *ngIf="driver.assigned_car != 'none'">{{driver.assigned_car.car_plate_number}}</td>
-                        <td><a href="" class="btn btn-mini btn-primary" data-toggle="modal" data-target="#myModal" (click)="passKey(driver.key)"><span class="fas fa-edit" ></span> EDIT INFO</a></td>
-                        <td *ngIf="driver.email == 'wala@gmail.com'"><a href="" data-toggle="modal" data-target="#addModal"><button class="btn btn-mini btn-success"><span class="icon"><i class="fas fa-plus-square"></i></span> ADD THIS DRIVER</button></a></td> -->
-                      <!-- </tr>
-                    </tbody>
-                  </table>
-                  <pagination-controls (pageChange)="p = $event"></pagination-controls> -->
           </div>
         </div>
-      </div>
-  </div>
-  <!-- Modal -->
-<!-- <div id="myModal" class="modal fade" role="dialog">
-    <div class="modal-dialog"> -->
-
-      <!-- Modal content-->
-      <!-- <div class="modal-content">
-        <div class="modal-header">
-          <button type="button" class="close" data-dismiss="modal">&times;</button>
-          <h4 class="modal-title">Edit Driver ( {{driverService.selectedDriver.user_email}} )</h4>
-        </div>
-        <div class="modal-body">
-            <form #driverForm="ngForm" (ngSubmit)="onSubmit(driverForm)" class="form-horizontal">
-                  <input type="hidden" name="$key" #$key="ngModel" [(ngModel)]="driverService.selectedDriver.$key" />
-              <div class="control-group">
-                  <label class="control-label">Full Name:</label>
-                  <div class="controls">
-                    <label>First Name: </label>
-                    <input type="text" name="user_firstname" #name="ngModel" [(ngModel)]="driverService.selectedDriver.user_firstname" placeholder="First Name" />
-                    <label>Last Name: </label>
-                    <input type="text" name="user_lastname" #name="ngModel" [(ngModel)]="driverService.selectedDriver.user_lastname" placeholder="Last Name" />
-                  </div>
-                </div>
-              <div class="control-group">
-                <label class="control-label">Birthdate: </label>
-                <div class="controls">
-                    <input type="date" class="form-control" name="user_birthdate" #name="ngModel" [(ngModel)]="driverService.selectedDriver.user_birthdate" placeholder="Position" />
-                </div>
-              </div>
-              <div class="control-group">
-                  <label class="control-label">Address: </label>
-                  <div class="controls">
-                      <input type="text" class="form-control" name="user_address" #name="ngModel" [(ngModel)]="driverService.selectedDriver.user_address" placeholder="Address" />
-                  </div>
-                  </div>
-              <div class="control-group">
-                  <label class="control-label">Salary: </label>
-                  <div class="controls">
-                    <input type="text" class="form-control" name="user_salary" #name="ngModel" [(ngModel)]="driverService.selectedDriver.user_salary" placeholder="Salary" />
-                  </div>
-                  </div>
-              <div class="control-group">
-                  <label class="control-label">Salary: </label>
-                  <div class="controls">
-                    <input type="number" class="form-control" name="user_mobile" #name="ngModel" [(ngModel)]="driverService.selectedDriver.user_mobile" placeholder="Salary" />
-                  </div>
-                  </div>
-                  <div class="form-actions">
-                    <button type="submit" class="btn btn-success pull-right" [disabled]="!driverForm.valid" onclick="$('.modal').modal('hide')"><span class="icon"><i class="fa fa-save"></i></span> Submit</button>
-                  </div>
-            </form>
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-        </div>
-      </div>
-
-    </div>
-  </div> -->
-  <!-- Modal -->
-<!-- <div id="addModal" class="modal fade" role="dialog">
-    <div class="modal-dialog"> -->
-
-      <!-- Modal content-->
-      <!-- <div class="modal-content">
-        <div class="modal-header">
-          <button type="button" class="close" data-dismiss="modal">&times;</button>
-          <h4 class="modal-title">Modal Header</h4>
-        </div>
-        <div class="modal-body">
-            <form #driverForm2="ngForm" (ngSubmit)="onSubmit2(driverForm2)" class="form-horizontal">
-                <input type="hidden" name="$key" #$key="ngModel" [(ngModel)]="driverService.selectedDriver.$key" />
-                <div class="form-group">
-                    <label for="exampleInputEmail1">Email address</label>
-                    <input class="form-control" id="exampleInputEmail1" name="email" #name="ngModel" [(ngModel)]="email" type="email" aria-describedby="emailHelp" placeholder="Enter email">
-                  </div>
-                  <div class="form-group">
-                    <label for="exampleInputPassword1">Password</label>
-                    <input class="form-control" id="exampleInputPassword1" name="password" #name="ngModel" [(ngModel)]="password" type="password" placeholder="Password">
-                  </div>
-                  <button type="submit" class="btn btn-success pull-right" [disabled]="!driverForm2.valid" onclick="$('.modal').modal('hide')"><span class="icon"><i class="fa fa-save"></i></span> Submit</button>
-            </form>
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-        </div>
-      </div>
-
-    </div>
-  </div> -->
-</div>

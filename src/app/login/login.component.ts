@@ -30,7 +30,7 @@ export class LoginComponent implements OnInit {
     if(this.authService.firebaseAuth.authState) {
       this.router.dispose;
       setTimeout((router) => {
-        this.router.navigate(['']);
+        this.router.navigate(['home']);
       }, 5000);
     }
 

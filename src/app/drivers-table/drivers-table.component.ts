@@ -45,7 +45,7 @@ export class DriversTableComponent implements OnInit {
   options: FormGroup;
   itemList: Item[];
   dataSource = new MatTableDataSource(this.itemList);
-  displayedColumns = ['index', 'driver firstname', 'driver lastname', 'driver email', 'actions'];
+  displayedColumns = ['in1', 'user_firstname', 'user_lastname', 'user_email', 'actions'];
   noRecords: boolean;
   order: string;
   reverse: boolean = false;

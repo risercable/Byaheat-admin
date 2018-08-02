@@ -1,5 +1,5 @@
-import {Component, OnInit, ViewChild} from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import {Component, Inject, OnInit, ViewChild, ViewEncapsulation} from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
 import { AuthService } from '../auth.service';
 import { Title }     from '@angular/platform-browser';
 import { AngularFireDatabase } from 'angularfire2/database';
@@ -8,7 +8,8 @@ import { Observable } from 'rxjs/Observable';
 import { ClientService } from '../drivers/shared/client.service';
 import { Client } from '../drivers/shared/client.model';
 import { NgForm } from '@angular/forms/src/directives/ng_form';
-import {MatPaginator, MatSort, MatTableDataSource} from "@angular/material";
+import {MAT_DIALOG_DATA, MatDialog, MatDialogRef, MatPaginator, MatSort, MatTableDataSource} from "@angular/material";
+import {ViewDetailsDialog} from "../reservation/reservation.component";
 declare var jsPDF: any; // Important
 
 @Component({
@@ -27,7 +28,7 @@ export class AccountComponent implements OnInit {
   optionSelected: any;
   order: string = 'cfull_name';
   reverse: boolean = false;
-  clientColumns = ['index_num', 'user_firstname', 'user_lastname', 'user_birthdate', 'user_mobile', 'actions'];
+  clientColumns = ['in1', 'user_firstname', 'user_lastname', 'user_birthdate', 'user_mobile', 'actions'];
   itemPrint: Perclient[];
   itemList: Perclient[];
   clientSource = new MatTableDataSource(this.itemPrint);
@@ -53,7 +54,7 @@ export class AccountComponent implements OnInit {
     }
   }
 
-  constructor(private db: AngularFireDatabase,private clientService: ClientService, public authService: AuthService, private route: ActivatedRoute, private titleService: Title) {
+  constructor(private db: AngularFireDatabase,private clientService: ClientService, public authService: AuthService, private route: ActivatedRoute, private titleService: Title, public dialog: MatDialog, private router: Router) {
     // this.clientList = db.list('clients');
     // this.clients = this.clientList.snapshotChanges().map(changes => {
     //   return changes.map(c => ({ key: c.payload.key, ...c.payload.val() }));
@@ -89,6 +90,21 @@ export class AccountComponent implements OnInit {
     }
 
     this.order = value;
+  }
+
+  openDialog(i: any): void {
+    let dialogRef = this.dialog.open(ClientDetailsDialog, {
+      width: 'auto',
+      data: { clientarray: i }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log('The dialog was closed');
+    });
+  }
+
+  onSelect(element) {
+    this.router.navigate(['/user/history', element.$key]);
   }
 
   ngOnInit() {
@@ -167,10 +183,29 @@ export class AccountComponent implements OnInit {
 }
 
 export interface Perclient {
+  $key: string;
   in1: number;
   user_firstname: string;
   user_lastname: string;
   user_birthdate: string;
   user_mobile: string;
-  key: string;
+  latest_ride: string;
+}
+
+@Component({
+  selector: 'client-details-dialog',
+  templateUrl: 'client-details-dialog.html',
+  styleUrls: ['client-details-style.scss'],
+  encapsulation: ViewEncapsulation.None,
+})
+export class ClientDetailsDialog {
+
+  constructor(
+    public dialogRef: MatDialogRef<ClientDetailsDialog>,
+    @Inject(MAT_DIALOG_DATA) public data: any) { }
+
+  onNoClick(): void {
+    this.dialogRef.close();
+  }
+
 }

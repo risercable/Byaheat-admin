@@ -17,7 +17,7 @@ import {AngularFireDatabase,AngularFireList} from 'angularfire2/database';
 @Injectable()
 export class AuthService {
 
-  loggedIn: boolean;
+  public loggedIn: boolean;
   loggedIn$ = new BehaviorSubject<boolean>(this.loggedIn);
   private In = new BehaviorSubject<boolean>(false);
 
@@ -98,7 +98,7 @@ export class AuthService {
           this.setLoggedIn(true);
           console.log('Nice, it worked!');
           console.log(this.user);
-          this.router.navigate(['']);
+          this.router.navigate(['home']);
         })
         .catch(err => {
           this.error = true;

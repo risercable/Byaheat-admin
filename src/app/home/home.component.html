@@ -1,35 +1,206 @@
-<div id="content">
-  <div id="content-header">
-      <div id="breadcrumb"> <a href="index.html" title="Go to Home" class="tip-bottom"><i class="icon-home"></i> Home</a></div>
-    </div>
-    <div class="container-fluid">
-        <div class="quick-actions_homepage">
-            <ul class="quick-actions">
-              <li class="bg_lb span3"> <a routerLink="users"> <i class="fas fa-user" style="font-size: 2em;"></i><br>{{ this.length }} Total Users</a> </li>
-              <li class="bg_lg span3">  <a routerLink="cars"><i class="fas fa-car" style="font-size: 2em;"></i><br>{{ this.lcars }} Total Cars</a> </li>
-              <li class="bg_lo span3"> <a routerLink="table"><i class="fas fa-id-card" style="font-size: 2em;"></i><br>{{ this.ldrivers }} Total Drivers</a>  </li>
+<!--<div id="content">-->
+  <!--<div id="content-header">-->
+      <!--<div id="breadcrumb"> <a href="index.html" title="Go to Home" class="tip-bottom"><i class="icon-home"></i> Home</a></div>-->
+    <!--</div>-->
+    <!--<div class="container-fluid">-->
+        <!--<div class="quick-actions_homepage">-->
+            <!--<ul class="quick-actions">-->
+              <!--<li class="bg_lb span3"> <a routerLink="users/table"> <i class="fas fa-user" style="font-size: 2em;"></i><br>{{ this.length }} Total Users</a> </li>-->
+              <!--<li class="bg_lg span3">  <a routerLink="cars/table"><i class="fas fa-car" style="font-size: 2em;"></i><br>{{ this.lcars }} Total Cars</a> </li>-->
+              <!--<li class="bg_lo span3"> <a routerLink="drivers/table"><i class="fas fa-id-card" style="font-size: 2em;"></i><br>{{ this.ldrivers }} Total Drivers</a>  </li>-->
 
-            </ul>
-          </div>
-      <!--End-Action boxes-->
-<div class="span6">
-  <div class="widget-box">
-          <div class="widget-title bg_ly"><span class="icon"><i class="icon-chevron-down"></i></span>
-            <h5>Latest Bookings</h5>
-          </div>
-          <div class="widget-content nopadding collapse in" id="collapseG2" *ngFor="let assign of assigns | async">
-            <ul class="recent-posts">
-              <li>
-                <div class="article-post">
-                  <span class="user-info"> User: {{ assign.customer_name }} / {{ assign.timestamp * 1000 | date:'EEEE, MMMM d, yyyy '}} @ {{ assign.timestamp * 1000 | date:'hh:mm a' }}<br>
-                    Driver: {{ assign.driver_name }}
-                  </span>
-                  <star-rating labelText="Rating ({{ assign.rating }})" size="100px" [readOnly]="true" labelPosition="top" [starType]="'svg'" [rating]="assign.rating" style="float: right;"></star-rating>
-                </div>
-              </li>
-            </ul>
+            <!--</ul>-->
+          <!--</div>-->
+      <!--&lt;!&ndash;End-Action boxes&ndash;&gt;-->
+<!--<div class="span6">-->
+  <!--<div class="widget-box">-->
+          <!--<div class="widget-title bg_ly"><span class="icon"><i class="icon-chevron-down"></i></span>-->
+            <!--<h5>Latest Bookings</h5>-->
+          <!--</div>-->
+          <!--<div class="widget-content nopadding collapse in" id="collapseG2" *ngFor="let assign of assigns | async">-->
+            <!--<ul class="recent-posts">-->
+              <!--<li>-->
+                <!--<div class="article-post">-->
+                  <!--<span class="user-info"> User: {{ assign.customer_name }} / {{ assign.timestamp * 1000 | date:'EEEE, MMMM d, yyyy '}} @ {{ assign.timestamp * 1000 | date:'hh:mm a' }}<br>-->
+                    <!--Driver: {{ assign.driver_name }}-->
+                  <!--</span>-->
+                  <!--<star-rating labelText="Rating ({{ assign.rating }})" size="100px" [readOnly]="true" labelPosition="top" [starType]="'svg'" [rating]="assign.rating" style="float: right;"></star-rating>-->
+                <!--</div>-->
+              <!--</li>-->
+            <!--</ul>-->
+          <!--</div>-->
+        <!--</div>-->
+<!--</div>-->
+    <!--</div>-->
+<!--</div>-->
+<!-- ============================================================== -->
+<!-- Page wrapper  -->
+<!-- ============================================================== -->
+<div class="page-wrapper">
+  <!-- ============================================================== -->
+  <!-- Bread crumb and right sidebar toggle -->
+  <!-- ============================================================== -->
+  <div class="page-breadcrumb">
+    <div class="row">
+      <div class="col-12 d-flex no-block align-items-center">
+        <h4 class="page-title">Total Users User: {{ediUser}}</h4>
+        <button type="button" class="btn btn-outline-secondary mr-2" placement="top"
+                ngbPopover="Vivamus sagittis lacus vel augue laoreet rutrum faucibus." popoverTitle="Popover on top">
+          Popover on top
+        </button>
+        <div class="ml-auto text-right">
+          <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+              <li class="breadcrumb-item"><a href="#">Home</a></li>
+              <li class="breadcrumb-item active" aria-current="page">Library</li>
+            </ol>
+          </nav>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- ============================================================== -->
+  <!-- End Bread crumb and right sidebar toggle -->
+  <!-- ============================================================== -->
+  <!-- ============================================================== -->
+  <!-- Container fluid  -->
+  <!-- ============================================================== -->
+  <div class="container-fluid">
+    <!-- ============================================================== -->
+    <!-- Sales Cards  -->
+    <!-- ============================================================== -->
+    <div class="row">
+      <!-- Column -->
+      <div class="col-md-6 col-lg-2 col-xlg-3">
+        <div class="card card-hover">
+          <div class="box bg-cyan text-center">
+            <a routerLink="../users/table" class="font-light text-white"> <i class="fas fa-user" style="font-size: 2em;"></i><br>{{ this.length }}<h6 class="text-white">Total Users</h6></a>
           </div>
         </div>
+      </div>
+      <!-- Column -->
+      <div class="col-md-6 col-lg-2 col-xlg-3">
+        <div class="card card-hover">
+          <div class="box bg-success text-center">
+            <a routerLink="../cars/table" class="font-light text-white"><i class="fas fa-car" style="font-size: 2em;"></i><br>{{ this.lcars }}<h6 class="text-white"> Total Cars</h6></a>
+          </div>
+        </div>
+      </div>
+      <!-- Column -->
+      <div class="col-md-6 col-lg-2 col-xlg-3">
+        <div class="card card-hover">
+          <div class="box bg-warning text-center">
+            <a routerLink="../drivers/table" class="font-light text-white"><i class="fas fa-id-card" style="font-size: 2em;"></i><br>{{ this.ldrivers }}<h6 class="text-white"> Total Drivers</h6></a>
+          </div>
+        </div>
+      </div>
+      <!-- Column -->
+      <!--<div class="col-md-6 col-lg-2 col-xlg-3">-->
+        <!--<div class="card card-hover">-->
+          <!--<div class="box bg-danger text-center">-->
+            <!--<h1 class="font-light text-white"><i class="mdi mdi-border-outside"></i></h1>-->
+            <!--<h6 class="text-white">Tables</h6>-->
+          <!--</div>-->
+        <!--</div>-->
+      <!--</div>-->
+      <!-- Column -->
+      <!--<div class="col-md-6 col-lg-2 col-xlg-3">-->
+        <!--<div class="card card-hover">-->
+          <!--<div class="box bg-info text-center">-->
+            <!--<h1 class="font-light text-white"><i class="mdi mdi-arrow-all"></i></h1>-->
+            <!--<h6 class="text-white">Full Width</h6>-->
+          <!--</div>-->
+        <!--</div>-->
+      <!--</div>-->
+      <!-- Column -->
+      <!-- Column -->
+      <!--<div class="col-md-6 col-lg-4 col-xlg-3">-->
+        <!--<div class="card card-hover">-->
+          <!--<div class="box bg-danger text-center">-->
+            <!--<h1 class="font-light text-white"><i class="mdi mdi-receipt"></i></h1>-->
+            <!--<h6 class="text-white">Forms</h6>-->
+          <!--</div>-->
+        <!--</div>-->
+      <!--</div>-->
+      <!-- Column -->
+      <!--<div class="col-md-6 col-lg-2 col-xlg-3">-->
+        <!--<div class="card card-hover">-->
+          <!--<div class="box bg-info text-center">-->
+            <!--<h1 class="font-light text-white"><i class="mdi mdi-relative-scale"></i></h1>-->
+            <!--<h6 class="text-white">Buttons</h6>-->
+          <!--</div>-->
+        <!--</div>-->
+      <!--</div>-->
+      <!-- Column -->
+      <!--<div class="col-md-6 col-lg-2 col-xlg-3">-->
+        <!--<div class="card card-hover">-->
+          <!--<div class="box bg-cyan text-center">-->
+            <!--<h1 class="font-light text-white"><i class="mdi mdi-pencil"></i></h1>-->
+            <!--<h6 class="text-white">Elements</h6>-->
+          <!--</div>-->
+        <!--</div>-->
+      <!--</div>-->
+      <!-- Column -->
+      <!--<div class="col-md-6 col-lg-2 col-xlg-3">-->
+        <!--<div class="card card-hover">-->
+          <!--<div class="box bg-success text-center">-->
+            <!--<h1 class="font-light text-white"><i class="mdi mdi-calendar-check"></i></h1>-->
+            <!--<h6 class="text-white">Calnedar</h6>-->
+          <!--</div>-->
+        <!--</div>-->
+      <!--</div>-->
+      <!-- Column -->
+      <!--<div class="col-md-6 col-lg-2 col-xlg-3">-->
+        <!--<div class="card card-hover">-->
+          <!--<div class="box bg-warning text-center">-->
+            <!--<h1 class="font-light text-white"><i class="mdi mdi-alert"></i></h1>-->
+            <!--<h6 class="text-white">Errors</h6>-->
+          <!--</div>-->
+        <!--</div>-->
+      <!--</div>-->
+      <!-- Column -->
+    </div>
+    <!-- ============================================================== -->
+    <!-- Latest 5 Reservations -->
+    <!-- ============================================================== -->
+    <div class="row">
+      <div class="col-md-12">
+        <div class="card">
+          <div class="card-body">
+            <div class="d-md-flex align-items-center">
+              <div>
+                <h4 class="card-title">Rides Updates</h4>
+                <h5 class="card-subtitle">Latest 5 rides made with <3 by clients</h5>
+              </div>
+          </div>
+              <!-- column -->
+                  <ul class="list-style-none" *ngFor="let assign of (assigns | async)?.slice().reverse()">
+                    <li class="d-flex no-block card-body border-top">
+                      <i class="fa fa-check-circle w-30px m-t-5"></i>
+                      <div>
+                        <a href="#" class="m-b-0 font-medium p-0" style="font-family: 'Nunito Sans', sans-serif !important; font-size: 0.875rem; line-height: 1.5;">User: {{ assign.customer_name }} / {{ assign.timestamp * 1000 | date:'EEEE, MMMM d, yyyy '}} @ {{ assign.timestamp * 1000 | date:'hh:mm a' }}</a>
+                        <span class="text-muted" style="font-family: 'Nunito Sans', sans-serif !important; font-size: 0.875rem; line-height: 1.5;">Driver {{ assign.driver_name }}</span>
+                      </div>
+                      <div class="ml-auto">
+                      </div>
+                  </li>
+                </ul>
+        <!-- ============================================================== -->
+    <!-- ============================================================== -->
+    <!-- Recent comment and chats -->
+    <!-- ============================================================== -->
+  <!-- ============================================================== -->
+  <!-- End Container fluid  -->
+  <!-- ============================================================== -->
+  <!-- ============================================================== -->
+  <!-- ============================================================== -->
+  <!-- End footer -->
+  <!-- ============================================================== -->
 </div>
     </div>
+<!-- ============================================================== -->
+<!-- End Page wrapper  -->
+      </div>
+    </div>
+  </div>
 </div>

@@ -4,11 +4,15 @@
 .example-container {
   display: flex;
   flex-direction: column;
-  min-width: 300px; }
+  min-width: 300px;
+  max-height: 750px; }
 
 .example-header {
   min-height: 64px;
-  padding: 8px 24px 0; }
+  padding: 8px 24px 0;
+  display: flex;
+  align-items: center;
+  font-size: 20px; }
 
 .mat-form-field {
   font-size: 14px;
@@ -54,7 +58,11 @@
 @media print {
   .hideThis, .hideThis * {
     display: none !important; } }
-.mat-column-index_num {
-  max-width: 100px; }
+.mat-column-in1 {
+  max-width: 80px; }
+
+.mat-column-actions {
+  width: auto;
+  display: inline-block; }
 
 /*# sourceMappingURL=account.component.css.map */

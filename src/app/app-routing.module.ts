@@ -20,10 +20,19 @@ import { ThisdriverComponent } from './thisdriver/thisdriver.component';
 import { CarslistComponent } from './carslist/carslist.component';
 import { AddCarComponent } from './add-car/add-car.component';
 import { ReservationComponent } from './reservation/reservation.component';
+import {ClientHistoryComponent} from "./client-history/client-history.component";
+import { HomeLayoutComponent } from './layouts/home-layout/home-layout.component';
+import { LoginLayoutComponent } from './layouts/login-layout/login-layout.component';
+import {TableComponent} from "./payments/table/table.component";
+import {ClientComponent} from "./payments/client/client.component";
 
 const routes: Routes = [
   { path:'',   component: HomeComponent, canActivate: [AuthGuard] },
+  { path:'home',   component: HomeComponent, canActivate: [AuthGuard] },
   { path:'users/table', component: AccountComponent, canActivate: [AuthGuard] },
+  { path:'user/history/:$key', component:ClientHistoryComponent, canActivate: [AuthGuard]},
+  { path:'payments/table', component:ClientComponent, canActivate: [AuthGuard]},
+  { path:'payments/table/client/:$key', component:TableComponent, canActivate: [AuthGuard]},
   { path:'login',   component: LoginComponent},
   { path:'cars/table', component: CarslistComponent, canActivate: [AuthGuard]},
   { path:'reservations', component: ReservationComponent, canActivate: [AuthGuard]},
@@ -36,7 +45,6 @@ const routes: Routes = [
   { path: 'this', component: ThisdriverComponent, canActivate: [AuthGuard] },
   { path: 'not-found', component: NotFoundComponent },
   { path: '**', redirectTo: 'not-found' }
-
 ];
 
 @NgModule({

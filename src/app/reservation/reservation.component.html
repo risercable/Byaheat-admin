@@ -1,16 +1,23 @@
-<div id="content">
-    <div id="content-header">
-      <div id="breadcrumb"> <a href="#" title="Go to Home" class="tip-bottom"><i class="icon-home"></i> Home</a><a href="#" class="current">Reservations</a> </div>
-      <h1>Reservations</h1>
+<!-- Page wrapper  -->
+<!-- ============================================================== -->
+<div class="page-wrapper">
+  <!-- ============================================================== -->
+  <!-- Bread crumb and right sidebar toggle -->
+  <!-- ============================================================== -->
+  <div class="page-breadcrumb">
+    <div class="row">
+      <div class="col-12 d-flex no-block align-items-center">
+        <h4 class="page-title">All Rides List</h4>
+        <div class="ml-auto text-right">
+          <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+              <li class="breadcrumb-item"><a routerLink="/home">Home</a></li>
+              <li class="breadcrumb-item active" aria-current="page">All Rides List</li>
+            </ol>
+          </nav>
+        </div>
+      </div>
     </div>
-    <div class="container-fluid">
-        <div class="row-fluid">
-          <div class="span12">
-            <div class="widget-box nopadding">
-              <div class="widget-title"> <span class="icon"><i class="icon-pencil"></i></span>
-                <h5>Reservations</h5>
-              </div>
-              <div class="widget-content">
                 <button (click)="onPrint()" class="btn btn-primary">PRINT</button>
                   <!--<input type="text" [(ngModel)]="term" placeholder="Enter search term" style="float: right; margin: 4px auto;">-->
                   <!--<table class="table table-bordered table-striped" id="basic-table">-->
@@ -75,8 +82,8 @@
                 <div class="mat-app-background basic-container">
                   <div class="example-container mat-elevation-z8">
                       <div class="example-header">
-                          <mat-form-field>
-                            <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filter">
+                          <mat-form-field style="width: 400px">
+                            <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Search here..." maxlength="30" matTooltip="*Maximum character is 30" matTooltipPosition="after">
                           </mat-form-field>
                         </div>
                       <mat-table #table [dataSource]="dataSource" matSort id="basic-table">
@@ -144,9 +151,6 @@
                 </div>
               </div>
             </div>
-            </div>
-        </div>
-    </div>
     <!-- Modal -->
     <div id="selectReservation" class="modal fade" role="dialog" style="width: auto;">
       <div class="modal-dialog">
@@ -186,4 +190,3 @@
 
       </div>
     </div>
-  </div>

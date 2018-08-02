@@ -1,0 +1,85 @@
+[hidden] {
+  display: none;
+}
+.example-container {
+  display: flex;
+  flex-direction: column;
+  min-width: 300px;
+  max-height: 750px;
+}
+
+.example-header {
+  min-height: 64px;
+  padding: 8px 24px 0;
+  display: flex;
+  align-items: center;
+  font-size: 20px;
+}
+
+.mat-form-field {
+  font-size: 14px;
+  width: 100%;
+}
+
+.mat-table {
+  overflow: auto;
+  max-height: 500px;
+  white-space: nowrap;
+
+  .hideX {
+    display: none !important;
+  }
+}
+
+.input1 {
+  width: auto;
+  background-color: white;    /* replace this color with your accent color hex code */
+}
+
+.mat-focused  {
+  background-color: white;    /* replace this color with your accent color hex code */
+}
+
+.mat-input-placeholder {
+  background-color: white;    /* replace this color with your accent color hex code */
+}
+
+.label1 {
+  color: royalblue;
+}
+
+.clear {
+  clear: both;
+}
+
+.separator {
+  height: 100%;
+  width: 1px;
+  background: black;
+  top: 0;
+  bottom: 0;
+  position: absolute;
+  left: 50%;
+}
+
+.container {
+  position: relative;
+}
+
+@media print {
+  .hideThis, .hideThis * {
+    display: none !important;
+  }
+}
+
+.mat-column-index_num, .mat-column-rating, .mat-column-price {
+  max-width: 100px;
+}
+
+.mat-column-actions {
+  width: auto;
+  display: inline-block;
+}
+
+
+

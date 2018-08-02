@@ -1,0 +1,20 @@
+* {
+  font-family: 'Nunito Sans', sans-serif !important;
+  font-size: 0.875rem;
+  line-height: 1.5; }
+
+button::-moz-focus-inner {
+  border: 0; }
+
+span:focus {
+  outline: none;
+  border: 0; }
+
+input:focus:invalid:focus {
+  border: 0;
+  box-shadow: none; }
+
+.control-group {
+  padding: 6px 6px; }
+
+/*# sourceMappingURL=add-car.component.css.map */

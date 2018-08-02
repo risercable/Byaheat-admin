@@ -1,0 +1,32 @@
+<!--&lt;!&ndash; <button (click)="onAll()">ALL</button> &ndash;&gt;-->
+            <!--<button (click)="onPrint()" class="btn btn-primary" download="...">PRINT</button>-->
+            <!--Sort by:-->
+            <!--<select class='select-option' [(ngModel)]='optionSelected' (ngModelChange)='onOptionSelected($event)' style="width: auto;">-->
+              <!--<option class='option' [value]="10">{{10}}</option>-->
+              <!--<option class='option' [value]="20">{{20}}</option>-->
+              <!--<option class='option' [value]="30">{{50}}</option>-->
+              <!--<option class='option' [value]="999">ALL</option>-->
+          <!--</select>-->
+              <!--<input type="text" [(ngModel)]="term" placeholder="Enter search term" style="float: right; margin: 4px auto;">-->
+            <!--<table class="table table-bordered table-striped" id="basic-table">-->
+              <!--<thead>-->
+                <!--<tr>-->
+                  <!--<th hidden></th>-->
+                  <!--<th>User Firstname</th>-->
+                  <!--<th>User Lastname</th>-->
+                  <!--<th>User Birthdate</th>-->
+                  <!--<th>User Mobile</th>-->
+                <!--</tr>-->
+              <!--</thead>-->
+              <!--<tbody *ngFor="let client of clients | async | filter:term | paginate: { itemsPerPage: this.ipp, currentPage: p }" (click)="onItemClick(client)">-->
+                <!--<tr class="odd gradeX">-->
+                  <!--<td hidden><input type="hidden" name="$key" #$key="ngModel" [(ngModel)]="clientService.selectedClient.$key" /></td>-->
+                  <!--<td>{{client.user_firstname}}</td>-->
+                  <!--<td>{{client.user_lastname}}</td>-->
+                  <!--<td>{{client.user_birthdate}}</td>-->
+                  <!--<td>{{client.user_mobile}}</td>-->
+                <!--</tr>-->
+
+              <!--</tbody>-->
+            <!--</table>-->
+            <!--<pagination-controls (pageChange)="p = $event"></pagination-controls>-->
