@@ -12,5 +12,7 @@ export const environment = {
     projectId: "lakbay-c65e4",
     storageBucket: "lakbay-c65e4.appspot.com",
     messagingSenderId: "169926421741"
-  }
+  },
+
+  googleMapsKey: 'AIzaSyDX8GsNHzj0010sDGVhIpx6HIPYfqOSpYw'
 };

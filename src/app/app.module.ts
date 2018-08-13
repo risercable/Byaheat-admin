@@ -80,7 +80,15 @@ import { LoginLayoutComponent } from './layouts/login-layout/login-layout.compon
 import { SidebarModule } from 'ng-sidebar';
 import {NgxMaskModule} from 'ngx-mask';
 import { TableComponent } from './payments/table/table.component';
-import { ClientComponent } from './payments/client/client.component'
+import { ClientComponent } from './payments/client/client.component';
+import { NotFoundLayoutComponent } from './layouts/not-found-layout/not-found-layout.component';
+
+import {AgmCoreModule} from '@agm/core';
+import {DriversMapComponent} from "./drivers-map/drivers-map.component";
+import {GeofireService} from "./geofire.service";
+import { SendEmailComponent } from './send-email/send-email.component';
+import {HttpClient, HttpClientModule} from "@angular/common/http";
+
 
 @NgModule({
   imports: [
@@ -110,10 +118,14 @@ import { ClientComponent } from './payments/client/client.component'
     MatSnackBarModule,
     MatTableModule,
     MatPaginatorModule,
+    HttpClientModule,
     MatSortModule,
     MatCardModule,
     NgbModule.forRoot(),
     AngularFireStorageModule,
+    AgmCoreModule.forRoot({
+      apiKey: environment.googleMapsKey
+    }),
     StarRatingModule.forRoot(),
     SidebarModule.forRoot(),
     NgxMaskModule.forRoot(),
@@ -134,6 +146,7 @@ import { ClientComponent } from './payments/client/client.component'
     DriversListComponent,
     DriversTableComponent,
     SignupComponent,
+    DriversMapComponent,
     AssignDriverComponent,
     ThisdriverComponent,
     CarslistComponent,
@@ -151,10 +164,12 @@ import { ClientComponent } from './payments/client/client.component'
     HomeLayoutComponent,
     LoginLayoutComponent,
     TableComponent,
-    ClientComponent
+    ClientComponent,
+    NotFoundLayoutComponent,
+    SendEmailComponent
   ],
   entryComponents: [DialogOverviewExampleDialog, PizzaPartyComponent, PlateExistExampleDialog, ViewDetailsDialog, ClientDetailsDialog, CarDetailsDialog],
-  providers: [AuthService, AuthGuard, AngularFireDatabase, LoginGuard, DriverService, CarService, ClientService, StorageService, MatDatepickerModule],
+  providers: [AuthService, AuthGuard, AngularFireDatabase, LoginGuard, DriverService, CarService, ClientService, StorageService, MatDatepickerModule, GeofireService, HttpClient],
   bootstrap: [ AppComponent ]
 })
 export class AppModule { }

@@ -1,7 +1,7 @@
 <!--top-Header-menu-->
   <!-- Topbar header - style you can find in pages.scss -->
   <!-- ============================================================== -->
-  <header class="topbar" data-navbarbg="skin5" *ngIf="loggedIn">
+  <header class="topbar" data-navbarbg="skin5">
     <nav class="navbar top-navbar navbar-expand-md navbar-dark">
       <div class="navbar-header" data-logobg="skin5">
 
@@ -19,7 +19,7 @@
         <!-- ============================================================== -->
         <!-- Toggle which is visible on mobile only -->
         <!-- ============================================================== -->
-        <a class="nav-toggler waves-effect waves-light d-block d-md-none" href="javascript:void(0)" (click)="add1css()"><i class="ti-menu ti-close"></i></a>
+        <a class="nav-toggler waves-effect waves-light d-block d-md-none" href="javascript:void(0)"><i class="ti-menu ti-close"></i></a>
         <!-- ============================================================== -->
         <!-- Logo -->
         <!-- ============================================================== -->
@@ -192,26 +192,27 @@
   <!-- ============================================================== -->
   <!-- Left Sidebar - style you can find in sidebar.scss  -->
   <!-- ============================================================== -->
-  <aside class="left-sidebar collapse" data-sidebarbg="skin5" *ngIf="loggedIn" [class.show]="show" [style.width]="css1 ? '10px' : ''">
+  <aside class="left-sidebar collapse" data-sidebarbg="skin5" [class.show]="show" id="sidebar">
     <!-- Sidebar scroll-->
     <div class="scroll-sidebar" id="sidebar-collapse">
       <!-- Sidebar navigation-->
       <nav class="sidebar-nav" [style.width]="css1 ? '10px' : ''">
         <ul id="sidebarnav" class="p-t-30">
-          <li class="sidebar-item"> <a class="sidebar-link waves-effect waves-dark sidebar-link" routerLink="home" [routerLinkActive]="'active'" aria-expanded="false"><i class="mdi mdi-view-dashboard"></i><span class="hide-menu">Dashboard</span></a></li>
-          <li class="sidebar-item" > <a class="sidebar-link waves-effect waves-dark sidebar-link" routerLink="users/table" [routerLinkActive]="'active'" aria-expanded="false"><i class="mdi mdi-verified"></i><span class="hide-menu">Clients</span></a></li>
-          <li class="sidebar-item"> <a class="sidebar-link waves-effect waves-dark sidebar-link" routerLink="reservations" [routerLinkActive]="'active'" aria-expanded="false"><i class="mdi mdi-book"></i><span class="hide-menu">Reservations</span></a></li>
-          <li class="sidebar-item"> <a class="sidebar-link waves-effect waves-dark sidebar-link" routerLink="payments/table" [routerLinkActive]="'active'" aria-expanded="false"><i class="mdi mdi-cash"></i><span class="hide-menu">Payments</span></a></li>
+          <li class="sidebar-item"> <a class="sidebar-link waves-effect waves-dark sidebar-link" [routerLink]="['/']" aria-expanded="false"><i class="mdi mdi-view-dashboard"></i><span class="hide-menu">Dashboard</span></a></li>
+          <li class="sidebar-item" > <a class="sidebar-link waves-effect waves-dark sidebar-link" [routerLink]="['/users/table']" [routerLinkActive]="'active'" aria-expanded="false"><i class="mdi mdi-verified"></i><span class="hide-menu">Clients</span></a></li>
+          <li class="sidebar-item"> <a class="sidebar-link waves-effect waves-dark sidebar-link" [routerLink]="['/reservations']" [routerLinkActive]="'active'" aria-expanded="false"><i class="mdi mdi-book"></i><span class="hide-menu">Reservations</span></a></li>
+          <li class="sidebar-item"> <a class="sidebar-link waves-effect waves-dark sidebar-link" [routerLink]="['/payments/table']" [routerLinkActive]="'active'" aria-expanded="false"><i class="mdi mdi-cash"></i><span class="hide-menu">Payments</span></a></li>
           <li class="sidebar-item" ngbDropdown> <a class="sidebar-link has-arrow waves-effect waves-dark" href="javascript:void(0)" aria-expanded="false" [routerLinkActive]="'active'" ngbDropdownToggle><i class="mdi mdi-contact-mail"></i><span class="hide-menu">Drivers </span></a>
             <ul aria-expanded="false" class="collapse first-level" ngbDropdownMenu>
-              <li class="sidebar-item"><a class="sidebar-link" routerLink="drivers/add-driver" [routerLinkActive]="'active'"><i class="mdi mdi-library-plus"></i><span class="hide-menu"> Add Driver </span></a></li>
-              <li class="sidebar-item"><a routerLink="drivers/table" class="sidebar-link" [routerLinkActive]="'active'"><i class="mdi mdi-format-list-bulleted"></i><span class="hide-menu"> Drivers Table </span></a></li>
+              <li class="sidebar-item"><a class="sidebar-link" [routerLink]="['/drivers/add-driver']" [routerLinkActive]="'active'"><i class="mdi mdi-library-plus"></i><span class="hide-menu"> Add Driver </span></a></li>
+              <li class="sidebar-item"><a [routerLink]="['/drivers/table']" class="sidebar-link" [routerLinkActive]="'active'"><i class="mdi mdi-format-list-bulleted"></i><span class="hide-menu"> Drivers Table </span></a></li>
+              <li class="sidebar-item"><a [routerLink]="['/drivers/map']" class="sidebar-link" [routerLinkActive]="'active'"><i class="mdi mdi-format-list-bulleted"></i><span class="hide-menu"> Drivers Map </span></a></li>
             </ul>
           </li>
           <li class="sidebar-item" ngbDropdown> <a class="sidebar-link has-arrow waves-effect waves-dark" href="javascript:void(0)" aria-expanded="false" [routerLinkActive]="'active'" ngbDropdownToggle><i class="mdi mdi-car"></i><span class="hide-menu">Cars </span></a>
             <ul aria-expanded="false" class="collapse  first-level" ngbDropdownMenu>
-              <li class="sidebar-item"><a routerLink="cars/add-car" class="sidebar-link" [routerLinkActive]="'active'"><i class="mdi mdi-library-plus"></i><span class="hide-menu"> Add Car </span></a></li>
-              <li class="sidebar-item"><a class="sidebar-link" routerLink="cars/table" [routerLinkActive]="'active'"><i class="mdi mdi-format-list-bulleted"></i><span class="hide-menu"> Cars Table </span></a></li>
+              <li class="sidebar-item"><a [routerLink]="['/cars/add-car']" class="sidebar-link" [routerLinkActive]="'active'"><i class="mdi mdi-library-plus"></i><span class="hide-menu"> Add Car </span></a></li>
+              <li class="sidebar-item"><a class="sidebar-link" [routerLink]="['/cars/table']" [routerLinkActive]="'active'"><i class="mdi mdi-format-list-bulleted"></i><span class="hide-menu"> Cars Table </span></a></li>
             </ul>
           </li>
         </ul>

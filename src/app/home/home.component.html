@@ -44,10 +44,6 @@
     <div class="row">
       <div class="col-12 d-flex no-block align-items-center">
         <h4 class="page-title">Total Users User: {{ediUser}}</h4>
-        <button type="button" class="btn btn-outline-secondary mr-2" placement="top"
-                ngbPopover="Vivamus sagittis lacus vel augue laoreet rutrum faucibus." popoverTitle="Popover on top">
-          Popover on top
-        </button>
         <div class="ml-auto text-right">
           <nav aria-label="breadcrumb">
             <ol class="breadcrumb">
@@ -164,7 +160,7 @@
     <!-- Latest 5 Reservations -->
     <!-- ============================================================== -->
     <div class="row">
-      <div class="col-md-12">
+      <div class="col-lg-6">
         <div class="card">
           <div class="card-body">
             <div class="d-md-flex align-items-center">
@@ -201,6 +197,21 @@
 <!-- ============================================================== -->
 <!-- End Page wrapper  -->
       </div>
+      <div class="col-lg-6">
+        <div class="card">
+          <div class="card-body">
+            <div class="d-md-flex align-items-center">
+              <div>
+                <h4 class="card-title">Ratings</h4>
+                <h5 class="card-subtitle">Top 5 Rated Drivers: </h5>
+                <ul class="list-style-none" *ngFor="let mostr of (mostrates | async)?.slice().reverse()">
+                  <li class="d-flex no-block card-body border-top">{{mostr.total_ratingpo}} <i class="mdi mdi-star-circle"></i>
+                  </li>
+                  <span>by: {{mostr.user_firstname}} {{mostr.user_lastname}}</span>
+                </ul>
+              </div>
+            </div>
+            <!-- column -->
     </div>
   </div>
 </div>

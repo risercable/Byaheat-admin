@@ -51,7 +51,7 @@ export class DriverService{
       user_address : driver.user_address,
     });
 
-    this.authService.signup(driver.email, driver.password);
+    // this.authService.signup(driver.email, driver.password);
 
     this.indriver = true;
   }
@@ -83,10 +83,10 @@ export class DriverService{
       email: drv.email,
   password: drv.password,
     })
-    this.authService.signup(drv.email, drv.password);
-    drv.email = drv.password = '';
-
-    this.emailadded = true;
+    // this.authService.signup(drv.email, drv.password);
+    // drv.email = drv.password = '';
+    //
+    // this.emailadded = true;
   }
 
  deleteDriver(key : string){

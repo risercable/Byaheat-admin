@@ -61,17 +61,17 @@ export class AuthService {
       return this.In.asObservable(); // {2}
     }
 
-     signup(email: string, password: string) {
-      this.firebaseAuth
-        .auth
-        .createUserWithEmailAndPassword(email, password)
-        .then(function (userData) {
-          this.hUid = userData.uid;
-        })
-        .catch(err => {
-          console.log('Something went wrong:',err.message);
-        });
-    }
+    //  signup(email: string, password: string) {
+    //   this.firebaseAuth
+    //     .auth
+    //     .createUserWithEmailAndPassword(email, password)
+    //     .then(function (userData) {
+    //       this.hUid = userData.uid;
+    //     })
+    //     .catch(err => {
+    //       console.log('Something went wrong:',err.message);
+    //     });
+    // }
 
     insertDriver(driver: Driver) {
       this.usersRef.child(this.hUid).set({

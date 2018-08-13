@@ -60,7 +60,12 @@ export class ClientComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.titleService.setTitle("Lakbay | Payments Table");
   }
+  public setTitle( newTitle: string) {
+    this.titleService.setTitle(newTitle);
+  }
+
 
 }
 

@@ -4,4 +4,10 @@
 .active {
   color: #2ab7f5 !important; }
 
+@media (max-width: 768px) {
+  #sidebar {
+    width: 100px; } }
+#sidebar {
+  flex-shrink: 0; }
+
 /*# sourceMappingURL=navbar.component.css.map */

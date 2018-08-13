@@ -30,9 +30,9 @@
                         <div class="mat-app-background basic-container">
                             <div class="example-container mat-elevation-z8">
                                 <div class="example-header">
-                                    <mat-form-field>
-                                      <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filter">
-                                    </mat-form-field>
+                                  <mat-form-field style="width: 400px">
+                                    <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Search here..." maxlength="30" matTooltip="*Maximum characters is 30" matTooltipPosition="after" style="width: 500px;">
+                                  </mat-form-field>
                                   </div>
                                 <mat-table #table [dataSource]="dataSource" matSort id="basic-table">
 

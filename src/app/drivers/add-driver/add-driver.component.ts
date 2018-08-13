@@ -54,10 +54,10 @@ export class AddDriverComponent implements OnInit {
     this.resetForm(form);
   }
 
-  signup(email: string, password: string) {
-    this.authService.signup(email, password);
-    email = password = '';
-  }
+  // signup(email: string, password: string) {
+  //   this.authService.signup(email, password);
+  //   email = password = '';
+  // }
 
   resetForm(form?: NgForm) {
     if (form != null)

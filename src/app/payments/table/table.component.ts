@@ -40,6 +40,7 @@ export class TableComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.titleService.setTitle("Lakbay | Payments Table");
     this.key = this.route.snapshot.paramMap.get("$key").toString();
 
     let data = this.db.list('/payments/' + this.key);
@@ -63,6 +64,10 @@ export class TableComponent implements OnInit {
       this.dataSource.sort = this.sort;
       this.dataSource.paginator = this.paginator;
     });
+  }
+
+  public setTitle( newTitle: string) {
+    this.titleService.setTitle(newTitle);
   }
 
 }

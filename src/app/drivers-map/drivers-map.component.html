@@ -1,0 +1,79 @@
+<!-- Page wrapper  -->
+<!-- ============================================================== -->
+<div class="page-wrapper">
+  <!-- ============================================================== -->
+  <!-- Bread crumb and right sidebar toggle -->
+  <!-- ============================================================== -->
+  <div class="page-breadcrumb">
+    <div class="row">
+      <div class="col-12 d-flex no-block align-items-center">
+        <h4 class="page-title">Users List</h4>
+        <div class="ml-auto text-right">
+          <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+              <li class="breadcrumb-item"><a routerLink="../../home">Home</a></li>
+              <li class="breadcrumb-item active" aria-current="page">Users List</li>
+            </ol>
+          </nav>
+        </div>
+      </div>
+    </div>
+    <!-- Mat Table Starts here -->
+
+    <div class="mat-app-background basic-container">
+      <div class="example-container mat-elevation-z8">
+        <div class="example-header">
+          <button (click)="smarkset(!smarkval)">Show Smark</button>
+          <!-- Map is Here -->
+          <div *ngIf="lat && lng" hidden>
+
+            <agm-map [latitude]="lat" [longitude]="lng">
+
+              <agm-marker [latitude]="lat" [longitude]="lng">
+
+                <agm-info-window>
+                  <h3><strong>Howdy!</strong></h3>
+                  <p>You are here!</p>
+                </agm-info-window>
+
+              </agm-marker>
+
+              <agm-marker *ngFor="let marker of markers"
+              [latitude]="marker[0]"
+              [longitude]="marker[1]"
+              [iconUrl]="'../../assets/images/if_car_1055099.svg'">
+
+                <agm-info-window>
+                  <h3><strong>Location Details</strong></h3>
+                  <p>You are {{ marker.distance }} kilometers from this point</p>
+                </agm-info-window>
+
+
+              </agm-marker>
+
+            </agm-map>
+
+          </div>
+          <div *ngIf="smarknulldiv">
+            <p>{{smarknull}}</p>
+          </div>
+
+          <div *ngIf="lat && lng">
+            <form>
+              <input type="text" name="textput" #textput placeholder="enter driver uid here...">
+              <button type="submit" (click)="searchsmark(textput.value)">Search Driver</button>
+            </form>
+            <agm-map [latitude]="lat" [longitude]="lng">
+            <agm-marker
+              [latitude]="lat" [longitude]="lng"
+              [iconUrl]="'../../assets/images/if_car_1055099.svg'">
+            </agm-marker>
+            </agm-map>
+          </div>
+          <!-- end of Map -->
+
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

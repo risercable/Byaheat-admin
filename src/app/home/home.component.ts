@@ -23,7 +23,9 @@ export class HomeComponent implements OnInit {
   driversList: AngularFireList<any>;
   forApproval: AngularFireList<any>;
   getAssigned: AngularFireList<any[]>;
+  driverRate: AngularFireList<any[]>;
   assigns: Observable<any[]>;
+  mostrates: Observable<any[]>;
   length: number;
   lcars: number;
   ldrivers: number;
@@ -47,6 +49,7 @@ export class HomeComponent implements OnInit {
 
     this.assigns = db.list('history', ref => ref.orderByChild('timestamp').endAt(1532880205 ).limitToLast(5)).valueChanges();
 
+    this.mostrates = db.list('drivers', ref => ref.orderByChild('total_ratingpo').startAt(1)).valueChanges();
 
     this.usersList.snapshotChanges().map(list => list.length).subscribe(length => this.length = length);
     this.carsList.snapshotChanges().map(list => list.length).subscribe(length => this.lcars = length);

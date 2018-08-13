@@ -25,12 +25,12 @@ export class SignupComponent implements OnInit {
     this.titleService.setTitle(newTitle);
   }
 
-  signup() {
-    this.authService.signup(this.email, this.password);
-    this.email = this.password = '';
-
-    this.driver.push(this.name);
-    this.driver.push(this.email);
-  }
+  // signup() {
+  //   this.authService.signup(this.email, this.password);
+  //   this.email = this.password = '';
+  //
+  //   this.driver.push(this.name);
+  //   this.driver.push(this.email);
+  // }
 
 }
