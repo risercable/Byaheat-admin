@@ -33,7 +33,7 @@ export class HomeComponent implements OnInit {
   message:string;
   ediUser: string;
 
-  constructor(private route: ActivatedRoute, location: Location, public authService: AuthService, private titleService: Title, private db: AngularFireDatabase, public storage: StorageService) {
+  constructor(private route: ActivatedRoute, location: Location, public authService: AuthService, private titleService: Title, private db: AngularFireDatabase, public storage: StorageService,  public router: Router) {
     var user = firebase.auth().currentUser;
     if(user!=null) {
       this.ediUser = user.displayName;
@@ -59,7 +59,21 @@ export class HomeComponent implements OnInit {
 
   ngOnInit() {
     this.titleService.setTitle("Lakbay | Home");
-    this.storage.currentMessage.subscribe(message => this.message = message)
+    this.storage.currentMessage.subscribe(message => this.message = message);
+
+    // let connectedRef = firebase.database().ref(".info/connected");
+    // connectedRef.on("value", (snap) => {
+    //   if (snap.val() === true) {
+    //     // alert("connected");
+    //   } else {
+    //     alert("not connected");
+    //     this.router.navigate(['/not-connected']);
+    //   }
+    // });
+  }
+
+  redirectNC() {
+
   }
 
   newMessage() {

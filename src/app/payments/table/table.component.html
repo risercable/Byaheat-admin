@@ -11,17 +11,14 @@
         <div class="ml-auto text-right">
           <nav aria-label="breadcrumb">
             <ol class="breadcrumb">
-              <li class="breadcrumb-item"><a routerLink="../../home">Home</a></li>
-              <li class="breadcrumb-item active" aria-current="page">Payments</li>
+              <li class="breadcrumb-item"><a routerLink="['home']">Home</a></li>
+              <li class="breadcrumb-item active" aria-current="page"><a [routerLink]="['/payments/table']">Payments Table</a></li>
+              <li class="breadcrumb-item" aria-current="page">Payments by {{key}}</li>
             </ol>
           </nav>
         </div>
       </div>
     </div>
-    <button type="button" class="btn btn-outline-secondary mr-2" placement="top"
-            ngbPopover="Vivamus sagittis lacus vel augue laoreet rutrum faucibus." popoverTitle="Popover on top">
-      Popover on top
-    </button>
     <div class="mat-app-background basic-container">
       <div class="example-container mat-elevation-z8">
         <div class="example-header">
@@ -34,7 +31,7 @@
           <!--- Note that these columns can be defined in any order.
                 The actual rendered columns are set as a property on the row definition" -->
           <ng-container matColumnDef="in1">
-            <mat-header-cell *matHeaderCellDef mat-sort-header>*NO*</mat-header-cell>
+            <mat-header-cell *matHeaderCellDef mat-sort-header>*#*</mat-header-cell>
             <mat-cell *matCellDef="let element; let i = index;"> {{element.in1}} </mat-cell>
           </ng-container>
 
@@ -46,13 +43,13 @@
           <!-- Position Column -->
 
           <ng-container matColumnDef="price_payed">
-            <mat-header-cell *matHeaderCellDef mat-sort-header>Price Payed*</mat-header-cell>
+            <mat-header-cell *matHeaderCellDef mat-sort-header>*Price Payed*</mat-header-cell>
             <mat-cell *matCellDef="let element"> {{element.price_payed}} </mat-cell>
           </ng-container>
 
           <ng-container matColumnDef="push_date">
             <mat-header-cell *matHeaderCellDef mat-sort-header>*Date Payed*</mat-header-cell>
-            <mat-cell *matCellDef="let element"> {{element.push_date}} </mat-cell>
+            <mat-cell *matCellDef="let element"> {{element.push_date | date:'EEEE, MMMM d, yyyy '}} @ {{ element.push_date * 1000 | date:'hh:mm a' }}</mat-cell>
           </ng-container>
 
           <!--<ng-container matColumnDef="actions" class="hideX">-->

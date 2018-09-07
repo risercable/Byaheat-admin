@@ -14,6 +14,9 @@ import {MatButtonModule} from '@angular/material/button';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {Item} from "../reservation/reservation.component";
+import {Router} from "@angular/router";
+import {GeoFire} from "geofire";
+import {GeofireService} from "../geofire.service";
 
 declare var jsPDF: any; // Important
 
@@ -45,10 +48,13 @@ export class DriversTableComponent implements OnInit {
   options: FormGroup;
   itemList: Item[];
   dataSource = new MatTableDataSource(this.itemList);
-  displayedColumns = ['in1', 'user_firstname', 'user_lastname', 'user_email', 'actions'];
+  displayedColumns = ['in1', 'user_firstname', 'user_lastname', 'user_email', 'actions', 'location'];
   noRecords: boolean;
   order: string;
   reverse: boolean = false;
+  lat: number;
+  lng: number;
+  public markers: any;
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
 
@@ -70,7 +76,7 @@ export class DriversTableComponent implements OnInit {
     }
   }
 
-  constructor(public authService: AuthService, public driverService : DriverService, public db: AngularFireDatabase, private titleService: Title, public dialog: MatDialog, fb: FormBuilder) {
+  constructor(public authService: AuthService, public driverService : DriverService, public db: AngularFireDatabase, private titleService: Title, public dialog: MatDialog, fb: FormBuilder, public router: Router, private geo: GeofireService) {
     this.options = fb.group({
       'color': 'primary',
       'fontSize': [16, Validators.min(10)],
@@ -147,6 +153,23 @@ export class DriversTableComponent implements OnInit {
       this.theKey = result;
     });
 
+  }
+
+  onLocation(dElement, dFname, dLname) {
+    this.router.navigate(['/drivers/table/location', dElement.$key]);
+  }
+
+  private getUserLocation() {
+    /// locate the user
+
+    if(navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(position => {
+        this.lat = position.coords.latitude;
+        this.lng = position.coords.longitude;
+
+        this.geo.getLocations(5000, [this.lat, this.lng]);
+      });
+    }
   }
 
   setOrder(value: string) {
@@ -303,5 +326,21 @@ export class DialogOverviewExampleDialog {
       this.driverService.updateDriver(form.value);
       this.dialogRef.close();
     }
+  }
+}
+
+@Component({
+  selector: 'driver-location-dialog',
+  templateUrl: 'driver-location-dialog.html',
+})
+export class DriverLocationDialog {
+  constructor(
+    public drlocationdialogRef: MatDialogRef<DriverLocationDialog>,
+    @Inject(MAT_DIALOG_DATA) public data: any) {
+
+  }
+
+  onNoClick(): void {
+    this.drlocationdialogRef.close();
   }
 }

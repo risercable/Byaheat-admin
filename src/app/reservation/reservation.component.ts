@@ -33,6 +33,8 @@ export class ReservationComponent implements OnInit {
   xD = [];
   dataSource = new MatTableDataSource(this.itemList);
   noRecords: boolean;
+  hideTableX: boolean = false;
+  searchX: string = '';
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
 
@@ -113,6 +115,7 @@ export class ReservationComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.hideTableX = true;
     // let data = this.db.list('history');
     // this.itemPrint = [];
     // data.snapshotChanges().subscribe(item => {
@@ -132,6 +135,10 @@ export class ReservationComponent implements OnInit {
     // });
 
     // console.log(this.itemPrint.slice());
+  }
+
+  isEmptyString() {
+    this.hideTableX = this.searchX === '';
   }
 
   viewThis(i: string) {

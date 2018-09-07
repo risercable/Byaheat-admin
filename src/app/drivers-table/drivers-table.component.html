@@ -67,6 +67,12 @@
                                       <button mat-icon-button color="accent" (click)="openDialog(element, element.user_email)"><i class="mdi mdi-pencil-box"></i> Edit</button>
                                     </mat-cell>
                                   </ng-container>
+                                  <ng-container matColumnDef="location" class="hideX">
+                                    <mat-header-cell *matHeaderCellDef> Location </mat-header-cell>
+                                  <mat-cell *matCellDef="let element; let i = index">
+                                    <button mat-icon-button color="accent" (click)="onLocation(element, element.user_firstname, element.user_lastname)"><i class="mdi mdi-crosshairs-gps"></i> View</button>
+                                  </mat-cell>
+                                  </ng-container>
 
                                   <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
                                   <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>

@@ -27,6 +27,9 @@ import {TableComponent} from "./payments/table/table.component";
 import {ClientComponent} from "./payments/client/client.component";
 import {DriversMapComponent} from "./drivers-map/drivers-map.component";
 import {SendEmailComponent} from "./send-email/send-email.component";
+import {NotcComponent} from "./notc/notc.component";
+import {NotFoundLayoutComponent} from "./layouts/not-found-layout/not-found-layout.component";
+import {DriverLocationComponent} from "./driver-location/driver-location.component";
 
 const routes: Routes = [
   // { path:'', redirectTo: 'home', pathMatch: 'full', canActivate: [AuthGuard] },
@@ -68,6 +71,7 @@ const routes: Routes = [
       { path: 'assign', component: AssignDriverComponent},
       { path: 'signup', component: SignupComponent},
       { path: 'drivers/table', component: DriversTableComponent},
+      { path: 'drivers/table/location/:$key', component: DriverLocationComponent},
       { path: 'drivers/map', component: DriversMapComponent},
       { path: 'sendemail', component: SendEmailComponent},
       { path: 'this', component: ThisdriverComponent},
@@ -80,6 +84,16 @@ const routes: Routes = [
       {
         path: 'login',
         component: LoginComponent   // {5}
+      }
+    ]
+  },
+  {
+    path: 'not-connected',
+    component: NotFoundLayoutComponent,
+    children: [
+      {
+        path: 'not-connected',
+        component: NotcComponent
       }
     ]
   }

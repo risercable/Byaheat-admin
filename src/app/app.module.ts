@@ -4,12 +4,12 @@ import * as firebase from 'firebase/app';
 import { DataTablesModule } from 'angular-datatables';
 
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { DialogOverviewExampleDialog } from './drivers-table/drivers-table.component';
+import {DialogOverviewExampleDialog, DriverLocationDialog} from './drivers-table/drivers-table.component';
 import { ViewDetailsDialog } from './reservation/reservation.component';
 import { PlateExistExampleDialog } from './add-car/add-car.component';
 import { PizzaPartyComponent } from './add-car/add-car.component';
 import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatInputModule } from '@angular/material';
+import {MatIconModule, MatInputModule} from '@angular/material';
 import { MatSelectModule } from '@angular/material';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MatRadioModule } from '@angular/material';
@@ -88,6 +88,8 @@ import {DriversMapComponent} from "./drivers-map/drivers-map.component";
 import {GeofireService} from "./geofire.service";
 import { SendEmailComponent } from './send-email/send-email.component';
 import {HttpClient, HttpClientModule} from "@angular/common/http";
+import { NotcComponent } from './notc/notc.component';
+import { DriverLocationComponent } from './driver-location/driver-location.component';
 
 
 @NgModule({
@@ -115,6 +117,7 @@ import {HttpClient, HttpClientModule} from "@angular/common/http";
     MatSelectModule,
     ReactiveFormsModule,
     MatRadioModule,
+    MatIconModule,
     MatSnackBarModule,
     MatTableModule,
     MatPaginatorModule,
@@ -166,9 +169,12 @@ import {HttpClient, HttpClientModule} from "@angular/common/http";
     TableComponent,
     ClientComponent,
     NotFoundLayoutComponent,
-    SendEmailComponent
+    SendEmailComponent,
+    NotcComponent,
+    DriverLocationComponent,
+    DriverLocationDialog
   ],
-  entryComponents: [DialogOverviewExampleDialog, PizzaPartyComponent, PlateExistExampleDialog, ViewDetailsDialog, ClientDetailsDialog, CarDetailsDialog],
+  entryComponents: [DialogOverviewExampleDialog, DriverLocationDialog, PizzaPartyComponent, PlateExistExampleDialog, ViewDetailsDialog, ClientDetailsDialog, CarDetailsDialog],
   providers: [AuthService, AuthGuard, AngularFireDatabase, LoginGuard, DriverService, CarService, ClientService, StorageService, MatDatepickerModule, GeofireService, HttpClient],
   bootstrap: [ AppComponent ]
 })

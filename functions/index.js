@@ -1,55 +1,27 @@
-const functions = require('firebase-functions');
-
-// // Create and Deploy Your First Cloud Functions
-// // https://firebase.google.com/docs/functions/write-firebase-functions
-//
-// exports.helloWorld = functions.https.onRequest((request, response) => {
-//  response.send("Hello from Firebase!");
-// });
-
-const admin = require('firebase-admin');
-admin.initializeApp();
-
-const firebaseConfig = JSON.parse(process.env.FIREBASE_CONFIG);
-const SENDGRID_API_KEY = firebaseConfig.sendgrid.key;
-
+// import {Reference as snapshot} from "firebase-admin";
+var functions = require('firebase-functions');
 const sgMail = require('@sendgrid/mail');
-sgMail.setApiKey(SENDGRID_API_KEY);
+sgMail.setApiKey('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');
 
-exports.firestoreEmail = functions.database
-  .ref('clients/{userId}/payxxx/')
-  .onCreate(event => {
+exports.sendReceiptEmail = functions.database.ref('mysample/{sampleId}').onCreate((snapshot, context) => {
 
-    const userId = event.params.userId;
+  const eventSnapshot = snapshot.after.val();
 
-    const db = admin.database();
+  const toemail = eventSnapshot.user_email;
 
-    return db.list('users').doc(userId)
-      .get()
-      .then(doc => {
+  const exact_price = eventSnapshot.price;
 
-        const user = doc.data();
+  const destination = eventSnapshot.destination;
 
-        const msg = {
-          to: user.email,
-          from: 'hello@lakbaymotors.com',
-          subject:  'Payed',
-          // text: `Hey ${toName}. You have a new follower!!! `,
-          // html: `<strong>Hey ${toName}. You have a new follower!!!</strong>`,
+  const payment_method = eventSnapshot.payment_method;
 
-          // custom templates
-          templateId: 'your-template-id-1234',
-          substitutionWrappers: ['{{', '}}'],
-          substitutions: {
-            name: user.displayName
-            // and other custom properties here
-          }
-        };
+  const msg = {
+    to: toemail,
+    from: 'lakbaymotors.phil@gmail.com',
+    subject: 'Payment Received',
+    text: 'thank you :)',
+    html: '<strong>We hav</strong>',
+  };
+  sgMail.send(msg);
+});
 
-        return sgMail.send(msg)
-      })
-      .then(() => console.log('email sent!') )
-      .catch(err => console.log(err) )
-
-
-  });

@@ -50,6 +50,12 @@
 .mat-column-rating, .mat-column-in1 {
   flex: 0 0 80px; }
 
+.mat-column-price_payed {
+  flex: 0 0 120px; }
+
+.mat-column-payment_method {
+  flex: 0 0 200px; }
+
 .mat-column-car_capacity {
   flex: 0 0 80px; }
 

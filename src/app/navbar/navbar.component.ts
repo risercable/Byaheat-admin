@@ -28,7 +28,6 @@ import { BehaviorSubject, Subject } from 'rxjs';
   ]
 })
 export class NavbarComponent implements OnInit {
-  isIn : boolean = false;
   aha: string;
   aha2: string;
   isaha: boolean = false;
@@ -36,28 +35,8 @@ export class NavbarComponent implements OnInit {
   getPending: AngularFireList<any[]>;
   lpending: number;
   public loggedIn;
-  isUserLoggerdIn$ = new Subject<any>();
-  menuState:string = 'out';
-  private _opened: boolean = false;
   show:boolean = true;
   css1: boolean = false;
-
-  toggleCollapse() {
-    this.show = !this.show
-  }
-
-  add1css() {
-    this.css1 = !this.css1;
-  }
-
-  private _toggleSidebar() {
-    this._opened = !this._opened;
-  }
-
-  toggleMenu() {
-    // 1-line if statement that toggles the value:
-    this.menuState = this.menuState === 'out' ? 'in' : 'out';
-  }
 
   constructor(public authService: AuthService, public storage: StorageService, private db: AngularFireDatabase) {
     this.getPending = db.list('reservations', ref => ref.orderByChild('assign').equalTo('not yet assigned'));
@@ -82,23 +61,8 @@ export class NavbarComponent implements OnInit {
         this.loggedIn = false;
       }
     });
-  }
 
-  logout() {
-    this.authService.logout();
-  }
-
-  isActive(i) {
-    return i;
-  }
-
-  newAll() {
-    this.storage.changeMessage("showAll");
-  }
-
-  toggleState() { // click handler
-    let bool = this.isIn;
-    this.isIn = bool === false ? true : false;
+    this.css1 = false;
   }
 
   clicked() {
@@ -107,16 +71,4 @@ export class NavbarComponent implements OnInit {
       this.isaha2 = false;
     }
   }
-
-  clicked2() {
-    this.isaha2 = !this.isaha2;
-    if(this.isaha == true) {
-      this.isaha = false;
-    }
-  }
-
-  collapseSideBar() {
-    $('.sidebarnav').toggleClass('menumin');
-  }
-
 }

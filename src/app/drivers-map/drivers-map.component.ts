@@ -24,13 +24,13 @@ export class DriversMapComponent implements OnInit {
   hits = new BehaviorSubject([]);
 
   constructor(private geo: GeofireService, private db: AngularFireDatabase) {
-    this.dbRef2 = this.db.list('/drivers_available/');
+    this.dbRef2 = this.db.list('/drivers_location/');
     this.geoFire2 = new GeoFire(this.dbRef2.query.ref);
   }
 
   ngOnInit() {
-    // this.getUserLocation();
-    this.dbRef2 = this.db.list('drivers_available/jrOCcZbehfUmSnf0mTiPLIhVsFn2/l');
+    this.getUserLocation();
+    this.dbRef2 = this.db.list('drivers_location/');
 
     this.geo.hits.subscribe(hits => this.markers = hits);
   }
