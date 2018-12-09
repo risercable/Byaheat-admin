@@ -5,7 +5,7 @@
 <ng-template #hideThis>
     <div id="user-nav" class="navbar navbar-inverse">
         <ul class="nav">
-          <li  class="dropdown" id="profile-messages" ><a title="" href="#" data-toggle="dropdown" data-target="#profile-messages" class="dropdown-toggle"><i class="icon icon-user"></i>  <span class="text">Welcome Admin</span><b class="caret"></b></a>
+          <li  class="dropdown" id="profile-messages" ><a title="" href="#" data-toggle="dropdown" data-target="#profile-messages" class="dropdown-toggle"><i class="icon icon-user"></i>  <span class="text">Welcome Lakbay Admin</span><b class="caret"></b></a>
             <ul class="dropdown-menu">
               <li><a href="#"><i class="icon-user"></i> My Profile</a></li>
               <li class="divider"></li>
@@ -42,11 +42,11 @@
           </ng-template>
 
         <li routerLinkActive="active" [routerLinkActiveOptions]="{exact:
-          true}"><a routerLink="reservations" (click)="newAll()"><i class="icon icon-th"></i> <span>Reservations</span></a></li>
+          true}"><a routerLink="reservations" (click)="newAll()"><i class="material-icons"> book </i> <span>Reservations</span></a></li>
           <li class="submenu" [ngClass]="this.isaha ? 'open' : 'wew'"> <a (click)="clicked();"><i class="far fa-id-badge"></i> <span>Drivers</span></a>
             <ul>
               <li routerLinkActive="active" [routerLinkActiveOptions]="{exact:
-                true}"><a routerLink="drivers/add-driver" (click)="clicked();"> <span>Add Driver</span></a></li>
+                true}"><a routerLink="drivers/add-driver"><span>Add Driver</span></a></li>
               <li routerLinkActive="active" [routerLinkActiveOptions]="{exact:
                 true}"><a routerLink="drivers/table" (click)="clicked();"> <span>Drivers Table</span></a></li>
             </ul>

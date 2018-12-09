@@ -1,0 +1,34 @@
+<h1 mat-dialog-title>Client Details No. {{ data.clientarray.in1 }}</h1>
+<div mat-dialog-content style="width: 660px;" class="container">
+  <div class="example-container" style="float: left; width: 200px;">
+    <mat-form-field [floatLabel]="never" class="input1">
+      <label class="label1">Client UID: </label>
+      <input matInput name="customer_id" [ngModel]="data.clientarray.$key" readonly>
+    </mat-form-field>
+    <mat-form-field [floatLabel]="never" class="input1">
+      <label class="label1">Client First Name: </label>
+      <input matInput name="customer_full_name" [ngModel]="data.clientarray.user_firstname" readonly>
+    </mat-form-field>
+    <mat-form-field [floatLabel]="never" class="input1">
+      <label class="label1">Client Last Name: </label>
+      <input matInput name="customer_full_name" [ngModel]="data.clientarray.user_lastname" readonly>
+    </mat-form-field>
+    <mat-form-field [floatLabel]="never" class="input1">
+      <label class="label1">Client Birthdate: </label>
+      <input matInput name="customer_full_name" [ngModel]="data.clientarray.user_birthdate" readonly>
+    </mat-form-field>
+    <mat-form-field [floatLabel]="never" class="input1">
+      <label class="label1">Client Mobile Number: </label>
+      <input matInput name="customer_full_name" [ngModel]="data.clientarray.user_mobile" readonly>
+    </mat-form-field>
+  </div>
+  <div class="separator"></div>
+  <div class="example-container" style="float: right; width: 200px;">
+    <p>Latest Ride:</p>
+
+  </div>
+  <div class="clear"></div>
+</div>
+<div mat-dialog-actions>
+  <button mat-button (click)="onNoClick()"> < Go Back</button>
+</div>

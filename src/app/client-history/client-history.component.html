@@ -1,0 +1,113 @@
+<div id="content">
+  <div id="content-header">
+    <div id="breadcrumb"> <a href="index.html" title="Go to Home" class="tip-bottom"><i class="icon-home"></i> Home</a><a href="#" class="current">User: aww Ride History</a></div>
+  </div>
+  <div class="container-fluid">
+    <hr>
+    <div class="row-fluid">
+      <div class="span12">
+        <div class="widget-box">
+          <div class="widget-title"> <span class="icon"> <i class="icon-pencil"></i> </span>
+            <h5>History</h5>
+          </div>
+          <div class="widget-content nopadding">
+            <!-- Mat Table Starts here -->
+
+            <div class="mat-app-background basic-container">
+              <div class="example-container mat-elevation-z8">
+                <div class="example-header">
+                  <h3>Ride History for Client: {{xD[0]?.customer_name}}</h3>
+                  <!--<mat-form-field style="width: 400px">-->
+                    <!--&lt;!&ndash;<input matInput (keyup)="applyFilter($event.target.value)" placeholder="Search..." maxlength="30" matTooltip="*Maximum character is 30" matTooltipPosition="after">&ndash;&gt;-->
+                  <!--</mat-form-field>-->
+                </div>
+                <mat-table #table [dataSource]="clientSource" matSort id="basic-table">
+
+                  <!--- Note that these columns can be defined in any order.
+                        The actual rendered columns are set as a property on the row definition" -->
+
+                  <ng-container matColumnDef="index_num">
+                    <mat-header-cell *matHeaderCellDef mat-sort-header>No</mat-header-cell>
+                    <mat-cell *matCellDef="let celement"> {{celement.in1}} </mat-cell>
+                  </ng-container>
+
+                  <!-- Position Column -->
+                  <!--<ng-container matColumnDef="customer">-->
+                    <!--<mat-header-cell *matHeaderCellDef mat-sort-header>Customer ID: </mat-header-cell>-->
+                    <!--<mat-cell *matCellDef="let element"> {{element.customer}} </mat-cell>-->
+                  <!--</ng-container>-->
+
+                  <!-- Name Column -->
+                  <!--<ng-container matColumnDef="customer_name">-->
+                    <!--<mat-header-cell *matHeaderCellDef mat-sort-header>Customer Full Name </mat-header-cell>-->
+                    <!--<mat-cell *matCellDef="let element"> {{element.customer_name}} </mat-cell>-->
+                  <!--</ng-container>-->
+
+                  <!-- Weight Column -->
+                  <ng-container matColumnDef="destination">
+                    <mat-header-cell *matHeaderCellDef mat-sort-header>Destination</mat-header-cell>
+                    <mat-cell *matCellDef="let element"> {{element.destination}} </mat-cell>
+                  </ng-container>
+
+                  <!-- Symbol Column -->
+                  <!--<ng-container matColumnDef="driver">-->
+                    <!--<mat-header-cell *matHeaderCellDef mat-sort-header>Driver ID: </mat-header-cell>-->
+                    <!--<mat-cell *matCellDef="let element"> {{element.driver}} </mat-cell>-->
+                  <!--</ng-container>-->
+
+                  <ng-container matColumnDef="driver_name">
+                    <mat-header-cell *matHeaderCellDef mat-sort-header>Driver Full name: </mat-header-cell>
+                    <mat-cell *matCellDef="let element"> {{element.driver_name}} </mat-cell>
+                  </ng-container>
+
+                  <ng-container matColumnDef="price">
+                    <mat-header-cell *matHeaderCellDef mat-sort-header>Ride Price: </mat-header-cell>
+                    <mat-cell *matCellDef="let element"> {{element.price}} </mat-cell>
+                  </ng-container>
+
+                  <ng-container matColumnDef="rating">
+                    <mat-header-cell *matHeaderCellDef mat-sort-header>Ride rating: </mat-header-cell>
+                    <mat-cell *matCellDef="let element"> {{element.rating}} </mat-cell>
+                  </ng-container>
+
+                  <ng-container matColumnDef="timestamp">
+                    <mat-header-cell *matHeaderCellDef mat-sort-header>Ride Timestamp: </mat-header-cell>
+                    <mat-cell *matCellDef="let element"> {{element.timestamp * 1000 | date:'EEEE, MMMM d, yyyy '}} @ {{ element.timestamp * 1000 | date:'hh:mm a' }} </mat-cell>
+                  </ng-container>
+
+                  <!--<ng-container matColumnDef="timestamp">-->
+                  <!--<mat-header-cell *matHeaderCellDef mat-sort-header> Time </mat-header-cell>-->
+                  <!--<mat-cell *matCellDef="let element"> {{element.timestamp * 1000 | date:'yyyy-MM-dd HH:mm:ss Z'}} </mat-cell>-->
+                  <!--</ng-container>-->
+
+                  <!--<ng-container matColumnDef="actions">-->
+                    <!--<mat-header-cell *matHeaderCellDef> Actions </mat-header-cell>-->
+                    <!--<mat-cell *matCellDef="let element" style="white-space: nowrap">-->
+                      <!--<button mat-icon-button color="accent" id="hideThis" (click)="openDialog(element)">View Details-->
+                      <!--</button>-->
+                      <!--<a color="warm" (click)="onSelect(element)" style="margin-left: 40px;">History Details</a>-->
+                    <!--</mat-cell>-->
+                  <!--</ng-container>-->
+
+                  <mat-header-row *matHeaderRowDef="historyColumns"></mat-header-row>
+                  <mat-row *matRowDef="let row; columns: historyColumns;"></mat-row>
+
+                </mat-table>
+                <!--<mat-card  *ngIf="noRecords" style="padding:100px;">-->
+                  <!--<h3 style="text-align:center">We couldn't find data for-->
+                    <!--<span style="color:red">"{{clientSource.filter}}"</span>-->
+                  <!--</h3>-->
+                <!--</mat-card>-->
+                <mat-paginator #paginator
+                               [pageSize]="5"
+                               [pageSizeOptions]="[5, 10, 20]"
+                               [showFirstLastButtons]="true">
+                </mat-paginator>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

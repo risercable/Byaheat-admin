@@ -4,18 +4,26 @@
 .example-container {
   display: flex;
   flex-direction: column;
-  min-width: 300px; }
+  min-width: 300px;
+  max-height: 750px; }
 
 .example-header {
   min-height: 64px;
-  padding: 8px 24px 0; }
+  padding: 8px 24px 0;
+  display: flex;
+  align-items: center;
+  font-size: 20px; }
 
 .mat-form-field {
-  font-size: 14px; }
+  font-size: 14px;
+  width: 100%; }
 
 .mat-table {
   overflow: auto;
-  max-height: 500px; }
+  max-height: 500px;
+  white-space: nowrap; }
+  .mat-table .hideX {
+    display: none !important; }
 
 .input1 {
   width: auto;
@@ -48,14 +56,14 @@
 .container {
   position: relative; }
 
-.mat-column-rating, .mat-column-in1 {
-  flex: 0 0 80px; }
+@media print {
+  .hideThis, .hideThis * {
+    display: none !important; } }
+.mat-column-index_num, .mat-column-rating, .mat-column-price {
+  max-width: 100px; }
 
-.highlight {
-  background: #42A948;
-  /* green */ }
+.mat-column-actions {
+  width: auto;
+  display: inline-block; }
 
-.mat-row:hover, .mat-row:focus {
-  background-color: lightskyblue; }
-
-/*# sourceMappingURL=reservation.component.css.map */
+/*# sourceMappingURL=client-history.component.css.map */

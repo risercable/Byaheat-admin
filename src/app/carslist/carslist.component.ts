@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, Inject, OnInit, ViewChild, ViewEncapsulation} from '@angular/core';
 import { AngularFireDatabase } from 'angularfire2/database';
 import { AngularFireList } from 'angularfire2/database/interfaces';
 import { Observable } from 'rxjs/Observable';
@@ -6,6 +6,8 @@ import { CarService } from '../drivers/shared/car.service';
 import { Car } from '../drivers/shared/car.model';
 import { NgForm } from '@angular/forms/src/directives/ng_form';
 import { Title } from '@angular/platform-browser';
+import {MatDialog, MatDialogRef, MAT_DIALOG_DATA, MatTableDataSource, MatPaginator, MatSort} from '@angular/material';
+import {ClientDetailsDialog} from "../account/account.component";
 declare var jsPDF: any; // Important
 
 @Component({
@@ -37,27 +39,89 @@ export class CarslistComponent implements OnInit {
   theDriver: string;
   notAssigned: AngularFireList<any[]>;
   length: number;
+  itemList: PerCar[];
+  isGreen: boolean = false;
+  dataSource = new MatTableDataSource(this.itemList);
+  displayedColumns = ['in1', 'car_model', 'car_type', 'car_plate_number', 'car_driver', 'actions'];
+  noRecords: boolean
+
+  @ViewChild(MatPaginator) paginator: MatPaginator;
+
+  @ViewChild(MatSort) sort: MatSort;
+
+  ngAfterViewInit() {
+    this.dataSource.sort = this.sort;
+  }
+
+  applyFilter(filterValue: string) {
+    filterValue = filterValue.trim(); // Remove whitespace
+    filterValue = filterValue.toLowerCase(); // MatTableDataSource defaults to lowercase matches
+    this.dataSource.filter = filterValue;
+
+    if(this.dataSource.filteredData.length == 0) {
+      this.noRecords = true;
+    } else {
+      this.noRecords = false;
+    }
+  }
 
 
-  constructor(private db: AngularFireDatabase,private carService: CarService, private titleService: Title) {
-    this.carList = db.list('all_cars');
-    this.cList = db.list('all_cars');
-    this.driversList = db.list('reservations');
-    this.drvList = db.list('drivers');
-    this.cars = this.carList.snapshotChanges().map(changes => {
-      return changes.map(c => ({ key: c.payload.key, ...c.payload.val() }));
+  constructor(private db: AngularFireDatabase,private carService: CarService, private titleService: Title, public dialog: MatDialog) {
+    // this.carList = db.list('all_cars');
+    // this.cList = db.list('all_cars');
+    // this.driversList = db.list('reservations');
+    // this.drvList = db.list('drivers');
+    // this.cars = this.carList.snapshotChanges().map(changes => {
+    //   return changes.map(c => ({ key: c.payload.key, ...c.payload.val() }));
+    // });
+
+    // this.adriversList = db.list('drivers', ref => ref.orderByChild('assigned_car').equalTo('none'));
+
+    // this.adrivers = this.adriversList.snapshotChanges().map(changes => {
+    //   return changes.map(c => ({ key: c.payload.key, ...c.payload.val() }));
+    // });
+
+    // this.notAssigned = db.list('all_cars', ref => ref.orderByChild('car_driver').equalTo('none'));
+
+    // this.notAssigned.snapshotChanges().map(list => list.length).subscribe(length => this.length = length);
+
+    let data = db.list('all_cars');
+    this.itemList = [];
+
+    data.snapshotChanges().subscribe(item => {
+      this.itemList = [];
+      let i = 1;
+      item.forEach(element => {
+        let json = element.payload.toJSON();
+        json["$key"] = element.key;
+        json["in1"] = i;
+        // this.itemList.push(json as Item);
+        this.itemList.push(json as PerCar);
+
+        i++;
+
+      });
+
+      this.dataSource = new MatTableDataSource(this.itemList);
+      this.dataSource.sort = this.sort;
+      this.dataSource.paginator = this.paginator;
     });
-
-    this.adriversList = db.list('drivers', ref => ref.orderByChild('assigned_car').equalTo('none'));
-
-    this.adrivers = this.adriversList.snapshotChanges().map(changes => {
-      return changes.map(c => ({ key: c.payload.key, ...c.payload.val() }));
-    });
-
-    this.notAssigned = db.list('all_cars', ref => ref.orderByChild('car_driver').equalTo('none'));
-
-    this.notAssigned.snapshotChanges().map(list => list.length).subscribe(length => this.length = length);
    }
+
+  openDialog(i: any): void {
+    let dialogRef = this.dialog.open(ClientDetailsDialog, {
+      width: 'auto',
+      data: { clientarray: i }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log('The dialog was closed');
+    });
+  }
+
+  // showX(i) {
+  //   i.popover('show');
+  // }
 
   ngOnInit() {
     this.setTitle("Lakbay | Cars List");
@@ -73,6 +137,10 @@ export class CarslistComponent implements OnInit {
 
     this.resetForm();
   }
+
+  // addGreen(value) {
+  //   this.isGreen = value;
+  // }
 
   passKey(key: string, pnumber: string, brand: string, model: string, capacity: number, color: string, type: string, ){
     this.keyToPass = key;
@@ -178,5 +246,34 @@ export class CarslistComponent implements OnInit {
     console.log(event) //option value will be sent as event
     this.ipp = event;
    }
+
+}
+
+export interface PerCar {
+  in1: number;
+  car_brand: string;
+  car_capacity: string;
+  car_color: string;
+  car_driver: string;
+  car_model: string;
+  car_plate_number: string;
+  car_type: string;
+}
+
+@Component({
+  selector: 'car-details-dialog',
+  templateUrl: 'car-details-dialog.html',
+  styleUrls: ['car-details-style.scss'],
+  encapsulation: ViewEncapsulation.None,
+})
+export class CarDetailsDialog {
+
+  constructor(
+    public dialogRef: MatDialogRef<CarDetailsDialog>,
+    @Inject(MAT_DIALOG_DATA) public data: any) { }
+
+  onNoClick(): void {
+    this.dialogRef.close();
+  }
 
 }

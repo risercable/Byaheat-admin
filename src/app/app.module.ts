@@ -17,7 +17,9 @@ import {MatSnackBarModule} from '@angular/material/snack-bar';
 import { StarRatingModule } from 'angular-star-rating';
 import {MatTableModule} from '@angular/material/table';
 import {MatPaginatorModule} from '@angular/material';
-import {MatSortModule} from "@angular/material"
+import {MatSortModule} from "@angular/material";
+import {ClientDetailsDialog} from "./account/account.component";
+import {CarDetailsDialog} from "./carslist/carslist.component";
 
 import { AppComponent }     from './app.component';
 import { AppRoutingModule } from './app-routing.module';
@@ -28,6 +30,7 @@ import { FilterPipeModule } from 'ngx-filter-pipe';
 import { Ng2SearchPipeModule } from 'ng2-search-filter';
 import {MatButtonModule, MatCheckboxModule, MatNativeDateModule, MatCardModule} from '@angular/material';
 import {MatDatepickerModule} from '@angular/material/datepicker';
+import {MatTooltipModule} from '@angular/material/tooltip';
 
 import { AngularFireDatabaseModule } from 'angularfire2/database';
 import { HttpModule } from '@angular/http';
@@ -48,8 +51,6 @@ import { AngularFireDatabase } from 'angularfire2/database-deprecated';
 import { AuthGuard } from './auth/auth.guard';
 import { LoginGuard } from './login.guard';
 import { AngularFireModule } from 'angularfire2';
-import angularLoad from 'angular-load';
-import { Location } from '@angular/common';
 import { PackagesComponent } from './packages/packages.component';
 import { NotFoundComponent } from './not-found/not-found.component';
 import { DriversComponent } from './drivers/drivers.component';
@@ -64,6 +65,8 @@ import { AssignDriverComponent } from './assign-driver/assign-driver.component';
 import { ThisdriverComponent } from './thisdriver/thisdriver.component';
 import { CarslistComponent } from './carslist/carslist.component';
 import { AddCarComponent } from './add-car/add-car.component';
+import { TruncatePipe } from "./limit.pipe";
+import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 
 import { StorageService } from './storage.service';
 import { ReservationComponent } from './reservation/reservation.component';
@@ -71,6 +74,7 @@ import { ReservationComponent } from './reservation/reservation.component';
 import { AngularFireStorageModule } from 'angularfire2/storage';
 
 import { OrderModule } from 'ngx-order-pipe';
+import { ClientHistoryComponent } from './client-history/client-history.component';
 
 @NgModule({
   imports: [
@@ -93,6 +97,7 @@ import { OrderModule } from 'ngx-order-pipe';
     BrowserAnimationsModule,
     MatFormFieldModule,
     MatInputModule,
+    MatTooltipModule,
     MatSelectModule,
     ReactiveFormsModule,
     MatRadioModule,
@@ -101,6 +106,7 @@ import { OrderModule } from 'ngx-order-pipe';
     MatPaginatorModule,
     MatSortModule,
     MatCardModule,
+    NgbModule.forRoot(),
     AngularFireStorageModule,
     StarRatingModule.forRoot(),
     OrderModule
@@ -127,11 +133,15 @@ import { OrderModule } from 'ngx-order-pipe';
     FilterPipe,
     ReservationComponent,
     DialogOverviewExampleDialog,
+    ClientDetailsDialog,
     PizzaPartyComponent,
     PlateExistExampleDialog,
-    ViewDetailsDialog
+    ViewDetailsDialog,
+    CarDetailsDialog,
+    ClientHistoryComponent,
+    TruncatePipe
   ],
-  entryComponents: [DialogOverviewExampleDialog, PizzaPartyComponent, PlateExistExampleDialog, ViewDetailsDialog],
+  entryComponents: [DialogOverviewExampleDialog, PizzaPartyComponent, PlateExistExampleDialog, ViewDetailsDialog, ClientDetailsDialog, CarDetailsDialog],
   providers: [AuthService, AuthGuard, AngularFireDatabase, LoginGuard, DriverService, CarService, ClientService, StorageService, MatDatepickerModule],
   bootstrap: [ AppComponent ]
 })

@@ -9,184 +9,83 @@
       <div class="span12">
         <div class="widget-box">
           <div class="widget-title"> <span class="icon"> <i class="icon-pencil"></i> </span>
-            <h5>Cars Table <span class="label label-important">{{ this.length }}</span></h5>
+            <h5>Cars Table</h5>
+            <button type="button" id="popover" class="btn btn-lg btn-danger" data-toggle="popover" title="Popover title" data-content="Cars list and their appropriate details. Assigning of driver is also done here."><i class="icon-info-sign"></i></button>
+            <button type="button" class="btn btn-outline-secondary mr-2" placement="top"
+                    ngbPopover="Vivamus sagittis lacus vel augue laoreet rutrum faucibus." popoverTitle="Popover on top">
+              Popover on top
+            </button>
           </div>
           <div class="widget-content">
-              <button (click)="onPrint()" class="btn btn-primary">PRINT</button>
-              Sort by:
-            <select class='select-option' [(ngModel)]='optionSelected' (ngModelChange)='onOptionSelected($event)' style="width: auto;">
-              <option class='option' selected [value]="10">{{10}}</option>
-              <option class='option' [value]="20">{{20}}</option>
-              <option class='option' [value]="30">{{50}}</option>
-              <option class='option' [value]="999">ALL</option>
-          </select>
-              <input type="text" [(ngModel)]="term" placeholder="Enter search term" style="float: right; margin: 4px auto;">
-            <table class="table table-bordered data-table" id="basic-table">
-              <thead>
-                <tr>
-                  <th hidden></th>
-                  <th>Car Platenumber</th>
-                  <th>Car Brand</th>
-                  <th>Car Model</th>
-                  <th>Car Capacity</th>
-                  <th>Car Color</th>
-                  <th>Car Type</th>
-                  <th>Car Driver</th>
-                  <!--<th>EDIT DETAILS</th>-->
-                </tr>
-              </thead>
-              <tbody *ngFor="let car of carlist | filter: term | paginate: { itemsPerPage: 10, currentPage: p }" (click)="onItemClick(car)">
-                <tr class="gradeX">
-                  <td hidden><input type="hidden" name="$key" #$key="ngModel" [(ngModel)]="carService.selectedCar.$key" /></td>
-                  <td>{{car.car_plate_number}}</td>
-                  <td>{{car.car_brand}}</td>
-                  <td>{{car.car_model}}</td>
-                  <td>{{car.car_capacity}}</td>
-                  <td>{{car.car_color}}</td>
-                  <td>{{car.car_type}}</td>
-                  <td hidden style="width: auto;">{{ car.car_driver }}</td>
-                  <td>{{car.car_driver}}<a *ngIf="car.car_driver == 'none' " href="" class="btn btn-mini btn-primary pull-right" (click)="passKey(car.$key, car.car_plate_number, car.car_brand, car.car_model, car.car_capacity, car.car_color, car.car_type)" data-toggle="modal" data-target="#selectDriverModal" style="width: 70px;">ASSIGN</a>
-                    <a *ngIf="car.car_driver != 'none' " href="" class="btn btn-mini btn-danger pull-right" (click)="passunKey(car.$key, car.car_plate_number, car.car_brand, car.car_model, car.car_capacity, car.car_color, car.car_type, car.car_driver)" data-toggle="modal" data-target="#unassignDriver" style="width: 70px;">UNASSIGN</a>
-                  </td>
-                  <!--<td><a href="" class="btn btn-mini btn-primary" data-toggle="modal" data-target="#myModal"><span class="fas fa-edit"></span> EDIT INFO</a></td>-->
-                </tr>
-              </tbody>
-            </table>
-            <pagination-controls (pageChange)="p = $event"></pagination-controls>
+              <div class="mat-app-background basic-container">
+                  <div class="example-container mat-elevation-z8">
+                      <div class="example-header">
+                          <mat-form-field style="width: 400px">
+                            <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Search here..." maxlength="30" matTooltip="*Maximum character is 30" matTooltipPosition="after" style="width: 500px;">
+                          </mat-form-field>
+                        </div>
+                      <mat-table #table [dataSource]="dataSource" matSort id="basic-table">
+
+                        <!--- Note that these columns can be defined in any order.
+                              The actual rendered columns are set as a property on the row definition" -->
+                        <ng-container matColumnDef="in1">
+                          <mat-header-cell *matHeaderCellDef mat-sort-header>*NO*</mat-header-cell>
+                          <mat-cell *matCellDef="let element; let i = index;"> {{element.in1}} </mat-cell>
+                        </ng-container>
+
+                        <ng-container matColumnDef="car_brand">
+                          <mat-header-cell *matHeaderCellDef mat-sort-header>*BRAND*</mat-header-cell>
+                          <mat-cell *matCellDef="let element; let i = index;"> {{element.car_brand}} </mat-cell>
+                        </ng-container>
+
+                        <!-- Position Column -->
+
+                        <ng-container matColumnDef="car_model">
+                            <mat-header-cell *matHeaderCellDef mat-sort-header>*MODEL*</mat-header-cell>
+                            <mat-cell *matCellDef="let element"> {{element.car_model}} </mat-cell>
+                          </ng-container>
+
+                        <ng-container matColumnDef="car_type">
+                          <mat-header-cell *matHeaderCellDef mat-sort-header>*TYPE*</mat-header-cell>
+                          <mat-cell *matCellDef="let element"> {{element.car_type}} </mat-cell>
+                        </ng-container>
+
+                        <ng-container matColumnDef="car_plate_number">
+                          <mat-header-cell *matHeaderCellDef mat-sort-header>*PLATE NUMBER*</mat-header-cell>
+                          <mat-cell *matCellDef="let element"> {{element.car_plate_number}} </mat-cell>
+                        </ng-container>
+
+                        <ng-container matColumnDef="car_driver">
+                          <mat-header-cell *matHeaderCellDef mat-sort-header>*DRIVER*</mat-header-cell>
+                          <mat-cell *matCellDef="let element" [style.color]="(element.car_driver === 'none') ? 'red' : '' ">{{(element.car_driver | limitTo: 20) + (element.car_driver.length > 20 ? '...' : '')}} <br><a style="color: #2d6987" *ngIf="element.car_driver === 'none'"><i class="icon-key"></i> ASSIGN NOW</a></mat-cell>
+                        </ng-container>
+
+                        <ng-container matColumnDef="actions" class="hideX">
+                          <mat-header-cell *matHeaderCellDef>*ACTION*</mat-header-cell>
+                          <mat-cell *matCellDef="let element; let i = index">
+                            <button mat-icon-button style="color: #2d6987;"><i class="icon-list"></i> DETAILS</button>
+                          </mat-cell>
+                        </ng-container>
+
+                        <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+                        <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+
+                      </mat-table>
+                    <mat-card  *ngIf="noRecords" style="padding:100px;">
+                      <h3 style="text-align:center">We couldn't find data for
+                        <span style="color:red">"{{dataSource.filter}}"</span>
+                      </h3>
+                    </mat-card>
+                      <mat-paginator #paginator
+                                      [pageSize]="5"
+                                      [pageSizeOptions]="[5, 10, 20]"
+                                      [showFirstLastButtons]="true">
+                      </mat-paginator>
+                    </div>
+                </div>
           </div>
         </div>
   </div>
 </div>
-</div>
-<!-- Modal -->
-<div id="myModal" class="modal fade" role="dialog">
-    <div class="modal-dialog">
-
-      <!-- Modal content-->
-      <div class="modal-content">
-        <div class="modal-header">
-          <button type="button" class="close" data-dismiss="modal">&times;</button>
-          <h4 class="modal-title"></h4>
-        </div>
-        <div class="modal-body">
-            <form #carForm="ngForm" (ngSubmit)="onSubmit(carForm)" class="form-horizontal">
-                  <input type="hidden" name="$key" #$key="ngModel" [(ngModel)]="carService.selectedCar.$key" />
-              <div class="control-group">
-                  <label class="control-label">car plate number: </label>
-                  <div class="controls">
-                    <input type="text" name="car_plate_number" #name="ngModel" [(ngModel)]="carService.selectedCar.car_plate_number"/>
-                  </div>
-                </div>
-                <div class="control-group">
-                    <label class="control-label">car brand: </label>
-                    <div class="controls">
-                        <input type="text" class="form-control" name="car_brand" #name="ngModel" [(ngModel)]="carService.selectedCar.car_brand" />
-                    </div>
-                  </div>
-                  <div class="control-group">
-                      <label class="control-label">car model: </label>
-                      <div class="controls">
-                          <input type="text" class="form-control" name="car_model" #name="ngModel" [(ngModel)]="carService.selectedCar.car_model" />
-                      </div>
-                    </div>
-                  <div class="control-group">
-                    <label class="control-label">car capacity: </label>
-                    <div class="controls">
-                        <input type="number" class="form-control" name="car_capacity" #name="ngModel" [(ngModel)]="carService.selectedCar.car_capacity" />
-                    </div>
-                  </div>
-                  <div class="control-group">
-                    <label class="control-label">car color: </label>
-                    <div class="controls">
-                        <input type="text" class="form-control" name="car_color" #name="ngModel" [(ngModel)]="carService.selectedCar.car_color" />
-                    </div>
-                  </div>
-                  <div class="control-group">
-                    <label class="control-label">car type: </label>
-                    <div class="controls">
-                        <input type="radio" value="Single" class="form-control" name="car_type" [(ngModel)]="carService.selectedCar.car_type"/>Single<br>
-                        <input type="radio" value="Family" class="form-control" name="car_type" [(ngModel)]="carService.selectedCar.car_type"/>Family<br>
-                        <input type="radio" value="Barkada" class="form-control" name="car_type" [(ngModel)]="carService.selectedCar.car_type"/>Barkada
-                    </div>
-                  </div>
-                  <div class="form-actions">
-                    <button type="submit" class="btn btn-success pull-right" [disabled]="!carForm.valid" onclick="$('.modal').modal('hide')"><span class="icon"><i class="fa fa-save"></i></span> Submit</button>
-                  </div>
-            </form>
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-        </div>
-      </div>
-
-    </div>
-  </div>
-  <!-- Modal -->
-<div id="selectDriverModal" class="modal fade" role="dialog">
-  <div class="modal-dialog">
-
-    <!-- Modal content-->
-    <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal">&times;</button>
-        <h4 class="modal-title">Select a Driver</h4>
-      </div>
-      <div class="modal-body">
-          <table class="table table-bordered table-striped">
-              <thead>
-                <tr>
-                  <th>Driver Name</th>
-                  <th>Assign Now</th>
-                </tr>
-              </thead>
-              <tbody *ngFor="let adriver of adrivers | async">
-                <tr class="odd gradeX">
-                  <td>{{adriver.user_firstname + " " + adriver.user_lastname}}</td>
-                  <td> <a class="btn btn-mini btn-primary" (click)="assignNow(adriver.key, adriver.user_email, this.pnumberToPass, this.typeToPass)" data-toggle="modal" data-target="#selectDriverModal">ASSIGN THIS DRIVER</a>
-                    </td>
-                </tr>
-              </tbody>
-            </table>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-      </div>
-    </div>
-
-  </div>
-</div>
-<!-- Modal -->
-<div id="unassignDriver" class="modal fade" role="dialog">
-  <div class="modal-dialog">
-
-    <!-- Modal content-->
-    <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal">&times;</button>
-        <h4 class="modal-title">Select a Driver</h4>
-      </div>
-      <div class="modal-body">
-          <table class="table table-bordered table-striped">
-              <thead>
-                <tr>
-                  <th>Driver Name</th>
-                  <th>Unassign</th>
-                </tr>
-              </thead>
-              <tbody *ngFor="let undriver of undrivers | async">
-                <tr class="odd gradeX">
-                  <td>{{undriver.user_firstname + " " + undriver.user_lastname}}</td>
-                  <td> <a class="btn btn-mini btn-danger" (click)="unassignNow(undriver.key, undriver.user_email)" data-toggle="modal" data-target="#unassignDriver">UNASSIGN THIS DRIVER</a>
-                    </td>
-                </tr>
-              </tbody>
-            </table>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-      </div>
-    </div>
-
-  </div>
 </div>
 </div>

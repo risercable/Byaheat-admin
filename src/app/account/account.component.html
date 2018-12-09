@@ -11,46 +11,14 @@
             <h5>Users Table</h5>
           </div>
           <div class="widget-content nopadding">
-            <!--&lt;!&ndash; <button (click)="onAll()">ALL</button> &ndash;&gt;-->
-            <!--<button (click)="onPrint()" class="btn btn-primary" download="...">PRINT</button>-->
-            <!--Sort by:-->
-            <!--<select class='select-option' [(ngModel)]='optionSelected' (ngModelChange)='onOptionSelected($event)' style="width: auto;">-->
-              <!--<option class='option' [value]="10">{{10}}</option>-->
-              <!--<option class='option' [value]="20">{{20}}</option>-->
-              <!--<option class='option' [value]="30">{{50}}</option>-->
-              <!--<option class='option' [value]="999">ALL</option>-->
-          <!--</select>-->
-              <!--<input type="text" [(ngModel)]="term" placeholder="Enter search term" style="float: right; margin: 4px auto;">-->
-            <!--<table class="table table-bordered table-striped" id="basic-table">-->
-              <!--<thead>-->
-                <!--<tr>-->
-                  <!--<th hidden></th>-->
-                  <!--<th>User Firstname</th>-->
-                  <!--<th>User Lastname</th>-->
-                  <!--<th>User Birthdate</th>-->
-                  <!--<th>User Mobile</th>-->
-                <!--</tr>-->
-              <!--</thead>-->
-              <!--<tbody *ngFor="let client of clients | async | filter:term | paginate: { itemsPerPage: this.ipp, currentPage: p }" (click)="onItemClick(client)">-->
-                <!--<tr class="odd gradeX">-->
-                  <!--<td hidden><input type="hidden" name="$key" #$key="ngModel" [(ngModel)]="clientService.selectedClient.$key" /></td>-->
-                  <!--<td>{{client.user_firstname}}</td>-->
-                  <!--<td>{{client.user_lastname}}</td>-->
-                  <!--<td>{{client.user_birthdate}}</td>-->
-                  <!--<td>{{client.user_mobile}}</td>-->
-                <!--</tr>-->
-
-              <!--</tbody>-->
-            <!--</table>-->
-            <!--<pagination-controls (pageChange)="p = $event"></pagination-controls>-->
 
             <!-- Mat Table Starts here -->
 
             <div class="mat-app-background basic-container">
               <div class="example-container mat-elevation-z8">
                 <div class="example-header">
-                  <mat-form-field>
-                    <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filter">
+                  <mat-form-field style="width: 400px">
+                    <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Search..." maxlength="30" matTooltip="*Maximum character is 30" matTooltipPosition="after">
                   </mat-form-field>
                 </div>
                 <mat-table #table [dataSource]="clientSource" matSort id="basic-table">
@@ -58,7 +26,7 @@
                   <!--- Note that these columns can be defined in any order.
                         The actual rendered columns are set as a property on the row definition" -->
 
-                  <ng-container matColumnDef="index_num">
+                  <ng-container matColumnDef="in1">
                     <mat-header-cell *matHeaderCellDef mat-sort-header>No</mat-header-cell>
                     <mat-cell *matCellDef="let celement"> {{celement.in1}} </mat-cell>
                   </ng-container>
@@ -94,9 +62,11 @@
 
                   <ng-container matColumnDef="actions">
                     <mat-header-cell *matHeaderCellDef> Actions </mat-header-cell>
-                    <mat-cell *matCellDef="let element">
-                      <button mat-icon-button color="accent" id="hideThis">View Details
+                    <mat-cell *matCellDef="let element" style="white-space: nowrap">
+                      <button mat-icon-button color="accent" id="hideThis" (click)="openDialog(element)">View Details
                       </button>
+                      <a color="warm" (click)="onSelect(element)" style="margin-left: 40px;" *ngIf="element.latest_ride != 'none'">History Details</a>
+                      <span *ngIf="element.latest_ride == 'none'" style="margin-left: 40px; color: red;">No Ride History</span>
                     </mat-cell>
                   </ng-container>
 

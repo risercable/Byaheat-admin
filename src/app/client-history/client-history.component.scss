@@ -24,6 +24,7 @@
 .mat-table {
   overflow: auto;
   max-height: 500px;
+  white-space: nowrap;
 
   .hideX {
     display: none !important;
@@ -71,7 +72,7 @@
   }
 }
 
-.mat-column-index_num {
+.mat-column-index_num, .mat-column-rating, .mat-column-price {
   max-width: 100px;
 }
 

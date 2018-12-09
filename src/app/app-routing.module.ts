@@ -20,10 +20,12 @@ import { ThisdriverComponent } from './thisdriver/thisdriver.component';
 import { CarslistComponent } from './carslist/carslist.component';
 import { AddCarComponent } from './add-car/add-car.component';
 import { ReservationComponent } from './reservation/reservation.component';
+import {ClientHistoryComponent} from "./client-history/client-history.component";
 
 const routes: Routes = [
   { path:'',   component: HomeComponent, canActivate: [AuthGuard] },
   { path:'users/table', component: AccountComponent, canActivate: [AuthGuard] },
+  { path:'user/history/:$key', component:ClientHistoryComponent, canActivate: [AuthGuard]},
   { path:'login',   component: LoginComponent},
   { path:'cars/table', component: CarslistComponent, canActivate: [AuthGuard]},
   { path:'reservations', component: ReservationComponent, canActivate: [AuthGuard]},

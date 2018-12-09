@@ -195,8 +195,8 @@ export class AddCarComponent implements OnInit {
 // }
 
   resetForm(form?: NgForm) {
-    if (form != null)
-      form.reset();
+    // if (form != null)
+    //   form.reset();
     // this.carService.selectedCar = {
     //   $key: null,
     //   car_plate_number: '',
