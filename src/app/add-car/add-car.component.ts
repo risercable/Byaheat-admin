@@ -11,6 +11,7 @@ import {MAT_DIALOG_DATA, MatDialog, MatDialogRef, MatSnackBar} from '@angular/ma
 import { MatRadioChange } from '@angular/material';
 import {CustomValidators} from "ng4-validators";
 import {MatButtonModule} from '@angular/material/button';
+import {Observable} from "rxjs/Observable";
 
 @Component({
   selector: 'app-add-car',
@@ -19,6 +20,8 @@ import {MatButtonModule} from '@angular/material/button';
 })
 export class AddCarComponent implements OnInit {
   carList: AngularFireList<any>;
+  toyotaCount: AngularFireList<any>;
+  tcount: Observable<any>;
   carID: number;
   carIncr: number = 1;
   getCarID: AngularFireList<any[]>;
@@ -81,6 +84,12 @@ export class AddCarComponent implements OnInit {
     this.pushTS = db.list('cars_list');
 
     this.dateCreated = firebase.database['ServerValue']['TIMESTAMP'];
+
+    this.toyotaCount = db.list('/all_cars', ref => ref.orderByChild('car_brand').equalTo('Toyota'));
+
+    this.tcount = this.toyotaCount.snapshotChanges().map(changes => {
+        return changes.map(c => ({ key: c.payload.key, ...c.payload.val() }));
+      });
   }
 
   openDialog(): void {

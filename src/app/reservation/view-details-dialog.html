@@ -4,14 +4,17 @@
     <mat-form-field [floatLabel]="never" class="input1">
       <label class="label1">Customer ID: </label>
       <input matInput name="customer_id" [ngModel]="data.datarray.customer" readonly>
+      <mat-icon matSuffix><i class="mdi mdi-eye" style="font-size: small;"></i></mat-icon>
     </mat-form-field>
     <mat-form-field [floatLabel]="never" class="input1">
       <label class="label1">Customer Full Name: </label>
       <input matInput name="customer_full_name" [ngModel]="data.datarray.customer_name" readonly>
+      <mat-icon matSuffix><i class="mdi mdi-eye" style="font-size: small;"></i></mat-icon>
     </mat-form-field>
     <mat-form-field [floatLabel]="never" class="input1">
       <label class="label1">Ride Destination: </label>
       <input matInput name="ride_destination" [ngModel]="data.datarray.destination" readonly>
+      <mat-icon matSuffix><i class="mdi mdi-eye" style="font-size: small;"></i></mat-icon>
     </mat-form-field>
   </div>
   <div class="separator"></div>
@@ -19,22 +22,26 @@
     <mat-form-field [floatLabel]="never" class="input1">
       <label class="label1">Driver ID: </label>
       <input matInput name="driver_id" [ngModel]="data.datarray.driver" readonly>
+      <mat-icon matSuffix><i class="mdi mdi-eye" style="font-size: small;"></i></mat-icon>
     </mat-form-field>
     <mat-form-field [floatLabel]="never" class="input1">
       <label class="label1">Driver Full Name: </label>
       <input matInput name="driver_full_name" [ngModel]="data.datarray.driver_name" readonly>
+      <mat-icon matSuffix><i class="mdi mdi-eye" style="font-size: small;"></i></mat-icon>
     </mat-form-field>
     <mat-form-field [floatLabel]="never" class="input1">
       <label class="label1">Rating: </label>
       <input matInput name="ride_rating" [ngModel]="data.datarray.rating" readonly>
+      <mat-icon matSuffix><i class="mdi mdi-eye" style="font-size: small;"></i></mat-icon>
     </mat-form-field>
     <mat-form-field [floatLabel]="never" class="input1">
       <label class="label1">Timestamp: </label>
       <input matInput name="ride_timestamp" [ngModel]="data.datarray.timestamp * 1000 | date:'yyyy-MM-dd HH:mm:ss Z'" readonly>
+      <mat-icon matSuffix><i class="mdi mdi-eye" style="font-size: small;"></i></mat-icon>
     </mat-form-field>
 </div>
   <div class="clear"></div>
 </div>
 <div mat-dialog-actions>
-  <button mat-button (click)="onNoClick()"> < Go Back</button>
+  <button mat-raised-button (click)="onNoClick()" color="accent" style="background-color: royalblue;"> < Go Back</button>
 </div>

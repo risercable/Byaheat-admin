@@ -1,85 +1,52 @@
-<div id="content">
-    <div id="content-header">
-      <div id="breadcrumb"> <a href="#" title="Go to Home" class="tip-bottom"><i class="icon-home"></i> Home</a><a href="#" class="current">Reservations</a> </div>
-      <h1>Reservations</h1>
+<!-- Page wrapper  -->
+<!-- ============================================================== -->
+<div class="page-wrapper">
+  <!-- ============================================================== -->
+  <!-- Bread crumb and right sidebar toggle -->
+  <!-- ============================================================== -->
+  <div class="page-breadcrumb">
+    <div class="row">
+      <div class="col-12 d-flex no-block align-items-center">
+        <h4 class="page-title">All Rides List</h4>
+        <div class="ml-auto text-right">
+          <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+              <li class="breadcrumb-item"><a routerLink="/home">Home</a></li>
+              <li class="breadcrumb-item active" aria-current="page">All Rides List</li>
+            </ol>
+          </nav>
+        </div>
+      </div>
     </div>
+  </div>
+    <!-- ============================================================== -->
+    <!-- End Bread crumb and right sidebar toggle -->
+    <!-- ============================================================== -->
+    <!-- ============================================================== -->
+    <!-- Container fluid  -->
+    <!-- ============================================================== -->
     <div class="container-fluid">
-        <div class="row-fluid">
-          <div class="span12">
-            <div class="widget-box nopadding">
-              <div class="widget-title"> <span class="icon"><i class="icon-pencil"></i></span>
-                <h5>Reservations</h5>
-              </div>
-              <div class="widget-content">
-                <button (click)="onPrint()" class="btn btn-primary">PRINT</button>
-                  <!--<input type="text" [(ngModel)]="term" placeholder="Enter search term" style="float: right; margin: 4px auto;">-->
-                  <!--<table class="table table-bordered table-striped" id="basic-table">-->
-                      <!--<thead>-->
-                        <!--<tr>-->
-                          <!--<th hidden>Key</th>-->
-                          <!--<th [class.active]="order === 'customer_name'"-->
-                          <!--(click)="setOrder('customer_name')">Client Full name <span [class.hidden]="reverse">▼</span-->
-                            <!--&gt;<span [class.hidden]="!reverse">▲</span></th>-->
-                          <!--<th [class.active]="order === 'driver_name'"-->
-                          <!--(click)="setOrder('driver_name')">Driver Full name <span [hidden]="reverse">▼</span-->
-                            <!--&gt;<span [hidden]="!reverse">▲</span></th>-->
-                          <!--<th [class.active]="order === 'destination'"-->
-                          <!--(click)="setOrder('destination')">Destination <span [hidden]="reverse">▼</span-->
-                            <!--&gt;<span [hidden]="!reverse">▲</span></th>-->
-                          <!--<th [class.active]="order === 'rating'"-->
-                          <!--(click)="setOrder('rating')">Rating <span [hidden]="reverse">▼</span-->
-                            <!--&gt;<span [hidden]="!reverse">▲</span></th>-->
-                          <!--<th [class.active]="order === 'timestamp'"-->
-                          <!--(click)="setOrder('timestamp')">Date & Time <span [hidden]="reverse">▼</span-->
-                            <!--&gt;<span [hidden]="!reverse">▲</span></th>-->
-                        <!--</tr>-->
-                      <!--</thead>-->
-                      <!--<tbody>-->
-                        <!--<tr class="odd gradeX" *ngFor="let reserve of reserves | async | orderBy: order:reverse:'case-insensitive' | filter: term | paginate: { itemsPerPage: 10, currentPage: p }">-->
-                          <!--<td hidden>{{reserve.key}}</td>-->
-                          <!--<td>{{reserve.customer_name}}</td>-->
-                          <!--<td>{{reserve.driver_name}}</td>-->
-                          <!--<td>{{reserve.destination}}</td>-->
-                          <!--<td>{{reserve.rating}}</td>-->
-                          <!--<td>{{reserve.timestamp * 1000 | date:'yyyy-MM-dd HH:mm:ss Z'}}</td>-->
-                        <!--</tr>-->
-                      <!--</tbody>-->
-                    <!--</table>-->
-                    <!--<pagination-controls (pageChange)="p = $event"></pagination-controls>-->
-                <!--<table class="mdl-data-table mdl-js-data-table mdl-data-table&#45;&#45;selectable mdl-shadow&#45;&#45;2dp">-->
-                  <!--<thead>-->
-                  <!--<tr>-->
-                    <!--<th class="mdl-data-table__cell&#45;&#45;non-numeric">Material</th>-->
-                    <!--<th>Quantity</th>-->
-                    <!--<th>Unit price</th>-->
-                  <!--</tr>-->
-                  <!--</thead>-->
-                  <!--<tbody>-->
-                  <!--<tr>-->
-                    <!--<td class="mdl-data-table__cell&#45;&#45;non-numeric">Acrylic (Transparent)</td>-->
-                    <!--<td>25</td>-->
-                    <!--<td>$2.90</td>-->
-                  <!--</tr>-->
-                  <!--<tr>-->
-                    <!--<td class="mdl-data-table__cell&#45;&#45;non-numeric">Plywood (Birch)</td>-->
-                    <!--<td>50</td>-->
-                    <!--<td>$1.25</td>-->
-                  <!--</tr>-->
-                  <!--<tr>-->
-                    <!--<td class="mdl-data-table__cell&#45;&#45;non-numeric">Laminate (Gold on Blue)</td>-->
-                    <!--<td>10</td>-->
-                    <!--<td>$2.35</td>-->
-                  <!--</tr>-->
-                  <!--</tbody>-->
-                <!--</table>-->
-                <div class="mat-app-background basic-container">
+      <!-- ============================================================== -->
+      <!-- Start Page Content -->
+      <!-- ============================================================== -->
+      <div class="row">
+    <div class="col-12">
+      <div class="card">
+        <div class="card-body">
+          <h6 class="card-subtitle">Search for rides made and its details.</h6>
+          <!-- Mat Table Starts here -->
+                <div class="mat-app-background basic-container" style="min-height: 400px;">
                   <div class="example-container mat-elevation-z8">
                       <div class="example-header">
-                          <mat-form-field>
-                            <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filter">
-                          </mat-form-field>
-                        </div>
-                      <mat-table #table [dataSource]="dataSource" matSort id="basic-table">
+                        <div class="container h-100">
+                          <div class="row h-100 justify-content-center align-items-center">
+                            <mat-form-field style="width: 400px; text-align: center;" class="col-6">
+                              <input class="text-center" matInput (keyup)="applyFilter($event.target.value)" [(ngModel)]="searchX" (ngModelChange)="isEmptyString()" placeholder="Enter your search term here..." maxlength="30" matTooltip="*Maximum characters is 30" matTooltipPosition="after">
+                            </mat-form-field>
+                            <span><i class="mdi mdi-information-outline"></i></span>
+                          </div>
+                          <div class="row h-100 justify-content-center align-items-center" [hidden]="hideTableX">
+                      <mat-table #table [dataSource]="dataSource" matSort id="basic-table" class="col-12">
 
                         <!--- Note that these columns can be defined in any order.
                               The actual rendered columns are set as a property on the row definition" -->
@@ -121,7 +88,7 @@
                         <ng-container matColumnDef="actions">
                           <mat-header-cell *matHeaderCellDef> Actions </mat-header-cell>
                           <mat-cell *matCellDef="let element">
-                            <button mat-icon-button color="accent" (click)="openDialog(element)" id="hideThis">View Details
+                            <button mat-icon-button color="accent" style="color: royalblue;" (click)="openDialog(element)" id="hideThis">View Details
                               </button>
                           </mat-cell>
                         </ng-container>
@@ -141,49 +108,52 @@
                                       [showFirstLastButtons]="true">
                       </mat-paginator>
                     </div>
+                        </div>
                 </div>
               </div>
             </div>
-            </div>
         </div>
+      </div>
     </div>
-    <!-- Modal -->
-    <div id="selectReservation" class="modal fade" role="dialog" style="width: auto;">
-      <div class="modal-dialog">
-
-        <!-- Modal content-->
-        <div class="modal-content">
-          <div class="modal-header">
-            <button type="button" class="close" data-dismiss="modal">&times;</button>
-            <h4 class="modal-title">More Details</h4>
-          </div>
-          <div class="modal-body">
-              <table class="table table-bordered table-striped">
-                  <thead>
-                    <tr>
-                      <th>Customer Name</th>
-                      <th>Driver</th>
-                      <th>Destination</th>
-                      <th>Rating</th>
-                      <th>Time</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr class="odd gradeX" *ngFor="let rs of more | async">
-                      <td>{{rs.customer_name}}</td>
-                      <!-- <td *ngFor="let rsd of more2 | async">{{rsd.user_firstname + " " + rsd.user_lastname}}</td>
-                      <td *ngFor="let rs of destination | async">{{rs.destination}}</td>
-                      <td *ngFor="let rs of destination | async">{{rs.rating}}</td>
-                      <td *ngFor="let rs of destination | async">{{rs.timestamp * 1000 | date:'yyyy-MM-dd HH:mm:ss Z'}}</td> -->
-                    </tr>
-                  </tbody>
-                </table>
-          </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-          </div>
-        </div>
-
       </div>
     </div>
   </div>
+    <!--&lt;!&ndash; Modal &ndash;&gt;-->
+    <!--<div id="selectReservation" class="modal fade" role="dialog" style="width: auto;">-->
+      <!--<div class="modal-dialog">-->
+
+        <!--&lt;!&ndash; Modal content&ndash;&gt;-->
+        <!--<div class="modal-content">-->
+          <!--<div class="modal-header">-->
+            <!--<button type="button" class="close" data-dismiss="modal">&times;</button>-->
+            <!--<h4 class="modal-title">More Details</h4>-->
+          <!--</div>-->
+          <!--<div class="modal-body">-->
+              <!--<table class="table table-bordered table-striped">-->
+                  <!--<thead>-->
+                    <!--<tr>-->
+                      <!--<th>Customer Name</th>-->
+                      <!--<th>Driver</th>-->
+                      <!--<th>Destination</th>-->
+                      <!--<th>Rating</th>-->
+                      <!--<th>Time</th>-->
+                    <!--</tr>-->
+                  <!--</thead>-->
+                  <!--<tbody>-->
+                    <!--<tr class="odd gradeX" *ngFor="let rs of more | async">-->
+                      <!--<td>{{rs.customer_name}}</td>-->
+                      <!--&lt;!&ndash; <td *ngFor="let rsd of more2 | async">{{rsd.user_firstname + " " + rsd.user_lastname}}</td>-->
+                      <!--<td *ngFor="let rs of destination | async">{{rs.destination}}</td>-->
+                      <!--<td *ngFor="let rs of destination | async">{{rs.rating}}</td>-->
+                      <!--<td *ngFor="let rs of destination | async">{{rs.timestamp * 1000 | date:'yyyy-MM-dd HH:mm:ss Z'}}</td> &ndash;&gt;-->
+                    <!--</tr>-->
+                  <!--</tbody>-->
+                <!--</table>-->
+          <!--</div>-->
+          <!--<div class="modal-footer">-->
+            <!--<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>-->
+          <!--</div>-->
+        <!--</div>-->
+
+      <!--</div>-->
+    <!--</div>-->

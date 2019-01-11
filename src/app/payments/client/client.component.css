@@ -1,0 +1,75 @@
+[hidden] {
+  display: none; }
+
+.example-container {
+  display: flex;
+  flex-direction: column; }
+
+.example-header {
+  min-height: 64px;
+  padding: 8px 24px 0; }
+
+.mat-form-field {
+  font-size: 14px; }
+
+.mat-table {
+  overflow: auto;
+  max-height: 500px; }
+
+.input1 {
+  width: auto;
+  background-color: white;
+  /* replace this color with your accent color hex code */ }
+
+.mat-focused {
+  background-color: white;
+  /* replace this color with your accent color hex code */ }
+
+.mat-input-placeholder {
+  background-color: white;
+  /* replace this color with your accent color hex code */ }
+
+.label1 {
+  color: royalblue; }
+
+.clear {
+  clear: both; }
+
+.separator {
+  height: 100%;
+  width: 1px;
+  background: black;
+  top: 0;
+  bottom: 0;
+  position: absolute;
+  left: 50%; }
+
+.container {
+  position: relative; }
+
+.mat-column-rating, .mat-column-in1 {
+  flex: 0 0 80px; }
+
+.mat-column-car_capacity {
+  flex: 0 0 80px; }
+
+.highlight {
+  background: #42A948;
+  /* green */ }
+
+.mat-row:hover, .mat-row:focus {
+  background-color: lightblue; }
+
+.mat-header-cell {
+  color: #1e242b;
+  background-color: whitesmoke; }
+
+ngb-popover-window {
+  position: absolute;
+  width: auto !important;
+  display: block !important;
+  background-color: #fafafa !important;
+  border: 1px solid #fafafa !important;
+  max-width: none !important; }
+
+/*# sourceMappingURL=client.component.css.map */

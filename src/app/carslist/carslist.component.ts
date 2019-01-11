@@ -44,6 +44,7 @@ export class CarslistComponent implements OnInit {
   dataSource = new MatTableDataSource(this.itemList);
   displayedColumns = ['in1', 'car_model', 'car_type', 'car_plate_number', 'car_driver', 'actions'];
   noRecords: boolean
+  noRecords: boolean;
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
 

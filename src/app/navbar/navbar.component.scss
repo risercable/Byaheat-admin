@@ -2,3 +2,63 @@
   .doNotPrint{display:none !important;}
 
 }
+
+#sidebar2 {
+  display: none;
+}
+
+.active {
+  background-color: #2ab7f5 !important;
+}
+
+.mini1css {
+  width: 40px;
+}
+
+.dropdown-menu-center {
+  left: 50% !important;
+  right: auto !important;
+  text-align: center !important;
+  transform: translate(-50%, 0) !important;
+}
+
+.cssleft {
+  flex-direction: column;
+  display: block;
+  position: relative;
+  margin: auto 0;
+  text-align: center!important;
+}
+
+.cssleft2 {
+  flex-direction: column;
+  display: block;
+  position: relative;
+  margin-left: -40px;
+  text-align: center!important;
+}
+
+@media (max-width: 768px) {
+  #sidebar {
+    display: none;
+  }
+
+  #sidebar2 {
+    display: block;
+  }
+}
+
+@media (max-width: 567px) {
+  #sidebar {
+    display: none;
+  }
+
+  #sidebar2 {
+    display: block;
+    font-size: x-small;
+  }
+}
+
+#sidebar {
+  flex-shrink: 0;
+}

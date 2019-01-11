@@ -4,7 +4,21 @@
 .example-container {
   display: flex;
   flex-direction: column;
-  min-width: 300px; }
+  min-width: 300px;
+  max-height: 750px; }
+
+.example-container > * {
+  width: 100%; }
+
+.example-right-align {
+  text-align: right; }
+
+input.example-right-align::-webkit-outer-spin-button,
+input.example-right-align::-webkit-inner-spin-button {
+  display: none; }
+
+input.example-right-align {
+  -moz-appearance: textfield; }
 
 .example-header {
   min-height: 64px;
@@ -57,5 +71,6 @@
 
 .mat-row:hover, .mat-row:focus {
   background-color: lightskyblue; }
+  background-color: silver; }
 
 /*# sourceMappingURL=reservation.component.css.map */

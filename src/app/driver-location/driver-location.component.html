@@ -1,0 +1,84 @@
+<!-- Page wrapper  -->
+<!-- ============================================================== -->
+<div class="page-wrapper">
+  <!-- ============================================================== -->
+  <!-- Bread crumb and right sidebar toggle -->
+  <!-- ============================================================== -->
+  <div class="page-breadcrumb">
+    <div class="row">
+      <div class="col-12 d-flex no-block align-items-center">
+        <h4 class="page-title">Clients</h4><br>
+        <div class="ml-auto text-right">
+          <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+              <li class="breadcrumb-item"><a routerLink="../../home">Home</a></li>
+              <li class="breadcrumb-item active" aria-current="page">Clients</li>
+            </ol>
+          </nav>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- ============================================================== -->
+  <!-- End Bread crumb and right sidebar toggle -->
+  <!-- ============================================================== -->
+  <!-- ============================================================== -->
+  <!-- Container fluid  -->
+  <!-- ============================================================== -->
+  <div class="container-fluid">
+    <!-- ============================================================== -->
+    <!-- Start Page Content -->
+    <!-- ============================================================== -->
+    <div class="row">
+      <div class="col-12">
+        <div class="card">
+          <div class="card-body">
+            <h6 class="card-subtitle">Search for clients and view their details.</h6>
+            <!-- Mat Table Starts here -->
+
+            <div class="mat-app-background basic-container" style="min-height: 400px;">
+              <div class="example-container mat-elevation-z8">
+                <div class="example-header">
+                  <div class="container h-100">
+                    <div class="row h-100 justify-content-center align-items-center">
+                      <!-- Map is Here -->
+                      <div *ngIf="lat && lng">
+
+                        <agm-map [latitude]="lat" [longitude]="lng">
+
+                          <agm-marker [latitude]="lat" [longitude]="lng">
+
+                            <agm-info-window>
+                              <h3><strong>Howdy!</strong></h3>
+                              <p>You are here!</p>
+                            </agm-info-window>
+
+                          </agm-marker>
+
+                          <!--<agm-marker *ngFor="let marker of markers1"-->
+                                      <!--[latitude]="marker[0]"-->
+                                      <!--[longitude]="marker[1]"-->
+                                      <!--[iconUrl]="'../../assets/images/if_car_1055099.svg'">-->
+
+                            <!--<agm-info-window>-->
+                              <!--<h3><strong>Location Details</strong></h3>-->
+                              <!--<p>You are {{ marker.distance }} kilometers from this point</p>-->
+                            <!--</agm-info-window>-->
+
+
+                          <!--</agm-marker>-->
+
+                        </agm-map>
+
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

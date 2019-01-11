@@ -24,24 +24,56 @@
   <link rel="stylesheet" type="text/css" media="print" href="assets/aww/print.css" />
 
   <script defer src="assets/js/fontawesome-all.js"></script>
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <!-- Tell the browser to be responsive to screen width -->
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="">
+  <meta name="author" content="">
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons"
+        rel="stylesheet">
+  <!-- Favicon icon -->
+  <link rel="icon" type="image/png" sizes="16x16" href="../../assets/images/favicon.png">
+  <title>Matrix Template - The Ultimate Multipurpose admin template</title>
+  <!-- Custom CSS -->
+  <link href="assets/libs/flot/css/float-chart.css" rel="stylesheet">
+  <!-- Custom CSS -->
+  <link href="assets/dist/css/style.min.css" rel="stylesheet">
+  <!--<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">-->
+  <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+  <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+  <!--[if lt IE 9]>
+  <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+  <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+  <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+  <![endif]-->
+  <style>
 
+  </style>
 </head>
 <body>
-  <!--Header-part-->
-<div id="header">
-    <h1><a href="dashboard.html">Matrix Admin</a></h1>
+<!-- ============================================================== -->
+<!-- Preloader - style you can find in spinners.css -->
+<!-- ============================================================== -->
+<div class="preloader">
+  <div class="lds-ripple">
+    <div class="lds-pos"></div>
+    <div class="lds-pos"></div>
   </div>
-  <!--close-Header-part-->
-  <app-root></app-root>
-
-  <!--Footer-part-->
-
-<div class="row-fluid">
-  <div id="footer" class="span12"> 2013 &copy; Matrix Admin. Brought to you by <a href="http://themedesigner.in">Themedesigner.in</a> </div>
 </div>
-
+<!-- ============================================================== -->
+<!-- Main wrapper - style you can find in pages.scss -->
+<!-- ============================================================== -->
+<div id="main-wrapper">
+  <app-root></app-root>
+  <!-- footer -->
+  <!-- ============================================================== -->
+  <footer class="footer text-center">
+    All Rights Reserved by Lakbay. Designed and Developed by TeamPoorSige<3
+  </footer>
+</div>
 <!--end-Footer-part-->
-
   <script src="assets/js/jquery.min.js"></script>
   <script src="https://printjs-4de6.kxcdn.com/print.min.js"></script>
   <!--<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.10/jquery.mask.js"></script>-->
@@ -75,45 +107,40 @@
   <script src="assets/js/matrix.wizard.js"></script>
   <!--<script src="assets/js/jquery.dataTables.min.js"></script>-->
   <!--<script src="assets/js/matrix.tables.js"></script>-->
+  <!-- ============================================================== -->
+  <!-- All Jquery -->
+  <!-- ============================================================== -->
+  <script src="assets/libs/jquery/dist/jquery.min.js"></script>
+  <!-- Bootstrap tether Core JavaScript -->
+  <script src="assets/libs/popper.js/dist/umd/popper.min.js"></script>
+  <script src="assets/libs/bootstrap/dist/js/bootstrap.min.js"></script>
+  <script src="assets/libs/perfect-scrollbar/dist/perfect-scrollbar.jquery.min.js"></script>
+  <script src="assets/extra-libs/sparkline/sparkline.js"></script>
+  <!--Wave Effects -->
+  <script src="assets/dist/js/waves.js"></script>
+  <!--Menu sidebar -->
+  <script src="assets/dist/js/sidebarmenu.js"></script>
+  <!--Custom JavaScript -->
+  <script src="assets/dist/js/custom.min.js"></script>
+  <script src="assets/dist/js/jquery.validate.js"></script>
+  <!--This page JavaScript -->
+  <!-- <script src="../../dist/js/pages/dashboards/dashboard1.js"></script> -->
+  <!-- Charts js Files -->
+  <script src="assets/libs/flot/excanvas.js"></script>
+  <script src="assets/libs/flot/jquery.flot.js"></script>
+  <script src="assets/libs/flot/jquery.flot.pie.js"></script>
+  <script src="assets/libs/flot/jquery.flot.time.js"></script>
+  <script src="assets/libs/flot/jquery.flot.stack.js"></script>
+  <script src="assets/libs/flot/jquery.flot.crosshair.js"></script>
+  <script src="assets/libs/flot.tooltip/js/jquery.flot.tooltip.min.js"></script>
+  <script src="assets/dist/js/pages/chart/chart-page-init.js"></script>
 
   <script type="text/javascript">
-    // This function is called from the pop-up menus to transfer to
-    // a different page. Ignore if the value returned is a null string:
-    function goPage (newURL) {
-
-        // if url is empty, skip the menu dividers and reset the menu selection to default
-        if (newURL != "") {
-
-            // if url is "-", it is this page -- reset the menu:
-            if (newURL == "-" ) {
-                resetMenu();
-            }
-            // else, send page to designated URL
-            else {
-              document.location.href = newURL;
-            }
-        }
-    }
-
-  // resets the menu selection upon entry to this page:
-  function resetMenu() {
-     document.gomenu.selector.selectedIndex = 2;
-  }
-
-  // // Add slideDown animation to Bootstrap dropdown when expanding.
-  // $('.dropdown-toggle').on('show.bs.dropdown', function() {
-  //   $(this).find('.dropdown').first().stop(true, true).slideDown();
-  // });
-
-  // // Add slideUp animation to Bootstrap dropdown when collapsing.
-  // $('.dropdown-toggle').on('hide.bs.dropdown', function() {
-  //   $(this).find('.dropdown').first().stop(true, true).slideUp();
-  // });
-
-  // $('input[name="user_birthdate="]').mask('00/00/0000');
-  $('input[name="car_plate_number"]').mask('SSS-0000');
-  $('input[name="user_mobile"]').mask('0000-000-0000');
-
+      $(document).ready(function () {
+          $('#sidebarCollapse').on('click', function () {
+              $('#sidebar').toggleClass('active');
+          });
+      });
   </script>
 
 

@@ -58,8 +58,12 @@
 @media print {
   .hideThis, .hideThis * {
     display: none !important; } }
-.mat-column-index_num {
-  max-width: 100px; }
+.mat-column-in1 {
+  max-width: 80px; }
+
+.mat-column-actions {
+  width: auto;
+  display: inline-block; }
 
 .mat-column-actions {
   width: auto;

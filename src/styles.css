@@ -5,6 +5,11 @@ Error: File to import not found or unreadable: ~css-star-rating/scss/star-rating
 1: /* You can add global styles to this file, and also import other style files *\/
 2: @import "~@angular/material/prebuilt-themes/indigo-pink.css";
 3: @import "~css-star-rating/scss/star-rating";
+4: 
+5: .page-wrapper {
+6:   //width: auto !important;
+7:   //display: block;
+8:   //flex: auto;
 
 Backtrace:
 styles.scss:3
@@ -50,4 +55,4 @@ C:/Ruby24-x64/bin/scss:23:in `<main>'
 body:before {
   white-space: pre;
   font-family: monospace;
-  content: "Error: File to import not found or unreadable: ~css-star-rating/scss/star-rating.\A         on line 3 of styles.scss\A \A 1: /* You can add global styles to this file, and also import other style files */\A 2: @import \"~@angular/material/prebuilt-themes/indigo-pink.css\";\A 3: @import \"~css-star-rating/scss/star-rating\";"; }
+  content: "Error: File to import not found or unreadable: ~css-star-rating/scss/star-rating.\A         on line 3 of styles.scss\A \A 1: /* You can add global styles to this file, and also import other style files */\A 2: @import \"~@angular/material/prebuilt-themes/indigo-pink.css\";\A 3: @import \"~css-star-rating/scss/star-rating\";\A 4: \A 5: .page-wrapper {\A 6:   //width: auto !important;\A 7:   //display: block;\A 8:   //flex: auto;"; }

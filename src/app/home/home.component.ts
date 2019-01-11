@@ -9,6 +9,7 @@ import { Observable } from 'rxjs/Observable';
 import 'rxjs/Rx'
 import { AssignDriverComponent } from '../assign-driver/assign-driver.component';
 import { StorageService } from '../storage.service';
+import * as firebase from 'firebase';
 
 @Component({
   selector: 'app-home',
@@ -22,14 +23,23 @@ export class HomeComponent implements OnInit {
   driversList: AngularFireList<any>;
   forApproval: AngularFireList<any>;
   getAssigned: AngularFireList<any[]>;
+  driverRate: AngularFireList<any[]>;
   assigns: Observable<any[]>;
+  mostrates: Observable<any[]>;
   length: number;
   lcars: number;
   ldrivers: number;
   lpending: number;
   message:string;
+  ediUser: string;
 
-  constructor(private route: ActivatedRoute, location: Location, public authService: AuthService, private titleService: Title, private db: AngularFireDatabase, public storage: StorageService) {
+  constructor(private route: ActivatedRoute, location: Location, public authService: AuthService, private titleService: Title, private db: AngularFireDatabase, public storage: StorageService,  public router: Router) {
+    var user = firebase.auth().currentUser;
+    if(user!=null) {
+      this.ediUser = user.displayName;
+    } else {
+      this.ediUser = 'null nga';
+    }
     this.location = location;
     this.usersList = db.list('clients');
     this.carsList = db.list('all_cars');
@@ -37,10 +47,9 @@ export class HomeComponent implements OnInit {
     this.forApproval = db.list('pending');
     this.getAssigned = db.list('history');
 
-    this.assigns = this.getAssigned.snapshotChanges().map(changes => {
-      return changes.map(c => ({ key: c.payload.key, ...c.payload.val() }));
-    });
+    this.assigns = db.list('history', ref => ref.orderByChild('timestamp').endAt(1532880205 ).limitToLast(5)).valueChanges();
 
+    this.mostrates = db.list('drivers', ref => ref.orderByChild('total_ratingpo').startAt(1)).valueChanges();
 
     this.usersList.snapshotChanges().map(list => list.length).subscribe(length => this.length = length);
     this.carsList.snapshotChanges().map(list => list.length).subscribe(length => this.lcars = length);
@@ -50,7 +59,21 @@ export class HomeComponent implements OnInit {
 
   ngOnInit() {
     this.titleService.setTitle("Lakbay | Home");
-    this.storage.currentMessage.subscribe(message => this.message = message)
+    this.storage.currentMessage.subscribe(message => this.message = message);
+
+    // let connectedRef = firebase.database().ref(".info/connected");
+    // connectedRef.on("value", (snap) => {
+    //   if (snap.val() === true) {
+    //     // alert("connected");
+    //   } else {
+    //     alert("not connected");
+    //     this.router.navigate(['/not-connected']);
+    //   }
+    // });
+  }
+
+  redirectNC() {
+
   }
 
   newMessage() {

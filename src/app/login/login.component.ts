@@ -30,7 +30,7 @@ export class LoginComponent implements OnInit {
     if(this.authService.firebaseAuth.authState) {
       this.router.dispose;
       setTimeout((router) => {
-        this.router.navigate(['']);
+        this.router.navigate(['home']);
       }, 5000);
     }
 
@@ -41,10 +41,10 @@ export class LoginComponent implements OnInit {
     this.titleService.setTitle(newTitle);
   }
 
-  signup() {
-    this.authService.signup(this.email, this.password);
-    this.email = this.password = '';
-  }
+  // signup() {
+  //   this.authService.signup(this.email, this.password);
+  //   this.email = this.password = '';
+  // }
 
   login() {
     this.authService.login(this.email, this.password);

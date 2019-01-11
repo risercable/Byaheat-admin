@@ -1,16 +1,23 @@
-<div id="content">
-  <div id="content-header">
-    <div id="breadcrumb"> <a href="#" title="Go to Home" class="tip-bottom"><i class="icon-home"></i> Home</a><a href="#" class="current">Table</a> </div>
-    <h1>Drivers Table</h1>
-  </div>
-  <div class="container-fluid">
-      <div class="row-fluid">
-        <div class="span12">
-          <div class="widget-box nopadding">
-            <div class="widget-title"> <span class="icon"><i class="icon-pencil"></i></span>
-              <h5>Driver Table</h5>
-            </div>
-            <div class="widget-content">
+<!-- Page wrapper  -->
+<!-- ============================================================== -->
+<div class="page-wrapper">
+  <!-- ============================================================== -->
+  <!-- Bread crumb and right sidebar toggle -->
+  <!-- ============================================================== -->
+  <div class="page-breadcrumb">
+    <div class="row">
+      <div class="col-12 d-flex no-block align-items-center">
+        <h4 class="page-title">Drivers List</h4>
+        <div class="ml-auto text-right">
+          <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+              <li class="breadcrumb-item"><a routerLink="../../home">Home</a></li>
+              <li class="breadcrumb-item active" aria-current="page">Drivers List</li>
+            </ol>
+          </nav>
+        </div>
+      </div>
+    </div>
                 <!--<div class="alert alert-success" *ngIf="driverService.emailadded == true">-->
                     <!--<button class="close" data-dismiss="alert" (click)="resetAlert()">×</button>-->
                     <!--<strong>Success!</strong> Added email address to the driver</div>-->
@@ -23,9 +30,9 @@
                         <div class="mat-app-background basic-container">
                             <div class="example-container mat-elevation-z8">
                                 <div class="example-header">
-                                    <mat-form-field>
-                                      <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filter">
-                                    </mat-form-field>
+                                  <mat-form-field style="width: 400px">
+                                    <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Search here..." maxlength="30" matTooltip="*Maximum characters is 30" matTooltipPosition="after" style="width: 500px;">
+                                  </mat-form-field>
                                   </div>
                                 <mat-table #table [dataSource]="dataSource" matSort id="basic-table">
 
@@ -57,8 +64,14 @@
                                   <ng-container matColumnDef="actions" class="hideX">
                                     <mat-header-cell *matHeaderCellDef> Action </mat-header-cell>
                                     <mat-cell *matCellDef="let element; let i = index">
-                                      <button mat-icon-button color="accent" (click)="openDialog(element, element.user_email)">View</button>
+                                      <button mat-icon-button color="accent" (click)="openDialog(element, element.user_email)"><i class="mdi mdi-pencil-box"></i> Edit</button>
                                     </mat-cell>
+                                  </ng-container>
+                                  <ng-container matColumnDef="location" class="hideX">
+                                    <mat-header-cell *matHeaderCellDef> Location </mat-header-cell>
+                                  <mat-cell *matCellDef="let element; let i = index">
+                                    <button mat-icon-button color="accent" (click)="onLocation(element, element.user_firstname, element.user_lastname)"><i class="mdi mdi-crosshairs-gps"></i> View</button>
+                                  </mat-cell>
                                   </ng-container>
 
                                   <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>

@@ -17,7 +17,7 @@ import {AngularFireDatabase,AngularFireList} from 'angularfire2/database';
 @Injectable()
 export class AuthService {
 
-  loggedIn: boolean;
+  public loggedIn: boolean;
   loggedIn$ = new BehaviorSubject<boolean>(this.loggedIn);
   private In = new BehaviorSubject<boolean>(false);
 
@@ -61,17 +61,17 @@ export class AuthService {
       return this.In.asObservable(); // {2}
     }
 
-     signup(email: string, password: string) {
-      this.firebaseAuth
-        .auth
-        .createUserWithEmailAndPassword(email, password)
-        .then(function (userData) {
-          this.hUid = userData.uid;
-        })
-        .catch(err => {
-          console.log('Something went wrong:',err.message);
-        });
-    }
+    //  signup(email: string, password: string) {
+    //   this.firebaseAuth
+    //     .auth
+    //     .createUserWithEmailAndPassword(email, password)
+    //     .then(function (userData) {
+    //       this.hUid = userData.uid;
+    //     })
+    //     .catch(err => {
+    //       console.log('Something went wrong:',err.message);
+    //     });
+    // }
 
     insertDriver(driver: Driver) {
       this.usersRef.child(this.hUid).set({
@@ -98,7 +98,7 @@ export class AuthService {
           this.setLoggedIn(true);
           console.log('Nice, it worked!');
           console.log(this.user);
-          this.router.navigate(['']);
+          this.router.navigate(['home']);
         })
         .catch(err => {
           this.error = true;

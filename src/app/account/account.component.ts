@@ -29,10 +29,13 @@ export class AccountComponent implements OnInit {
   order: string = 'cfull_name';
   reverse: boolean = false;
   clientColumns = ['in1', 'user_firstname', 'user_lastname', 'user_birthdate', 'user_mobile', 'actions'];
+  clientColumns = ['user_firstname', 'user_lastname', 'user_birthdate', 'user_mobile', 'actions'];
   itemPrint: Perclient[];
   itemList: Perclient[];
   clientSource = new MatTableDataSource(this.itemPrint);
   noRecords: boolean;
+  hideTableX: boolean = false;
+  searchX: string = '';
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
 
@@ -43,15 +46,15 @@ export class AccountComponent implements OnInit {
   }
 
   applyFilter(filterValue: string) {
+
+
+    this.hideTableX = this.searchX === '';
+
     filterValue = filterValue.trim(); // Remove whitespace
     filterValue = filterValue.toLowerCase(); // MatTableDataSource defaults to lowercase matches
     this.clientSource.filter = filterValue;
 
-    if(this.clientSource.filteredData.length == 0) {
-      this.noRecords = true;
-    } else {
-      this.noRecords = false;
-    }
+    this.noRecords = this.clientSource.filteredData.length == 0;
   }
 
   constructor(private db: AngularFireDatabase,private clientService: ClientService, public authService: AuthService, private route: ActivatedRoute, private titleService: Title, public dialog: MatDialog, private router: Router) {
@@ -119,6 +122,12 @@ export class AccountComponent implements OnInit {
       });
     });
     this.ipp = 10;
+
+    this.hideTableX = true;
+  }
+
+  isEmptyString() {
+    this.hideTableX = this.searchX === '';
   }
 
   logout() {

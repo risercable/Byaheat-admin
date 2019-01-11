@@ -17,6 +17,30 @@
             </button>
           </div>
           <div class="widget-content">
+<!-- Page wrapper  -->
+<!-- ============================================================== -->
+<div class="page-wrapper">
+  <!-- ============================================================== -->
+  <!-- Bread crumb and right sidebar toggle -->
+  <!-- ============================================================== -->
+  <div class="page-breadcrumb">
+    <div class="row">
+      <div class="col-12 d-flex no-block align-items-center">
+        <h4 class="page-title">Cars List</h4>
+        <div class="ml-auto text-right">
+          <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+              <li class="breadcrumb-item"><a routerLink="../../home">Home</a></li>
+              <li class="breadcrumb-item active" aria-current="page">Cars List</li>
+            </ol>
+          </nav>
+        </div>
+      </div>
+    </div>
+      <button type="button" class="btn btn-outline-secondary mr-2" placement="top"
+              ngbPopover="Vivamus sagittis lacus vel augue laoreet rutrum faucibus." popoverTitle="Popover on top">
+        Popover on top
+      </button>
               <div class="mat-app-background basic-container">
                   <div class="example-container mat-elevation-z8">
                       <div class="example-header">
@@ -66,7 +90,51 @@
                             <button mat-icon-button style="color: #2d6987;"><i class="icon-list"></i> DETAILS</button>
                           </mat-cell>
                         </ng-container>
+                            <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Search here..." maxlength="30" matTooltip="*Maximum characters is 30" matTooltipPosition="after" style="width: 500px;">
+                          </mat-form-field>
+                        </div>
+                      <mat-table #table [dataSource]="dataSource" matSort id="basic-table">
 
+                        <!--- Note that these columns can be defined in any order.
+                              The actual rendered columns are set as a property on the row definition" -->
+                        <ng-container matColumnDef="in1">
+                          <mat-header-cell *matHeaderCellDef mat-sort-header>*NO*</mat-header-cell>
+                          <mat-cell *matCellDef="let element; let i = index;"> {{element.in1}} </mat-cell>
+                        </ng-container>
+
+                        <ng-container matColumnDef="car_brand">
+                          <mat-header-cell *matHeaderCellDef mat-sort-header>*BRAND*</mat-header-cell>
+                          <mat-cell *matCellDef="let element; let i = index;"> {{element.car_brand}} </mat-cell>
+                        </ng-container>
+
+                        <!-- Position Column -->
+
+                        <ng-container matColumnDef="car_model">
+                            <mat-header-cell *matHeaderCellDef mat-sort-header>*MODEL*</mat-header-cell>
+                            <mat-cell *matCellDef="let element"> {{element.car_model}} </mat-cell>
+                          </ng-container>
+
+                        <ng-container matColumnDef="car_type">
+                          <mat-header-cell *matHeaderCellDef mat-sort-header>*TYPE*</mat-header-cell>
+                          <mat-cell *matCellDef="let element"> {{element.car_type}} </mat-cell>
+                        </ng-container>
+
+                        <ng-container matColumnDef="car_plate_number">
+                          <mat-header-cell *matHeaderCellDef mat-sort-header>*PLATE NUMBER*</mat-header-cell>
+                          <mat-cell *matCellDef="let element"> {{element.car_plate_number}} </mat-cell>
+                        </ng-container>
+
+                        <ng-container matColumnDef="car_driver">
+                          <mat-header-cell *matHeaderCellDef mat-sort-header>*DRIVER*</mat-header-cell>
+                          <mat-cell *matCellDef="let element" [style.color]="(element.car_driver === 'none') ? 'red' : '' ">{{(element.car_driver | limitTo: 20) + (element.car_driver.length > 20 ? '...' : '')}} <br><a style="color: #2d6987" *ngIf="element.car_driver === 'none'"><i class="icon-key"></i> ASSIGN NOW</a></mat-cell>
+                        </ng-container>
+
+                        <ng-container matColumnDef="actions" class="hideX">
+                          <mat-header-cell *matHeaderCellDef>*ACTION*</mat-header-cell>
+                          <mat-cell *matCellDef="let element; let i = index">
+                            <button mat-icon-button style="color: #2d6987;"><i class="mdi mdi-open-in-new"></i> DETAILS</button>
+                          </mat-cell>
+                        </ng-container>
                         <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
                         <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
 

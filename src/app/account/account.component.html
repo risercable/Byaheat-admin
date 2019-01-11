@@ -1,7 +1,30 @@
-<div id="content">
-  <div id="content-header">
-      <div id="breadcrumb"> <a href="index.html" title="Go to Home" class="tip-bottom"><i class="icon-home"></i> Home</a><a href="#" class="current">Users</a></div>
+<!-- Page wrapper  -->
+<!-- ============================================================== -->
+<div class="page-wrapper">
+  <!-- ============================================================== -->
+  <!-- Bread crumb and right sidebar toggle -->
+  <!-- ============================================================== -->
+  <div class="page-breadcrumb">
+    <div class="row">
+      <div class="col-12 d-flex no-block align-items-center">
+        <h4 class="page-title">Clients</h4><br>
+        <div class="ml-auto text-right">
+          <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+              <li class="breadcrumb-item"><a routerLink="../../home">Home</a></li>
+              <li class="breadcrumb-item active" aria-current="page">Clients</li>
+            </ol>
+          </nav>
+        </div>
+      </div>
+    </div>
   </div>
+  <!-- ============================================================== -->
+  <!-- End Bread crumb and right sidebar toggle -->
+  <!-- ============================================================== -->
+  <!-- ============================================================== -->
+  <!-- Container fluid  -->
+  <!-- ============================================================== -->
   <div class="container-fluid">
     <hr>
     <div class="row-fluid">
@@ -11,47 +34,62 @@
             <h5>Users Table</h5>
           </div>
           <div class="widget-content nopadding">
-
+    <!-- ============================================================== -->
+    <!-- Start Page Content -->
+    <!-- ============================================================== -->
+    <div class="row">
+      <div class="col-12">
+        <div class="card">
+          <div class="card-body">
+            <h6 class="card-subtitle">Search for clients and view their details.</h6>
             <!-- Mat Table Starts here -->
 
-            <div class="mat-app-background basic-container">
+            <div class="mat-app-background basic-container" style="min-height: 400px;">
               <div class="example-container mat-elevation-z8">
                 <div class="example-header">
                   <mat-form-field style="width: 400px">
                     <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Search..." maxlength="30" matTooltip="*Maximum character is 30" matTooltipPosition="after">
+                  <div class="container h-100">
+                    <div class="row h-100 justify-content-center align-items-center">
+                  <mat-form-field style="width: 400px; text-align: center;" class="col-6">
+                    <input class="text-center" matInput (keyup)="applyFilter($event.target.value)" [(ngModel)]="searchX" (ngModelChange)="isEmptyString()" placeholder="Enter your search term here..." maxlength="30" matTooltip="*Maximum characters is 30" matTooltipPosition="after">
                   </mat-form-field>
-                </div>
-                <mat-table #table [dataSource]="clientSource" matSort id="basic-table">
+                      <span><i class="mdi mdi-information-outline"></i></span>
+                    </div>
+                    <div class="row h-100 justify-content-center align-items-center" [hidden]="hideTableX">
+                <mat-table #table [dataSource]="clientSource" matSort id="basic-table" class="col-12">
 
                   <!--- Note that these columns can be defined in any order.
                         The actual rendered columns are set as a property on the row definition" -->
-
                   <ng-container matColumnDef="in1">
                     <mat-header-cell *matHeaderCellDef mat-sort-header>No</mat-header-cell>
                     <mat-cell *matCellDef="let celement"> {{celement.in1}} </mat-cell>
                   </ng-container>
-
+                  <!--<ng-container matColumnDef="in1">-->
+                    <!--<mat-header-cell *matHeaderCellDef mat-sort-header>No</mat-header-cell>-->
+                    <!--<mat-cell *matCellDef="let celement"> {{celement.in1}} </mat-cell>-->
+                  <!--</ng-container>-->
                   <!-- Position Column -->
                   <ng-container matColumnDef="user_firstname">
-                    <mat-header-cell *matHeaderCellDef mat-sort-header>Client Firstname</mat-header-cell>
+                    <mat-header-cell *matHeaderCellDef mat-sort-header>Firstname</mat-header-cell>
                     <mat-cell *matCellDef="let element"> {{element.user_firstname}} </mat-cell>
                   </ng-container>
 
                   <!-- Name Column -->
                   <ng-container matColumnDef="user_lastname">
-                    <mat-header-cell *matHeaderCellDef mat-sort-header>Client Lastname </mat-header-cell>
+                    <mat-header-cell *matHeaderCellDef mat-sort-header>Lastname </mat-header-cell>
                     <mat-cell *matCellDef="let element"> {{element.user_lastname}} </mat-cell>
                   </ng-container>
 
                   <!-- Weight Column -->
                   <ng-container matColumnDef="user_birthdate">
-                    <mat-header-cell *matHeaderCellDef mat-sort-header> Client Birthdate</mat-header-cell>
+                    <mat-header-cell *matHeaderCellDef mat-sort-header>Birthdate</mat-header-cell>
                     <mat-cell *matCellDef="let element"> {{element.user_birthdate}} </mat-cell>
                   </ng-container>
 
                   <!-- Symbol Column -->
                   <ng-container matColumnDef="user_mobile">
-                    <mat-header-cell *matHeaderCellDef mat-sort-header> Client Mobile Number </mat-header-cell>
+                    <mat-header-cell *matHeaderCellDef mat-sort-header>Mobile Number </mat-header-cell>
                     <mat-cell *matCellDef="let element"> {{element.user_mobile}} </mat-cell>
                   </ng-container>
 
@@ -64,6 +102,7 @@
                     <mat-header-cell *matHeaderCellDef> Actions </mat-header-cell>
                     <mat-cell *matCellDef="let element" style="white-space: nowrap">
                       <button mat-icon-button color="accent" id="hideThis" (click)="openDialog(element)">View Details
+                      <button mat-icon-button color="accent" id="hideThis" (click)="openDialog(element)"><i class="mdi mdi-open-in-new"></i> Details
                       </button>
                       <a color="warm" (click)="onSelect(element)" style="margin-left: 40px;" *ngIf="element.latest_ride != 'none'">History Details</a>
                       <span *ngIf="element.latest_ride == 'none'" style="margin-left: 40px; color: red;">No Ride History</span>
@@ -84,6 +123,8 @@
                                [pageSizeOptions]="[5, 10, 20]"
                                [showFirstLastButtons]="true">
                 </mat-paginator>
+                    </div>
+                  </div>
               </div>
             </div>
 
@@ -91,7 +132,8 @@
 
           </div>
         </div>
-  </div>
-</div>
+        </div>
+      </div>
+    </div>
   </div>
 </div>

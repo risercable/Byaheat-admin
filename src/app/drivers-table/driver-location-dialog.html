@@ -1,0 +1,37 @@
+<h3 mat-dialog-title>Location of driver: {{ data.dFname }}</h3>
+<div mat-dialog-content>
+  <!-- Map is Here -->
+  <div *ngIf="data.lat && data.lng">
+
+    <agm-map [latitude]="data.lat" [longitude]="data.lng">
+
+      <agm-marker [latitude]="data.lat" [longitude]="data.lng">
+
+        <agm-info-window>
+          <h3><strong>Howdy!</strong></h3>
+          <p>You are here!</p>
+        </agm-info-window>
+
+      </agm-marker>
+
+      <agm-marker *ngFor="let marker of data.geo"
+                  [latitude]="marker.location[0]"
+                  [longitude]="marker.location[1]"
+                  [iconUrl]="'../../assets/images/if_car_1055099.svg'">
+
+        <agm-info-window>
+          <h3><strong>Location Details</strong></h3>
+          <p>You are {{ marker.distance }} kilometers from this point</p>
+        </agm-info-window>
+
+
+      </agm-marker>
+
+    </agm-map>
+
+  </div>
+</div>
+<div mat-dialog-actions>
+  <button class="btn btn-success" (click)="onNoClick()">Cancel</button>
+  <!-- <button mat-button (click)="onSubmit(driverForm)" cdkFocusInitial>Ok</button> -->
+</div>

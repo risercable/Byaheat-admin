@@ -1,26 +1,47 @@
-<div id="content">
-    <div id="content-header">
-      <div id="breadcrumb"> <a href="#" title="Go to Home" class="tip-bottom"><i class="icon-home"></i> Home</a><a href="#" class="current">Drivers</a> </div>
-      <h1>Car Page</h1>
+<!-- Page wrapper  -->
+<!-- ============================================================== -->
+<div class="page-wrapper">
+  <!-- ============================================================== -->
+  <!-- Bread crumb and right sidebar toggle -->
+  <!-- ============================================================== -->
+  <div class="page-breadcrumb">
+    <div class="row">
+      <div class="col-12 d-flex no-block align-items-center">
+        <h4 class="page-title">Add Car</h4>
+        <div class="ml-auto text-right">
+          <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+              <li class="breadcrumb-item"><a routerLink="../../home">Home</a></li>
+              <li class="breadcrumb-item active" aria-current="page">Add Car</li>
+            </ol>
+          </nav>
+        </div>
+      </div>
     </div>
-    <div class="container-fluid">
-        <div class="row-fluid">
-          <div class="span8">
-            <div class="widget-box">
-              <div class="widget-title"> <span class="icon"><i class="icon-ok"></i></span>
-                <h5>Add Car</h5>
-              </div>
-              <div class="widget-content nopadding">
+  </div>
+  <!-- Container fluid  -->
+  <!-- ============================================================== -->
+  <div class="container-fluid">
+    <!-- ============================================================== -->
+    <!-- Start Page Content -->
+    <!-- ============================================================== -->
+    <div class="row">
+      <div class="col-md-6">
+        <div class="card">
+          <form class="form-horizontal">
+            <div class="card-body">
+              <h4 class="card-title">Car Info</h4>
                   <div class="alert alert-success" *ngIf="carService.incar == true">
                       <button class="close" data-dismiss="alert">×</button>
-                      <strong>Success!</strong> Added car info</div>
+                      <strong>Success!</strong> Added car info
+                  </div>
                   <form #carForm="ngForm" (ngSubmit)="onSubmit(carForm);" class="form-horizontal">
                     <input type="hidden" name="$key" #$key="ngModel" [(ngModel)]="carService.selectedCar.$key" />
                     <div class="control-group">
                       <div class="controls">
                         <mat-form-field>
                           <mat-label>Car Plate Number</mat-label>
-                          <input matInput name="car_plate_number" [(ngModel)]="car_plate_number" [formControl]="car_pnE" placeholder="AAA-1111" required>
+                          <input matInput name="car_plate_number" [(ngModel)]="car_plate_number" [formControl]="car_pnE" placeholder="AAA-1111" mask='SSSS-0000' required>
                           <mat-error *ngIf="car_pnE.invalid">{{getErrorMessage4()}}</mat-error>
                         </mat-form-field>
                       </div>
@@ -100,8 +121,26 @@
                       </div>
                   </form>
               </div>
-            </div>
-            </div>
+          </form>
         </div>
+      </div>
+      <div class="col-md-6">
+        <div class="card">
+          <form class="form-horizontal">
+            <div class="card-body">
+              <p>Number of Toyota Cars: <span></span></p>
+            </div>
+          </form>
+        </div>
+        <div class="card">
+          <form class="form-horizontal">
+            <div class="card-body" style="height: auto; overflow: auto;">
+              <p style="margin: 0 auto;">Just another Under Construction div XD</p>
+              <img src="../../assets/images/ao2X1b0_700b.jpg" style="width: auto; height: auto;">
+            </div>
+          </form>
+        </div>
+      </div>
     </div>
   </div>
+</div>
