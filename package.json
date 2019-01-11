@@ -1,6 +1,10 @@
 {
   "name": "lakbay-web",
   "version": "0.0.0",
+  "engines": {
+    "node": "10.14.1",
+    "npm": "6.4.1"
+  },
   "license": "MIT",
   "scripts": {
     "ng": "ng",
