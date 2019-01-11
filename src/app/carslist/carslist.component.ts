@@ -1,13 +1,15 @@
 import {Component, Inject, OnInit, ViewChild, ViewEncapsulation} from '@angular/core';
-import { AngularFireDatabase } from 'angularfire2/database';
-import { AngularFireList } from 'angularfire2/database/interfaces';
-import { Observable } from 'rxjs/Observable';
-import { CarService } from '../drivers/shared/car.service';
-import { Car } from '../drivers/shared/car.model';
-import { NgForm } from '@angular/forms/src/directives/ng_form';
-import { Title } from '@angular/platform-browser';
-import {MatDialog, MatDialogRef, MAT_DIALOG_DATA, MatTableDataSource, MatPaginator, MatSort} from '@angular/material';
+import {AngularFireDatabase} from 'angularfire2/database';
+import {AngularFireList} from 'angularfire2/database/interfaces';
+import {Observable} from 'rxjs/Observable';
+import {CarService} from '../drivers/shared/car.service';
+import {Car} from '../drivers/shared/car.model';
+import {NgForm} from '@angular/forms/src/directives/ng_form';
+import {Title} from '@angular/platform-browser';
+import {MAT_DIALOG_DATA, MatDialog, MatDialogRef, MatPaginator, MatSort, MatTableDataSource} from '@angular/material';
 import {ClientDetailsDialog} from "../account/account.component";
+import * as firebase from "firebase";
+
 declare var jsPDF: any; // Important
 
 @Component({
@@ -42,12 +44,13 @@ export class CarslistComponent implements OnInit {
   itemList: PerCar[];
   isGreen: boolean = false;
   dataSource = new MatTableDataSource(this.itemList);
-  displayedColumns = ['in1', 'car_model', 'car_type', 'car_plate_number', 'car_driver', 'actions'];
+  displayedColumns = ['in1', 'car_model', 'car_type', 'car_plate_number', 'car_driver', 'unassign'];
   noRecords: boolean;
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
 
   @ViewChild(MatSort) sort: MatSort;
+  elementsCar: any;
 
   ngAfterViewInit() {
     this.dataSource.sort = this.sort;
@@ -68,18 +71,18 @@ export class CarslistComponent implements OnInit {
 
   constructor(private db: AngularFireDatabase,private carService: CarService, private titleService: Title, public dialog: MatDialog) {
     // this.carList = db.list('all_cars');
-    // this.cList = db.list('all_cars');
-    // this.driversList = db.list('reservations');
-    // this.drvList = db.list('drivers');
+    this.cList = db.list('all_cars');
+    this.driversList = db.list('reservations');
+    this.drvList = db.list('drivers');
     // this.cars = this.carList.snapshotChanges().map(changes => {
     //   return changes.map(c => ({ key: c.payload.key, ...c.payload.val() }));
     // });
 
-    // this.adriversList = db.list('drivers', ref => ref.orderByChild('assigned_car').equalTo('none'));
+    this.adriversList = db.list('drivers', ref => ref.orderByChild('assigned_car').equalTo('none'));
 
-    // this.adrivers = this.adriversList.snapshotChanges().map(changes => {
-    //   return changes.map(c => ({ key: c.payload.key, ...c.payload.val() }));
-    // });
+    this.adrivers = this.adriversList.snapshotChanges().map(changes => {
+      return changes.map(c => ({ key: c.payload.key, ...c.payload.val() }));
+    });
 
     // this.notAssigned = db.list('all_cars', ref => ref.orderByChild('car_driver').equalTo('none'));
 
@@ -111,7 +114,19 @@ export class CarslistComponent implements OnInit {
   openDialog(i: any): void {
     let dialogRef = this.dialog.open(ClientDetailsDialog, {
       width: 'auto',
-      data: { clientarray: i }
+      data: { cararray: i }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log('The dialog was closed');
+    });
+  }
+
+  openAssign(i: any): void {
+    let dbRef = this.db.list('drivers', ref => ref.orderByChild('assigned_car').equalTo('none'));
+    let dialogRef = this.dialog.open(AssignCarDialog, {
+      width: 'auto',
+      data: { drarray: dbRef }
     });
 
     dialogRef.afterClosed().subscribe(result => {
@@ -169,10 +184,14 @@ export class CarslistComponent implements OnInit {
     });
   }
 
-  assignNow(wewa: string, wewb: string, wew: string, wew2: string) {
-    this.drvList.update(wewa, { assigned_car: {car_plate_number: wew, car_brand: this.brand, car_model: this.model, car_capacity: this.capacity, car_color: this.color, car_type: wew2} });
-    this.drvList.update(wewa, {car_type: wew2});
-    this.cList.update(this.keyToPass, { car_driver: wewb });
+  assignNow(drkey: string, dremail: string, platenum: string, type: string) {
+    this.drvList.update(drkey, { assigned_car: {car_plate_number: platenum, car_brand: this.brand, car_model: this.model, car_capacity: this.capacity, car_color: this.color, car_type: type} });
+    this.drvList.update(drkey, {car_type: type});
+    this.cList.update(this.keyToPass, { car_driver: dremail });
+
+    firebase.database().ref('reservation_dates').child(type).child(drkey).update({
+      nodate: "true"
+    })
   }
 
   unassignNow(theKey: string, theEmail: string) {
@@ -247,6 +266,9 @@ export class CarslistComponent implements OnInit {
     this.ipp = event;
    }
 
+  sendPlateNumber(element) {
+    this.elementsCar = element;
+  }
 }
 
 export interface PerCar {
@@ -276,4 +298,19 @@ export class CarDetailsDialog {
     this.dialogRef.close();
   }
 
+}
+
+@Component({
+  selector: 'assign-car-dialog',
+  templateUrl: 'assign-car-dialog.html',
+  encapsulation: ViewEncapsulation.None
+})
+
+export class AssignCarDialog {
+
+  constructor(public dialogRef: MatDialogRef<AssignCarDialog>, @Inject(MAT_DIALOG_DATA) public data: any) { }
+
+  onNoClick(): void {
+    this.dialogRef.close();
+  }
 }

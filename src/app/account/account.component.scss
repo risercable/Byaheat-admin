@@ -16,9 +16,21 @@
   font-size: 20px;
 }
 
+.mat-column-user_firstname, .mat-column-user_lastname, .mat-column-user_birthdate {
+  max-width: 120px;
+}
+
+.mat-header-cell {
+ text-align: center;
+}
+
 .mat-form-field {
   font-size: 14px;
   width: 100%;
+}
+
+.mat-column-actions {
+  padding: 5px 1px 5px 4px !important;
 }
 
 .mat-table {
@@ -30,18 +42,18 @@
   }
 }
 
-.input1 {
-  width: auto;
-  background-color: white;    /* replace this color with your accent color hex code */
-}
-
-.mat-focused  {
-  background-color: white;    /* replace this color with your accent color hex code */
-}
-
-.mat-input-placeholder {
-  background-color: white;    /* replace this color with your accent color hex code */
-}
+//.input1 {
+//  width: auto;
+//  background-color: white;    /* replace this color with your accent color hex code */
+//}
+//
+//.mat-focused  {
+//  background-color: white;    /* replace this color with your accent color hex code */
+//}
+//
+//.mat-input-placeholder {
+//  background-color: white;    /* replace this color with your accent color hex code */
+//}
 
 .label1 {
   color: royalblue;
@@ -54,7 +66,7 @@
 .separator {
   height: 100%;
   width: 1px;
-  background: black;
+  background: wheat;
   top: 0;
   bottom: 0;
   position: absolute;
@@ -76,8 +88,7 @@
 }
 
 .mat-column-actions {
-  width: auto;
-  display: inline-block;
+  margin-left: -100px;
 }
 
 

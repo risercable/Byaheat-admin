@@ -1,0 +1,35 @@
+<h1 mat-dialog-title>Print Menu</h1>
+<div mat-dialog-content>
+  <form #printForm="ngForm">
+  <p>sort data</p>
+  <mat-radio-group>
+    <mat-radio-button value="date" (change)="isdate('catg')">By Category</mat-radio-button>
+    <mat-radio-button value="catg" (change)="isdate('date')">By Date</mat-radio-button>
+  </mat-radio-group>
+  <br>
+  <mat-form-field>
+    <mat-select name="by_catg" placeholder="Select data" [(value)]="sortD" [disabled]="!bycatg" required>
+      <mat-option *ngFor="let col of cols" [value]="col.value">
+        {{ col.value }}
+      </mat-option>
+    </mat-select>
+    <br>
+  </mat-form-field>
+  <p>From -> </p>
+  <mat-form-field>
+    <input name="by_date" matInput [matDatepicker]="picker" placeholder="Choose a date" [disabled]="!bydate" required>
+    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+    <mat-datepicker #picker (selectedChanged)="onDate($event)"></mat-datepicker>
+  </mat-form-field>
+  <p>-> to now</p>
+  <mat-radio-group>
+    <mat-radio-button value="asc" (click)="sortas('asc')">Ascending</mat-radio-button>
+    <mat-radio-button value="desc" (click)="sortas('desc')">Descending</mat-radio-button>
+  </mat-radio-group>
+    <!--<button type="submit" mat-raised-button color="primary" [disabled]="!printForm.valid" (click)="onGo()"><i class="fa fa-save"></i>Submit</button>-->
+  </form>
+</div>
+<div mat-dialog-actions>
+  <button mat-button (click)="onGo()">Go</button>
+  <button mat-button (click)="onNoClick()">Cancel</button>
+</div>

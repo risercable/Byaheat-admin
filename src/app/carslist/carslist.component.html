@@ -18,10 +18,27 @@
         </div>
       </div>
     </div>
-      <button type="button" class="btn btn-outline-secondary mr-2" placement="top"
-              ngbPopover="Vivamus sagittis lacus vel augue laoreet rutrum faucibus." popoverTitle="Popover on top">
-        Popover on top
-      </button>
+  </div>
+      <!--<button type="button" class="btn btn-outline-secondary mr-2" placement="top"-->
+              <!--ngbPopover="Vivamus sagittis lacus vel augue laoreet rutrum faucibus." popoverTitle="Popover on top">-->
+        <!--Popover on top-->
+      <!--</button>-->
+  <!-- ============================================================== -->
+  <!-- End Bread crumb and right sidebar toggle -->
+  <!-- ============================================================== -->
+  <!-- ============================================================== -->
+  <!-- Container fluid  -->
+  <!-- ============================================================== -->
+  <div class="container-fluid">
+    <!-- ============================================================== -->
+    <!-- Start Page Content -->
+    <!-- ============================================================== -->
+    <div class="row">
+      <div class="col-12">
+        <div class="card">
+          <div class="card-body">
+            <h6 class="card-subtitle">Search for clients and view their details.</h6>
+            <!-- Mat Table Starts here -->
               <div class="mat-app-background basic-container">
                   <div class="example-container mat-elevation-z8">
                       <div class="example-header">
@@ -62,15 +79,22 @@
 
                         <ng-container matColumnDef="car_driver">
                           <mat-header-cell *matHeaderCellDef mat-sort-header>*DRIVER*</mat-header-cell>
-                          <mat-cell *matCellDef="let element" [style.color]="(element.car_driver === 'none') ? 'red' : '' ">{{(element.car_driver | limitTo: 20) + (element.car_driver.length > 20 ? '...' : '')}} <br><a style="color: #2d6987" *ngIf="element.car_driver === 'none'"><i class="icon-key"></i> ASSIGN NOW</a></mat-cell>
+                          <mat-cell *matCellDef="let element" [style.color]="(element.car_driver === 'none') ? 'red' : '' ">{{(element.car_driver | limitTo: 20) + (element.car_driver.length > 20 ? '...' : '')}} <br><a style="color: #2d6987" *ngIf="element.car_driver === 'none'" (click)="passKey(element.$key, element.car_plate_number, element.car_brand, element.car_model, element.car_capacity, element.car_color, element.car_type)" data-toggle="modal" data-target="#selectDriverModal" ><i class="mdi mdi-key-plus"></i> ASSIGN NOW</a></mat-cell>
                         </ng-container>
 
-                        <ng-container matColumnDef="actions" class="hideX">
-                          <mat-header-cell *matHeaderCellDef>*ACTION*</mat-header-cell>
-                          <mat-cell *matCellDef="let element; let i = index">
-                            <button mat-icon-button style="color: #2d6987;"><i class="mdi mdi-open-in-new"></i> DETAILS</button>
-                          </mat-cell>
-                        </ng-container>
+                          <ng-container matColumnDef="unassign">
+                            <mat-header-cell *matHeaderCellDef mat-sort-header>*UNASSIGN*</mat-header-cell>
+                            <mat-cell *matCellDef="let element">
+                              <button *ngIf="element.car_driver != 'none' " href="" class="btn btn-mini btn-danger pull-right" (click)="passunKey(element.$key, element.car_plate_number, element.car_brand, element.car_model, element.car_capacity, element.car_color, element.car_type, element.car_driver)" data-toggle="modal" data-target="#unassignDriver" style="width: auto;"><i class="mdi mdi-alert"></i> UNASSIGN</button>
+                            </mat-cell>
+                          </ng-container>
+
+                        <!--<ng-container matColumnDef="actions" class="hideX">-->
+                          <!--<mat-header-cell *matHeaderCellDef>*ACTION*</mat-header-cell>-->
+                          <!--<mat-cell *matCellDef="let element; let i = index">-->
+                            <!--<button mat-icon-button style="color: #2d6987;"><i class="mdi mdi-open-in-new" (click)="openDialog(element)"></i> DETAILS</button>-->
+                          <!--</mat-cell>-->
+                        <!--</ng-container>-->
 
                         <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
                         <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
@@ -89,4 +113,76 @@
                     </div>
                 </div>
           </div>
+        </div>
+      </div>
+    </div>
+  </div>
+<!-- Select Driver Modal -->
+<div id="selectDriverModal" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">Select a Driver</h4>
+      </div>
+      <div class="modal-body">
+        <table class="table table-bordered table-striped">
+          <thead>
+          <tr>
+            <th>Driver Name</th>
+            <th>Assign Now</th>
+          </tr>
+          </thead>
+          <tbody *ngFor="let adriver of adrivers | async">
+          <tr class="odd gradeX">
+            <td>{{adriver.user_firstname + " " + adriver.user_lastname}}</td>
+            <td> <a class="btn btn-mini btn-primary" (click)="assignNow(adriver.key, adriver.user_email, this.pnumberToPass, this.typeToPass)" data-toggle="modal" data-target="#selectDriverModal">ASSIGN THIS DRIVER</a>
+            </td>
+          </tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- Unassign Driver Modal -->
+<div id="unassignDriver" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">Select a Driver</h4>
+      </div>
+      <div class="modal-body">
+        <table class="table table-bordered table-striped">
+          <thead>
+          <tr>
+            <th>Driver Name</th>
+            <th>Unassign</th>
+          </tr>
+          </thead>
+          <tbody *ngFor="let undriver of undrivers | async">
+          <tr class="odd gradeX">
+            <td>{{undriver.user_firstname + " " + undriver.user_lastname}}</td>
+            <td> <a class="btn btn-mini btn-danger" (click)="unassignNow(undriver.key, undriver.user_email)" data-toggle="modal" data-target="#unassignDriver">UNASSIGN THIS DRIVER</a>
+            </td>
+          </tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+
+  </div>
 </div>

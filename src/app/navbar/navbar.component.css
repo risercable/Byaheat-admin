@@ -30,19 +30,35 @@
   margin-left: -40px;
   text-align: center !important; }
 
+#b4side {
+  display: none; }
+
 @media (max-width: 768px) {
   #sidebar {
     display: none; }
 
-  #sidebar2 {
-    display: block; } }
+  #b4side {
+    display: block; }
+
+  .light-logo {
+    max-height: 20%;
+    max-width: 20%;
+    margin-bottom: -10px; }
+
+  .dropdown-menu {
+    background-color: #3e5569; } }
 @media (max-width: 567px) {
   #sidebar {
     display: none; }
+    #sidebar .dropdown-menu-center {
+      background-color: #3e5569; }
 
-  #sidebar2 {
-    display: block;
-    font-size: x-small; } }
+  #b4side {
+    display: block; }
+
+  .light-logo {
+    max-height: 30%;
+    max-width: 30%; } }
 #sidebar {
   flex-shrink: 0; }
 

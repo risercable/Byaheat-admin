@@ -14,7 +14,7 @@ export const environment = {
     messagingSenderId: "169926421741"
   },
 
-  googleMapsKey: 'AIzaSyDX8GsNHzj0010sDGVhIpx6HIPYfqOSpYw',
+  googleMapsKey: '',
 
-  SENDGRID_API_KEY:'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'
+  SENDGRID_API_KEY:''
 };

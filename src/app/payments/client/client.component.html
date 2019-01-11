@@ -18,14 +18,47 @@
         </div>
       </div>
     </div>
-    <div class="mat-app-background basic-container">
+  </div>
+  <!-- ============================================================== -->
+  <!-- End Bread crumb and right sidebar toggle -->
+  <!-- ============================================================== -->
+  <!-- ============================================================== -->
+  <!-- Container fluid  -->
+  <!-- ============================================================== -->
+  <div class="container-fluid">
+    <!-- ============================================================== -->
+    <!-- Start Page Content -->
+    <!-- ============================================================== -->
+    <div class="row">
+      <div class="col-12">
+        <div class="card">
+          <div class="card-body">
+            <h6 class="card-subtitle">Search for payments made (per key) and view their all payments history with their corresponding details.</h6>
+            <!-- Mat Table Starts here -->
+    <div class="mat-app-background basic-container" style="min-height: 400px;">
       <div class="example-container mat-elevation-z8">
         <div class="example-header">
-          <mat-form-field style="width: 400px">
-            <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Search here..." maxlength="30" matTooltip="*Maximum character is 30" matTooltipPosition="after" style="width: 500px;">
-          </mat-form-field>
-        </div>
-        <mat-table #table [dataSource]="dataSource" matSort id="basic-table">
+          <div class="container h-100">
+            <div class="row h-100 justify-content-center align-items-center">
+              <mat-form-field style="width: 400px; text-align: center;" class="col-6">
+                <input class="text-center" matInput (keyup)="applyFilter($event.target.value)" [(ngModel)]="searchX" placeholder="Enter your search term here..." maxlength="30" matTooltip="*Maximum characters is 30" matTooltipPosition="after">
+              </mat-form-field>
+              <span><i class="mdi mdi-information-outline"></i></span>
+              <!--<div class="container-fluid">-->
+                <!--<h6 class="text-center"  *ngIf="bbt">or</h6>-->
+                <!--<div class="d-flex justify-content-center">-->
+                  <!--<button style="background-color: #6610f2; outline: white; color: white;" (click)="hideTableX=false;bbt=false" class="btn text-center"  mat-button *ngIf="bbt">show table</button>-->
+                <!--</div>-->
+              <!--</div>-->
+            </div>
+            <div class="row h-100 justify-content-center align-items-center">
+              <mat-card *ngIf="!dataSource?.filteredData.length">
+                <div><h3 style="text-align:center">We couldn't find data for
+                  <span style="color:red">"{{dataSource.filter}}"</span>
+                </h3></div>
+              </mat-card>
+              <mat-card *ngIf="dataSource?.filteredData.length" style="width: 100%">
+        <mat-table #table [dataSource]="dataSource" matSort id="basic-table" class="col-12">
 
           <!--- Note that these columns can be defined in any order.
                 The actual rendered columns are set as a property on the row definition" -->
@@ -62,8 +95,15 @@
                        [pageSizeOptions]="[5, 10, 20]"
                        [showFirstLastButtons]="true">
         </mat-paginator>
+              </mat-card>
+            </div>
       </div>
     </div>
   </div>
 </div>
-
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

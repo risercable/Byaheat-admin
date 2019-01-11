@@ -13,6 +13,8 @@ import { AddDriverComponent } from './drivers/add-driver/add-driver.component';
 import { DriverService } from './drivers/shared/driver.service';
 import { Driver } from './drivers/shared/driver.model';
 import {AngularFireDatabase,AngularFireList} from 'angularfire2/database';
+import {switchMap} from "rxjs/operators";
+import {of} from "rxjs/observable/of";
 
 @Injectable()
 export class AuthService {
@@ -26,21 +28,35 @@ export class AuthService {
   error: boolean;
   isLoggedIn: boolean;
   hUid: string;
+  isAdmin: boolean;
+  checkThis: any;
+  username: string;
+  password: string;
 
   driverList: AngularFireList<any>;
   drivers: Observable<any[]>;
   usersRef: any;
+  user$: Observable<AppUser>;
 
     // store the URL so we can redirect after logging in
     redirectUrl: string;
 
-    constructor(public firebaseAuth: AngularFireAuth, private router: Router, db: AngularFireDatabase) {
+    constructor(public firebaseAuth: AngularFireAuth, private router: Router,public db: AngularFireDatabase) {
       this.user = firebaseAuth.authState;
       this.usersRef = firebase.database().ref("drivers");
       this.driverList = db.list('drivers');
     this.drivers = this.driverList.snapshotChanges().map(changes => {
       return changes.map(c => ({ key: c.payload.key, ...c.payload.val() }));
     });
+
+      this.user$ = firebaseAuth.authState
+        .pipe(switchMap(user_ => {
+          if (user_) {
+            return this.db.object(`admins`).valueChanges();
+          } else {
+            return of(null);
+          }
+        }));
      }
 
      ngOnInit() {
@@ -97,8 +113,11 @@ export class AuthService {
           this.In.next(true);
           this.setLoggedIn(true);
           console.log('Nice, it worked!');
-          console.log(this.user);
-          this.router.navigate(['home']);
+
+          let uid = value.user.uid;
+          console.log(uid);
+          this.sAdmin(uid);
+          // this.router.navigate(['home']);
         })
         .catch(err => {
           this.error = true;
@@ -107,6 +126,7 @@ export class AuthService {
           console.log('Something went wrong:',err.message);
         });
         this.setLoggedIn(true);
+
       }
 
     logout(){
@@ -125,7 +145,41 @@ export class AuthService {
       return this.loggedIn;
       }
 
-      get authenticated(): boolean {
-        return this.firebaseAuth.authState !== null;
+  get authenticated(): boolean {
+    return this.firebaseAuth.authState !== null;
+  }
+
+  getUserData(email: string) {
+      firebase.database().ref('admin/email').once('value').then((snapshot) => {
+        var isEmail = snapshot.val();
+
+        return isEmail == email;
+      })
+  }
+
+  private sAdmin(uid: string) {
+    return firebase.database().ref('users/' + uid + '/roles').once('value').then(snapshot => {
+      let adminSiya = snapshot.val().admin;
+
+      console.log("snap val: ", adminSiya);
+
+      if(adminSiya !== true) {
+        this.firebaseAuth
+          .auth
+          .signOut();
+
+        console.log("tama pero di ka admin");
+        this.router.navigate(['login']);
+      } else {
+        console.log("tama tsaka admin ka!!!");
+        this.router.navigate(['home']);
       }
-    }
+    });
+  }
+}
+
+export interface AppUser {
+  name: string;
+  email: string;
+  isAdmin: boolean;
+}

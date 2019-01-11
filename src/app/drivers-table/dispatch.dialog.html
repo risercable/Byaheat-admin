@@ -1,0 +1,21 @@
+<h1 mat-dialog-title>Confirm Dispatch</h1>
+<div mat-dialog-content>
+  <div class="example-container">
+    <p>Driver Full Name: {{data.thed1.user_firstname + " " + data.thed1.user_lastname}}</p>
+    <p>Car Plate Number: {{data.thed1.assigned_car.car_plate_number}}</p>
+    <p>Time In: {{tNow}}</p>
+    <p>Time To Park Car: {{tOut}}</p>
+    <mat-form-field class="example-full-width">
+      <input matInput placeholder="Condition" #carCondition>
+    </mat-form-field>
+  </div>
+</div>
+<div mat-dialog-actions>
+  <div class="col-12">
+    <div class="row">
+      <button class="btn btn-success col-5" (click)="onYes(true, carCondition.value)">YES</button>
+      <button class="btn btn-outline-info col-5 offset-2" (click)="onNoClick(false)">Cancel</button>
+    </div>
+  </div>
+<!-- <button mat-button (click)="onSubmit(driverForm)" cdkFocusInitial>Ok</button> -->
+</div>

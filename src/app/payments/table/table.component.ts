@@ -6,6 +6,8 @@ import {CarService} from "../../drivers/shared/car.service";
 import {Title} from "@angular/platform-browser";
 import {ActivatedRoute} from "@angular/router";
 import * as firebase from "firebase";
+import {PerClientPays} from "../client/client.component";
+import {el} from "@angular/platform-browser/testing/src/browser_util";
 
 @Component({
   selector: 'app-table',
@@ -15,9 +17,11 @@ import * as firebase from "firebase";
 export class TableComponent implements OnInit {
   itemList: PerPays[];
   dataSource = new MatTableDataSource(this.itemList);
-  displayedColumns = ['in1', 'payment_method', 'price_payed', 'push_date'];
+  displayedColumns = ['in1', 'payment_method', 'price', 'timestamp'];
   noRecords: boolean;
   key: string = '';
+  price: number;
+  arrayPo: any;
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
 
@@ -43,8 +47,13 @@ export class TableComponent implements OnInit {
     this.titleService.setTitle("Lakbay | Payments Table");
     this.key = this.route.snapshot.paramMap.get("$key").toString();
 
-    let data = this.db.list('/payments/' + this.key);
+    let data = this.db.list('/payments/' + this.key, ref => ref.orderByChild('paid/'+ this.key).limitToLast(1));
     this.itemList = [];
+    this.arrayPo = [];
+
+    const db = firebase.database();
+    const usersRef = db.ref('payments/' + this.key);
+    const query = usersRef.orderByChild('paid/' + this.key).limitToLast(1);
 
     data.snapshotChanges().subscribe(item => {
       this.itemList = [];
@@ -63,6 +72,7 @@ export class TableComponent implements OnInit {
       this.dataSource = new MatTableDataSource(this.itemList);
       this.dataSource.sort = this.sort;
       this.dataSource.paginator = this.paginator;
+
     });
   }
 
@@ -75,6 +85,6 @@ export class TableComponent implements OnInit {
 export interface PerPays {
   in1: string;
   payment_method: string;
-  price_payed: string;
-  push_date: string;
+  price: string;
+  timestamp: string;
 }

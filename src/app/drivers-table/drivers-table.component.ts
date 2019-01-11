@@ -9,7 +9,7 @@ import { Title } from '@angular/platform-browser';
 
 import {MatDatepickerModule} from '@angular/material/datepicker';
 import {MatDialogModule} from '@angular/material/dialog';
-import {MatDialog, MatDialogRef, MAT_DIALOG_DATA, MatTableDataSource, MatPaginator, MatSort} from '@angular/material';
+import {MatDialog, MatDialogRef, MAT_DIALOG_DATA, MatTableDataSource, MatPaginator, MatSort, MatSnackBar} from '@angular/material';
 import {MatButtonModule} from '@angular/material/button';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
@@ -17,6 +17,7 @@ import {Item} from "../reservation/reservation.component";
 import {Router} from "@angular/router";
 import {GeoFire} from "geofire";
 import {GeofireService} from "../geofire.service";
+import * as firebase from "firebase";
 
 declare var jsPDF: any; // Important
 
@@ -47,8 +48,9 @@ export class DriversTableComponent implements OnInit {
   maxDate = new Date();
   options: FormGroup;
   itemList: Item[];
+  itemRating: any[];
   dataSource = new MatTableDataSource(this.itemList);
-  displayedColumns = ['in1', 'user_firstname', 'user_lastname', 'user_email', 'actions', 'location'];
+  displayedColumns = ['in1', 'user_firstname', 'user_lastname', 'user_email', 'total_rating', 'dispatched', 'actions', 'location'];
   noRecords: boolean;
   order: string;
   reverse: boolean = false;
@@ -87,11 +89,24 @@ export class DriversTableComponent implements OnInit {
 
     data.snapshotChanges().subscribe(item => {
       this.itemList = [];
+      this.itemRating = [];
       let i = 1;
       item.forEach(element => {
         let json = element.payload.toJSON();
+
+
         json["$key"] = element.key;
         json["in1"] = i;
+        let crx = [];
+
+        element.payload.child('rating').forEach(childR => {
+
+          crx.push(childR.val());
+        })
+
+        let sum = crx.reduce((acc, cur) => acc + cur, 0);
+        json["total_rating"] = sum;
+
         // this.itemList.push(json as Item);
         this.itemList.push(json as Item);
 
@@ -102,6 +117,9 @@ export class DriversTableComponent implements OnInit {
       this.dataSource = new MatTableDataSource(this.itemList);
       this.dataSource.sort = this.sort;
       this.dataSource.paginator = this.paginator;
+
+      console.log('ratings:', this.itemList);
+      console.log('logsRates: ', this.itemRating);
     });
 
     this.driverList = db.list('drivers');
@@ -155,8 +173,29 @@ export class DriversTableComponent implements OnInit {
 
   }
 
+  dispatchDetails(dk: string): void {
+    let dialogRef = this.dialog.open(DpDetailsDialog, {
+      width: '460px',
+      data: { thedk: dk }
+    })
+    dialogRef.afterClosed().subscribe(result => {
+      console.log('The dialog was closed');
+    });
+  }
+
+  openDispatch(d1: any): void {
+    let dialogRef = this.dialog.open(DispatchDialog, {
+      width: '460px',
+      data: { thed1: d1 }
+    })
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log('The dialog was closed');
+    });
+  }
+
   onLocation(dElement, dFname, dLname) {
-    this.router.navigate(['/drivers/table/location', dElement.$key]);
+    this.router.navigate(['/drivers/table/location', dElement.$key, dElement.user_firstname  + ' ' + dElement.user_lastname]);
   }
 
   private getUserLocation() {
@@ -167,7 +206,7 @@ export class DriversTableComponent implements OnInit {
         this.lat = position.coords.latitude;
         this.lng = position.coords.longitude;
 
-        this.geo.getLocations(5000, [this.lat, this.lng]);
+        // this.geo.getLocations(5000, [this.lat, this.lng]);
       });
     }
   }
@@ -293,6 +332,96 @@ export interface Item {
   user_firstname: string;
   user_lastname: string;
   user_email: string;
+  total_rating: number;
+  dispatched: boolean;
+}
+
+@Component({
+  selector: 'dpdetails-dialog',
+  templateUrl: 'dpdetails-dialog.html',
+})
+export class DpDetailsDialog {
+  full_name: string;
+  car_con: string;
+  car_pnum: string;
+  time_in: any;
+  time_out: any;
+
+  constructor(
+    public dialogRef: MatDialogRef<DpDetailsDialog>,
+    @Inject(MAT_DIALOG_DATA) public data: any, public driverService : DriverService, public db2: AngularFireDatabase) {
+
+    let dete = firebase.database().ref('dispatches').child(data.thedk);
+
+    dete.once('value', item => {
+      this.full_name = item.val().driver_full_name;
+      this.car_pnum = item.val().car_plate_number;
+      this.time_in = item.val().time_in;
+      this.time_out = item.val().time_out;
+      this.car_con = item.val().car_condition;
+    })
+  }
+
+  onNoClick(x: boolean): void {
+    this.dialogRef.close();
+  }
+}
+
+  @Component({
+    selector: 'dispatch.dialog',
+    templateUrl: 'dispatch.dialog.html',
+  })
+export class DispatchDialog {
+  tNow: any;
+  tOut: any;
+
+    constructor(
+      public dialogRef: MatDialogRef<DispatchDialog>,
+      @Inject(MAT_DIALOG_DATA) public data: any, public driverService : DriverService, public db2: AngularFireDatabase, public snackBar: MatSnackBar) {
+
+      let timestamp = +new Date();
+
+      this.tNow = new Date(timestamp).toLocaleString();
+      this.tNow = this.tNow.split(' ').slice(0, 6).join(' ');
+
+      let cpDate  = new Date(timestamp);
+
+      cpDate.setHours(cpDate.getHours()+8);
+
+      this.tOut = new Date(cpDate).toLocaleString();
+      this.tOut = this.tOut.split(' ').slice(0, 6).join(' ');
+
+      console.log(this.tNow);
+    }
+
+    openSnackBar(message: string) {
+      this.snackBar.open("Success dispatch: " + message, "Ok", {
+        duration: 2000,
+      });
+    }
+
+    onNoClick(x: boolean): void {
+      firebase.database().ref('drivers/' + this.data.thed1.$key).update({
+        dispatched: x
+      })
+      this.dialogRef.close();
+    }
+
+    onYes(x: boolean, cCon: string): void {
+      firebase.database().ref('drivers/' + this.data.thed1.$key).update({
+        dispatched: x
+      })
+      firebase.database().ref('dispatches/' + this.data.thed1.$key).update({
+        driver_fullname: this.data.thed1.user_firstname + " " + this.data.thed1.user_lastname,
+        car_plate_number: this.data.thed1.assigned_car.car_plate_number,
+        car_condition: cCon,
+        time_in: this.tNow,
+        time_out: this.tOut
+      })
+      this.dialogRef.close();
+
+      this.openSnackBar(this.data.thed1.user_firstname);
+    }
 }
 
 @Component({
@@ -305,12 +434,21 @@ export class DialogOverviewExampleDialog {
   f11: Driver[];
   f1list: AngularFireList<any>;
   f1ss: Observable<any[]>
+  allData: any[];
 
   constructor(
     public dialogRef: MatDialogRef<DialogOverviewExampleDialog>,
     @Inject(MAT_DIALOG_DATA) public data: any, public driverService : DriverService, public db2: AngularFireDatabase) {
 
-    console.log(data.theKey);
+    let dataF = firebase.database().ref('drivers');
+    let cRef = dataF.child(data.theKey.$key);
+
+    this.allData = [];
+    cRef.once('value', (snapshot) => {
+      console.log('snapshot: ', snapshot.val());
+
+      this.allData = snapshot.val();
+    })
   }
 
   onNoClick(): void {

@@ -38,24 +38,47 @@
   text-align: center!important;
 }
 
+#b4side {
+  display: none;
+}
+
 @media (max-width: 768px) {
   #sidebar {
     display: none;
   }
 
-  #sidebar2 {
+  #b4side {
     display: block;
   }
+
+  .light-logo {
+    max-height: 20%;
+    max-width: 20%;
+    margin-bottom: -10px;
+  }
+
+  .dropdown-menu {
+    background-color: #3e5569;
+  }
+
 }
 
 @media (max-width: 567px) {
   #sidebar {
     display: none;
+
+    .dropdown-menu-center {
+      background-color: #3e5569;
+    }
   }
 
-  #sidebar2 {
+  #b4side {
     display: block;
-    font-size: x-small;
+  }
+
+  .light-logo {
+    max-height: 30%;
+    max-width: 30%;
   }
 }
 

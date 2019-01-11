@@ -4,7 +4,11 @@ import * as firebase from 'firebase/app';
 import { DataTablesModule } from 'angular-datatables';
 
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import {DialogOverviewExampleDialog, DriverLocationDialog} from './drivers-table/drivers-table.component';
+import {
+  DialogOverviewExampleDialog,
+  DispatchDialog, DpDetailsDialog,
+  DriverLocationDialog
+} from './drivers-table/drivers-table.component';
 import { ViewDetailsDialog } from './reservation/reservation.component';
 import { PlateExistExampleDialog } from './add-car/add-car.component';
 import { PizzaPartyComponent } from './add-car/add-car.component';
@@ -18,8 +22,8 @@ import { StarRatingModule } from 'angular-star-rating';
 import {MatTableModule} from '@angular/material/table';
 import {MatPaginatorModule} from '@angular/material';
 import {MatSortModule} from "@angular/material";
-import {ClientDetailsDialog} from "./account/account.component";
-import {CarDetailsDialog} from "./carslist/carslist.component";
+import {ClientDetailsDialog, PrintOptsDialog} from "./account/account.component";
+import {AssignCarDialog, CarDetailsDialog} from "./carslist/carslist.component";
 
 import { AppComponent }     from './app.component';
 import { AppRoutingModule } from './app-routing.module';
@@ -69,7 +73,7 @@ import { TruncatePipe } from "./limit.pipe";
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 
 import { StorageService } from './storage.service';
-import { ReservationComponent } from './reservation/reservation.component';
+import { ReservationComponent, PrintMenuDialog } from './reservation/reservation.component';
 
 import { AngularFireStorageModule } from 'angularfire2/storage';
 
@@ -90,11 +94,22 @@ import { SendEmailComponent } from './send-email/send-email.component';
 import {HttpClient, HttpClientModule} from "@angular/common/http";
 import { NotcComponent } from './notc/notc.component';
 import { DriverLocationComponent } from './driver-location/driver-location.component';
+import { RemitsComponent } from './remits/remits.component';
+import { RemitsHistoryComponent } from './remits-history/remits-history.component';
+import { RatespageComponent } from './ratespage/ratespage.component';
 
+import { PlotlyModule } from 'angular-plotly.js';
+import { CountdownModule } from 'ngx-countdown';
+import { CountdownTimerModule } from 'ngx-countdown-timer';
+
+import { DispatchingComponent, ParkCarDialog } from './dispatching/dispatching.component';
+import { ChatPageComponent } from './chat-page/chat-page.component';
+import { MorrisJsModule } from 'angular-morris-js';
 
 @NgModule({
   imports: [
     BrowserModule,
+    MorrisJsModule,
     RouterModule,
     FormsModule,
     AppRoutingModule,
@@ -120,10 +135,14 @@ import { DriverLocationComponent } from './driver-location/driver-location.compo
     MatIconModule,
     MatSnackBarModule,
     MatTableModule,
+    MatSnackBarModule,
     MatPaginatorModule,
     HttpClientModule,
     MatSortModule,
     MatCardModule,
+    PlotlyModule,
+    CountdownModule,
+    CountdownTimerModule.forRoot(),
     NgbModule.forRoot(),
     AngularFireStorageModule,
     AgmCoreModule.forRoot({
@@ -157,11 +176,15 @@ import { DriverLocationComponent } from './driver-location/driver-location.compo
     FilterPipe,
     ReservationComponent,
     DialogOverviewExampleDialog,
+    DispatchDialog,
+    DpDetailsDialog,
+    PrintOptsDialog,
     ClientDetailsDialog,
     PizzaPartyComponent,
     PlateExistExampleDialog,
     ViewDetailsDialog,
     CarDetailsDialog,
+    AssignCarDialog,
     ClientHistoryComponent,
     TruncatePipe,
     HomeLayoutComponent,
@@ -172,9 +195,16 @@ import { DriverLocationComponent } from './driver-location/driver-location.compo
     SendEmailComponent,
     NotcComponent,
     DriverLocationComponent,
-    DriverLocationDialog
+    DriverLocationDialog,
+    ParkCarDialog,
+    PrintMenuDialog,
+    RemitsComponent,
+    RemitsHistoryComponent,
+    RatespageComponent,
+    DispatchingComponent,
+    ChatPageComponent
   ],
-  entryComponents: [DialogOverviewExampleDialog, DriverLocationDialog, PizzaPartyComponent, PlateExistExampleDialog, ViewDetailsDialog, ClientDetailsDialog, CarDetailsDialog],
+  entryComponents: [DialogOverviewExampleDialog, DriverLocationDialog, PizzaPartyComponent, PlateExistExampleDialog, ViewDetailsDialog, ClientDetailsDialog, CarDetailsDialog, AssignCarDialog, DispatchDialog, DpDetailsDialog, PrintOptsDialog, ParkCarDialog, PrintMenuDialog],
   providers: [AuthService, AuthGuard, AngularFireDatabase, LoginGuard, DriverService, CarService, ClientService, StorageService, MatDatepickerModule, GeofireService, HttpClient],
   bootstrap: [ AppComponent ]
 })

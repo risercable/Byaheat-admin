@@ -2,6 +2,11 @@
 <div mat-dialog-content style="width: 660px;" class="container">
   <div class="example-container" style="float: left; width: 200px;">
     <mat-form-field [floatLabel]="never" class="input1">
+      <label class="label1">Ride ID: </label>
+      <input matInput name="key" [ngModel]="data.datarray.$key" readonly>
+      <mat-icon matSuffix><i class="mdi mdi-eye" style="font-size: small;"></i></mat-icon>
+    </mat-form-field>
+    <mat-form-field [floatLabel]="never" class="input1">
       <label class="label1">Customer ID: </label>
       <input matInput name="customer_id" [ngModel]="data.datarray.customer" readonly>
       <mat-icon matSuffix><i class="mdi mdi-eye" style="font-size: small;"></i></mat-icon>

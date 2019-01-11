@@ -42,14 +42,14 @@
 
           <!-- Position Column -->
 
-          <ng-container matColumnDef="price_payed">
+          <ng-container matColumnDef="price">
             <mat-header-cell *matHeaderCellDef mat-sort-header>*Price Payed*</mat-header-cell>
-            <mat-cell *matCellDef="let element"> {{element.price_payed}} </mat-cell>
+            <mat-cell *matCellDef="let element"> {{element.price}} </mat-cell>
           </ng-container>
 
-          <ng-container matColumnDef="push_date">
+          <ng-container matColumnDef="timestamp">
             <mat-header-cell *matHeaderCellDef mat-sort-header>*Date Payed*</mat-header-cell>
-            <mat-cell *matCellDef="let element"> {{element.push_date | date:'EEEE, MMMM d, yyyy '}} @ {{ element.push_date * 1000 | date:'hh:mm a' }}</mat-cell>
+            <mat-cell *matCellDef="let element"> {{element.timestamp * 1000 | date:'EEEE, MMMM d, yyyy '}} @ {{ element.timestamp * 1000 | date:'hh:mm a' }}</mat-cell>
           </ng-container>
 
           <!--<ng-container matColumnDef="actions" class="hideX">-->

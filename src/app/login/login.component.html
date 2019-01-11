@@ -104,7 +104,8 @@
                                   <div class="input-group-prepend">
                                       <span class="input-group-text bg-warning text-white" id="basic-addon2"><i class="ti-pencil"></i></span>
                                   </div>
-                                  <input type="text" class="form-control form-control-lg" placeholder="Password" aria-label="Password" aria-describedby="basic-addon1" required="" name="password" id="exampleInputPassword1" [(ngModel)]="password">
+                                  <input [type]="show ? 'text' : 'password'" class="form-control form-control-lg" placeholder="Password" aria-label="Password" aria-describedby="basic-addon1" required="" name="password" id="exampleInputPassword1" [(ngModel)]="password">
+                                <span class="input-group-text bg-warning text-white pull-right" (click)="passwordX()"><i [class]="show ? 'mdi mdi-eye' : 'mdi mdi-eye-off'"></i></span>
                               </div>
                           </div>
                       </div>
@@ -112,7 +113,6 @@
                           <div class="col-12">
                               <div class="form-group">
                                   <div class="p-t-20">
-                                      <button class="btn btn-info" id="to-recover" type="button"><i class="fa fa-lock m-r-5"></i> Lost password?</button>
                                       <button class="btn btn-success float-right" type="submit" (click)="login()">Login</button>
                                   </div>
                               </div>

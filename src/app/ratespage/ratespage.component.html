@@ -1,0 +1,126 @@
+<!-- Page wrapper  -->
+<!-- ============================================================== -->
+<div class="page-wrapper">
+  <!-- ============================================================== -->
+  <!-- Bread crumb and right sidebar toggle -->
+  <!-- ============================================================== -->
+  <div class="page-breadcrumb">
+    <div class="row">
+      <div class="col-12 d-flex no-block align-items-center">
+        <h4 class="page-title">Clients</h4><br>
+        <div class="ml-auto text-right">
+          <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+              <li class="breadcrumb-item"><a routerLink="../../home">Home</a></li>
+              <li class="breadcrumb-item active" aria-current="page">Clients</li>
+            </ol>
+          </nav>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- ============================================================== -->
+  <!-- End Bread crumb and right sidebar toggle -->
+  <!-- ============================================================== -->
+  <!-- ============================================================== -->
+  <!-- Container fluid  -->
+  <!-- ============================================================== -->
+  <div class="container-fluid">
+    <!-- ============================================================== -->
+    <!-- Start Page Content -->
+    <!-- ============================================================== -->
+    <div class="row">
+      <div class="col-12">
+        <div class="card">
+          <div class="card-body">
+            <h6 class="card-subtitle">Search for clients and view their details.</h6>
+            <!-- Mat Table Starts here -->
+
+            <div class="mat-app-background basic-container" style="min-height: 400px;">
+              <div class="example-container mat-elevation-z8">
+                <div class="example-header">
+                  <div class="container h-100">
+                    <div class="row h-100 justify-content-center align-items-center">
+                      <mat-form-field style="width: 400px; text-align: center;" class="col-6">
+                        <input class="text-center" matInput (keyup)="applyFilter($event.target.value)" placeholder="Enter your search term here..." maxlength="30" matTooltip="*Maximum characters is 30" matTooltipPosition="after">
+                      </mat-form-field>
+                      <span><i class="mdi mdi-information-outline"></i></span>
+                    </div>
+                    <div class="row h-100 justify-content-center align-items-center">
+                      <mat-table #table [dataSource]="driverRatesSource" matSort id="basic-table" class="col-12">
+
+                        <!--- Note that these columns can be defined in any order.
+                              The actual rendered columns are set as a property on the row definition" -->
+
+                        <!--<ng-container matColumnDef="in1">-->
+                        <!--<mat-header-cell *matHeaderCellDef mat-sort-header>No</mat-header-cell>-->
+                        <!--<mat-cell *matCellDef="let celement"> {{celement.in1}} </mat-cell>-->
+                        <!--</ng-container>-->
+
+                        <!-- Position Column -->
+                        <ng-container matColumnDef="driverKey">
+                          <mat-header-cell *matHeaderCellDef mat-sort-header>Driver Key</mat-header-cell>
+                          <mat-cell *matCellDef="let element"> {{element.$key}} </mat-cell>
+                        </ng-container>
+
+                        <!-- Name Column -->
+                        <ng-container matColumnDef="driver_fullname">
+                          <mat-header-cell *matHeaderCellDef mat-sort-header>Driver Fullname </mat-header-cell>
+                          <mat-cell *matCellDef="let element"> {{element.driver_name}} </mat-cell>
+                        </ng-container>
+
+                        <!-- Weight Column -->
+                        <ng-container matColumnDef="rating">
+                          <mat-header-cell *matHeaderCellDef mat-sort-header>Rating</mat-header-cell>
+                          <mat-cell *matCellDef="let element"> {{element.total_rating}} </mat-cell>
+                        </ng-container>
+
+                        <!-- Symbol Column -->
+                        <ng-container matColumnDef="average_rating">
+                          <mat-header-cell *matHeaderCellDef mat-sort-header>Average Rating</mat-header-cell>
+                          <mat-cell *matCellDef="let element"> {{element.average_rating}} </mat-cell>
+                        </ng-container>
+
+                        <!--<ng-container matColumnDef="timestamp">-->
+                        <!--<mat-header-cell *matHeaderCellDef mat-sort-header> Time </mat-header-cell>-->
+                        <!--<mat-cell *matCellDef="let element"> {{element.timestamp * 1000 | date:'yyyy-MM-dd HH:mm:ss Z'}} </mat-cell>-->
+                        <!--</ng-container>-->
+
+                        <!--<ng-container matColumnDef="actions">-->
+                          <!--<mat-header-cell *matHeaderCellDef> Actions </mat-header-cell>-->
+                          <!--<mat-cell *matCellDef="let element" style="white-space: nowrap">-->
+                            <!--<button mat-icon-button color="accent" id="hideThis" (click)="openDialog(element)"><i class="mdi mdi-open-in-new"></i> Details-->
+                            <!--</button>-->
+                            <!--<a color="warm" (click)="onSelect(element)" style="margin-left: 40px;" *ngIf="element.latest_ride != 'none'">History Details</a>-->
+                            <!--<span *ngIf="element.latest_ride == 'none'" style="margin-left: 40px; color: red;">No Ride History</span>-->
+                          <!--</mat-cell>-->
+                        <!--</ng-container>-->
+
+                        <mat-header-row *matHeaderRowDef="driverRatesCols"></mat-header-row>
+                        <mat-row *matRowDef="let row; columns: driverRatesCols;"></mat-row>
+
+                      </mat-table>
+                      <mat-card  *ngIf="noRecords" style="padding:100px;">
+                        <h3 style="text-align:center">We couldn't find data for
+                          <span style="color:red">"{{driverRatesSource.filter}}"</span>
+                        </h3>
+                      </mat-card>
+                      <mat-paginator #paginator
+                                     [pageSize]="5"
+                                     [pageSizeOptions]="[5, 10, 20]"
+                                     [showFirstLastButtons]="true">
+                      </mat-paginator>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- end of Mat Table -->
+
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

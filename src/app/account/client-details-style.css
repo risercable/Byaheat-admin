@@ -17,22 +17,6 @@
   overflow: auto;
   max-height: 500px; }
 
-.input1 {
-  width: auto;
-  background-color: white;
-  /* replace this color with your accent color hex code */ }
-
-.mat-focused {
-  background-color: white;
-  /* replace this color with your accent color hex code */ }
-
-.mat-input-placeholder {
-  background-color: white;
-  /* replace this color with your accent color hex code */ }
-
-.label1 {
-  color: royalblue; }
-
 .clear {
   clear: both; }
 

@@ -91,6 +91,13 @@
         </div>
       </div>
       <!-- Column -->
+      <div class="col-md-6 col-lg-3">
+        <div class="card card-hover">
+          <div class="box bg-danger text-center">
+            <a class="font-weight-bold font-light text-white"><i class="fas fa-location-arrow" style="font-size: 2em;"></i><br><span class="text-white" style="font-size: 3em;">{{ lworkings }}</span><h6 class="text-white">Total Drivers on Trip</h6></a>
+          </div>
+        </div>
+      </div>
       <!--<div class="col-md-6 col-lg-2 col-xlg-3">-->
         <!--<div class="card card-hover">-->
           <!--<div class="box bg-danger text-center">-->
@@ -175,13 +182,15 @@
                     <li class="d-flex no-block card-body border-top">
                       <i class="fa fa-check-circle w-30px m-t-5"></i>
                       <div>
-                        <a href="#" class="m-b-0 font-medium p-0" style="font-family: 'Nunito Sans', sans-serif !important; font-size: 0.875rem; line-height: 1.5;">User: {{ assign.customer_name }} / {{ assign.timestamp * 1000 | date:'EEEE, MMMM d, yyyy '}} @ {{ assign.timestamp * 1000 | date:'hh:mm a' }}</a>
-                        <span class="text-muted" style="font-family: 'Nunito Sans', sans-serif !important; font-size: 0.875rem; line-height: 1.5;">Driver {{ assign.driver_name }}</span>
+                        <a class="m-b-0 font-medium p-0" style="font-family: 'Nunito Sans', sans-serif !important; font-size: 0.875rem; line-height: 1.5;">User: {{ assign.customer_name }} / {{ assign.timestamp * 1000 | date:'EEEE, MMMM d, yyyy '}} @ {{ assign.timestamp * 1000 | date:'hh:mm a' }}</a>
+                        <span class="text-muted" style="font-family: 'Nunito Sans', sans-serif !important; font-size: 0.875rem; line-height: 1.5;">Driver: {{ assign.driver_name }}</span>
+                        <span class="text-muted float-right">Destination: {{ assign.destination }}</span>
                       </div>
                       <div class="ml-auto">
                       </div>
                   </li>
                 </ul>
+          </div>
         <!-- ============================================================== -->
     <!-- ============================================================== -->
     <!-- Recent comment and chats -->
@@ -195,6 +204,17 @@
   <!-- ============================================================== -->
 </div>
     </div>
+      <div class="col-lg-6">
+        <div class="card">
+          <div class="card-body">
+            <div class="d-md-flex align-items-center">
+              <h4 class="card-title">Sales (Bar char)</h4>
+
+            </div>
+            <!-- column -->
+          </div>
+        </div>
+      </div>
 <!-- ============================================================== -->
 <!-- End Page wrapper  -->
       </div>
@@ -213,6 +233,24 @@
               </div>
             </div>
             <!-- column -->
+    </div>
+  </div>
+</div>
+    <div class="col-lg-6">
+      <div class="card">
+        <div class="card-body">
+          <div class="d-md-flex align-items-center">
+              <h4 class="card-title">Ratings</h4>
+              <h5 class="card-subtitle">Top 5 Rated Drivers: </h5>
+              <ul class="list-style-none" *ngFor="let mostr of (mostrates | async)?.slice().reverse()">
+                <li class="d-flex no-block card-body border-top">{{mostr.total_ratingpo}} <i class="mdi mdi-star-circle"></i>
+                </li>
+                <span>by: {{mostr.user_firstname}} {{mostr.user_lastname}}</span>
+              </ul>
+            </div>
+          <!-- column -->
+        </div>
+      </div>
     </div>
   </div>
 </div>

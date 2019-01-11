@@ -30,6 +30,11 @@ import {SendEmailComponent} from "./send-email/send-email.component";
 import {NotcComponent} from "./notc/notc.component";
 import {NotFoundLayoutComponent} from "./layouts/not-found-layout/not-found-layout.component";
 import {DriverLocationComponent} from "./driver-location/driver-location.component";
+import {RemitsComponent} from "./remits/remits.component";
+import {RemitsHistoryComponent} from "./remits-history/remits-history.component";
+import {RatespageComponent} from "./ratespage/ratespage.component";
+import {DispatchingComponent} from "./dispatching/dispatching.component";
+import {ChatPageComponent} from "./chat-page/chat-page.component";
 
 const routes: Routes = [
   // { path:'', redirectTo: 'home', pathMatch: 'full', canActivate: [AuthGuard] },
@@ -51,30 +56,42 @@ const routes: Routes = [
   // { path: 'not-found', component: NotFoundComponent },
   // { path: '**', redirectTo: 'not-found' }
   {
-    path: '',                       // {1}
+    path: '',
+    canActivate: [AuthGuard],
     component: HomeLayoutComponent,
-    canActivate: [AuthGuard],       // {2}
+    // {2}
     children: [
       {
         path: '',
-        component: HomeComponent   // {3}
+        redirectTo: 'home',
+        pathMatch: 'full',
+        // {3}
       },
-      { path:'users/table', component: AccountComponent},
-      { path:'user/history/:$key', component:ClientHistoryComponent},
+      {
+        path: 'home',
+        component: HomeComponent
+      },
+      { path:'clients/table', component: AccountComponent},
+      { path:'clients/table/history/:$key/:fullname', component:ClientHistoryComponent},
       { path:'payments/table', component:ClientComponent},
       { path:'payments/table/client/:$key', component:TableComponent},
       { path:'cars/table', component: CarslistComponent},
+      { path:'chatpage', component: ChatPageComponent },
       { path:'reservations', component: ReservationComponent},
       { path:'cars/add-car', component: AddCarComponent},
       { path: 'packages', component: PackagesComponent},
       { path: 'drivers/add-driver', component: DriversComponent},
       { path: 'assign', component: AssignDriverComponent},
-      { path: 'signup', component: SignupComponent},
+      { path: 'drivers/dispatch', component: DispatchingComponent},
       { path: 'drivers/table', component: DriversTableComponent},
-      { path: 'drivers/table/location/:$key', component: DriverLocationComponent},
+      { path: 'drivers/table/location/:$key/:firstname', component: DriversMapComponent},
       { path: 'drivers/map', component: DriversMapComponent},
+      { path: 'drivers/ratings', component: RatespageComponent },
+      { path: 'remit-page', component: RemitsComponent},
+      { path: 'remit-page/cash/by/:$key/:fullname', component: RemitsHistoryComponent},
       { path: 'sendemail', component: SendEmailComponent},
       { path: 'this', component: ThisdriverComponent},
+      { path: 'not-found', component: NotFoundComponent },
     ]
   },
   {
@@ -84,6 +101,10 @@ const routes: Routes = [
       {
         path: 'login',
         component: LoginComponent   // {5}
+      },
+      {
+        path: 'signup',
+        component: SignupComponent
       }
     ]
   },
