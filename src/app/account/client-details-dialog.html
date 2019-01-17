@@ -1,27 +1,27 @@
 <h1 mat-dialog-title>Client Details For {{ data.clientarray.user_email }}</h1>
 <div mat-dialog-content style="width: 660px;" class="container">
   <div class="example-container" style="float: left; width: 200px;">
-    <mat-form-field [floatLabel]="never" class="input1">
+    <mat-form-field  class="input1">
       <label class="label1">Client UID: </label>
       <input matInput name="customer_id" [ngModel]="data.clientarray.$key" readonly>
       <mat-icon matSuffix><i class="mdi mdi-eye" style="font-size: small;"></i></mat-icon>
     </mat-form-field>
-    <mat-form-field [floatLabel]="never" class="input1">
+    <mat-form-field  class="input1">
       <label class="label1">Client First Name: </label>
       <input matInput name="customer_full_name" [ngModel]="data.clientarray.user_firstname" readonly>
       <mat-icon matSuffix><i class="mdi mdi-eye" style="font-size: small;"></i></mat-icon>
     </mat-form-field>
-    <mat-form-field [floatLabel]="never" class="input1">
+    <mat-form-field  class="input1">
       <label class="label1">Client Last Name: </label>
       <input matInput name="customer_full_name" [ngModel]="data.clientarray.user_lastname" readonly>
       <mat-icon matSuffix><i class="mdi mdi-eye" style="font-size: small;"></i></mat-icon>
     </mat-form-field>
-    <mat-form-field [floatLabel]="never" class="input1">
+    <mat-form-field  class="input1">
       <label class="label1">Client Birthdate: </label>
       <input matInput name="customer_full_name" [ngModel]="data.clientarray.user_birthdate" readonly>
       <mat-icon matSuffix><i class="mdi mdi-eye" style="font-size: small;"></i></mat-icon>
     </mat-form-field>
-    <mat-form-field [floatLabel]="never" class="input1">
+    <mat-form-field  class="input1">
       <label class="label1">Client Mobile Number: </label>
       <input matInput name="customer_full_name" [ngModel]="data.clientarray.user_mobile" readonly>
       <mat-icon matSuffix><i class="mdi mdi-eye" style="font-size: small;"></i></mat-icon>
@@ -30,9 +30,9 @@
   <div class="separator"></div>
   <div class="example-container" style="float: right; width: 200px;">
     <p>Latest Ride ID:</p>
-    <mat-form-field [floatLabel]="never" class="input1">
+    <mat-form-field  class="input1">
       <label class="label1">Ride Destination: </label>
-      <input matInput name="latest_destination" [ngModel]=" readonly>
+      <input matInput name="latest_destination" [ngModel]="" readonly>
       <mat-icon matSuffix><i class="mdi mdi-eye" style="font-size: small;"></i></mat-icon>
     </mat-form-field>
   </div>

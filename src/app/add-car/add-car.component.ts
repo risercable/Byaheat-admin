@@ -78,7 +78,7 @@ export class AddCarComponent implements OnInit {
     });
   }
 
-  constructor(private carService : CarService, private titleService: Title, private db: AngularFireDatabase, public snackBar: MatSnackBar, private changeDetector: ChangeDetectorRef, public dialog: MatDialog) {
+  constructor(public carService : CarService, private titleService: Title, private db: AngularFireDatabase, public snackBar: MatSnackBar, private changeDetector: ChangeDetectorRef, public dialog: MatDialog) {
 
     // this.getCarID = db.list('cars_list', ref => ref.orderByChild('car'))
     this.carList = db.list('all_cars');

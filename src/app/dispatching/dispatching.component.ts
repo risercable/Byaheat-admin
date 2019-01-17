@@ -96,6 +96,11 @@ export interface PerDisP {
 export class ParkCarDialog {
   dpdataArray = [];
   public tNow: any;
+  dpdatadriver_fullname: string;
+  dpdatacar_plate_number: string;
+  dpdatatime_in: string;
+  dpdatatime_out: string;
+  dpdatacar_condition: string;
 
   constructor(
     public dialogRef: MatDialogRef<ParkCarDialog>,
@@ -105,6 +110,13 @@ export class ParkCarDialog {
 
     firebase.database().ref('dispatches').child(this.data.theKey.$key).on('value', (snapshot) => {
       this.dpdataArray = snapshot.val();
+
+      this.dpdatadriver_fullname = snapshot.child('driver_fullname').val();
+      this.dpdatacar_plate_number = snapshot.child('car_plate_number').val();
+      this.dpdatatime_in = snapshot.child('time_in').val();
+      this.dpdatatime_out = snapshot.child('time_out').val();
+      this.dpdatacar_condition = snapshot.child('car_condition').val();
+
     });
 
     this.tNow = new Date(timestamp).toLocaleString();

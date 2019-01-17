@@ -362,7 +362,7 @@ export class DpDetailsDialog {
     })
   }
 
-  onNoClick(x: boolean): void {
+  onNoClick(): void {
     this.dialogRef.close();
   }
 }
