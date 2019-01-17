@@ -4,7 +4,7 @@
 // The list of which env maps to which file can be found in `.angular-cli.json`.
 
 export const environment = {
-  production: false,
+  production: true,
   firebase: {
     apiKey: "AIzaSyAPQxvVJXY2xXEnRrSa0EhdCNKVbnhOnIw",
     authDomain: "lakbay-c65e4.firebaseapp.com",
@@ -14,7 +14,7 @@ export const environment = {
     messagingSenderId: "169926421741"
   },
 
-  googleMapsKey: '',
+  googleMapsKey: 'AIzaSyDX8GsNHzj0010sDGVhIpx6HIPYfqOSpYw',
 
-  SENDGRID_API_KEY:''
+  SENDGRID_API_KEY:'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'
 };
