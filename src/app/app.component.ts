@@ -10,4 +10,8 @@ import angularLoad from 'angular-load';
 })
 export class AppComponent {
   title = 'app';
+
+  constructor() {
+    localStorage.removeItem('firebase:previous_websocket_failure');
+  }
 }
