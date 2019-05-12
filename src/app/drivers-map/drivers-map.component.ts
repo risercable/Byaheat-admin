@@ -3,6 +3,10 @@ import {GeofireService} from "../geofire.service";
 import {GeoFire} from "geofire";
 import {AngularFireDatabase} from "angularfire2/database";
 import {BehaviorSubject} from "../../../node_modules/rxjs/BehaviorSubject";
+import {ActivatedRoute} from "@angular/router";
+import * as firebase from "firebase";
+import {PerPays} from "../payments/table/table.component";
+import {PerDriver} from "../remits-history/remits-history.component";
 
 @Component({
   selector: 'app-drivers-map',
@@ -12,6 +16,9 @@ import {BehaviorSubject} from "../../../node_modules/rxjs/BehaviorSubject";
 export class DriversMapComponent implements OnInit {
   lat: number;
   lng: number;
+  key: string = '';
+  infoList: DriverModel1[];
+  dfullname: string = '';
 
   public markers: any;
   smarkval: boolean = false;
@@ -23,13 +30,19 @@ export class DriversMapComponent implements OnInit {
 
   hits = new BehaviorSubject([]);
 
-  constructor(private geo: GeofireService, private db: AngularFireDatabase) {
+  constructor(private route: ActivatedRoute, private geo: GeofireService, private db: AngularFireDatabase) {
     this.dbRef2 = this.db.list('/drivers_location/');
     this.geoFire2 = new GeoFire(this.dbRef2.query.ref);
   }
 
   ngOnInit() {
+
+    this.key = this.route.snapshot.paramMap.get("$key").toString();
+
+    this.dfullname = this.route.snapshot.paramMap.get("firstname").toString();
+
     this.getUserLocation();
+
     this.dbRef2 = this.db.list('drivers_location/');
 
     this.geo.hits.subscribe(hits => this.markers = hits);
@@ -68,7 +81,7 @@ export class DriversMapComponent implements OnInit {
     this.lng = (<number>center[1]);
 
     console.log("lat is: "+center[0]);
-    this.geo.getLocations(5, [this.lat, this.lng]);
+    this.geo.getLocations(5, [this.lat, this.lng], this.key);
   }
 
   private getUserLocation() {
@@ -79,8 +92,14 @@ export class DriversMapComponent implements OnInit {
         this.lat = position.coords.latitude;
         this.lng = position.coords.longitude;
 
-        this.geo.getLocations(5000, [this.lat, this.lng]);
+        this.geo.getLocations(100, [this.lat, this.lng], this.key);
       });
     }
   }
+}
+
+export interface DriverModel1 {
+  $key: string;
+  $user_firstname: string;
+  $user_lastname: string;
 }

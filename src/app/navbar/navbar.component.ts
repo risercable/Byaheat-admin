@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
 import { Routes, RouterModule } from '@angular/router';
 import {AngularFireAuth} from 'angularfire2/auth';
 import * as firebase from 'firebase/app';
@@ -37,8 +37,9 @@ export class NavbarComponent implements OnInit {
   public loggedIn;
   show:boolean = true;
   css1: boolean = false;
+  navbarOpen = false;
 
-  constructor(public authService: AuthService, public storage: StorageService, private db: AngularFireDatabase) {
+  constructor(public authService: AuthService, public storage: StorageService, private db: AngularFireDatabase, public router: Router) {
     this.getPending = db.list('reservations', ref => ref.orderByChild('assign').equalTo('not yet assigned'));
     this.getPending.snapshotChanges().map(list => list.length).subscribe(length => this.lpending = length);
    }
@@ -65,10 +66,24 @@ export class NavbarComponent implements OnInit {
     this.css1 = false;
   }
 
+  toggleNavbar() {
+    this.navbarOpen = !this.navbarOpen;
+  }
+
   clicked() {
     this.isaha = !this.isaha;
     if(this.isaha2 == true) {
       this.isaha2 = false;
     }
+  }
+
+  logout() {
+    const that = this;
+    firebase.auth().signOut().then(function() {
+      alert("successfully signed out!");
+        that.router.navigate(['login']);
+    }).catch(function(error) {
+      // An error happened.
+    });
   }
 }

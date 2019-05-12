@@ -18,15 +18,31 @@ export class ClientHistoryComponent implements OnInit {
   clientSource;
   xD: PerHistory[] = [];
   key: string;
+  fullname: string;
   fname: string[];
   lname: string;
   clientList: AngularFireList<any>;
   clients: Observable<any>;
   historyColumns = ['index_num', 'destination', 'driver_name', 'price', 'rating', 'timestamp'];
 
-  @ViewChild(MatPaginator) paginator: MatPaginator;
+  private paginator: MatPaginator;
+  private sort: MatSort;
 
-  @ViewChild(MatSort) sort: MatSort;
+
+  @ViewChild(MatSort) set matSort(ms: MatSort) {
+    this.sort = ms;
+    this.setDataSourceAttributes();
+  }
+
+  @ViewChild(MatPaginator) set matPaginator(mp: MatPaginator) {
+    this.paginator = mp;
+    this.setDataSourceAttributes();
+  }
+
+  setDataSourceAttributes() {
+    this.clientSource.paginator = this.paginator;
+    this.clientSource.sort = this.sort;
+  }
 
   constructor(private route: ActivatedRoute, private db: AngularFireDatabase) {
     this.xD = [];
@@ -34,6 +50,7 @@ export class ClientHistoryComponent implements OnInit {
 
   ngOnInit() {
     this.key = this.route.snapshot.paramMap.get("$key").toString();
+    this.fullname = this.route.snapshot.paramMap.get("fullname").toString();
     console.log("Aww: " + this.key);
 
     let data = this.db.list('history', ref => ref.orderByChild('customer').equalTo(this.key));
@@ -54,7 +71,7 @@ export class ClientHistoryComponent implements OnInit {
         i++;
       });
 
-      this.clientSource = new MatTableDataSource(this.itemList);
+      this.clientSource = new MatTableDataSource(this.itemList.reverse());
       this.clientSource.sort = this.sort;
       this.clientSource.paginator = this.paginator;
 

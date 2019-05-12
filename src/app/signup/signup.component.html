@@ -1,30 +1,41 @@
-<div id="content">
-    <div id="content-header">
-      <div id="breadcrumb"> <a href="#" title="Go to Home" class="tip-bottom"><i class="icon-home"></i> Home</a><a href="#" class="current">Drivers</a> </div>
-      <h1>Drivers Page</h1>
+<div class="main-wrapper">
+  <!-- ============================================================== -->
+  <!-- Preloader - style you can find in spinners.css -->
+  <!-- ============================================================== -->
+  <div class="preloader">
+    <div class="lds-ripple">
+      <div class="lds-pos"></div>
+      <div class="lds-pos"></div>
     </div>
-    <div class="container-fluid">
-        <div class="row-fluid">
-          <div class="span8">
-            <div class="widget-box">
-              <div class="widget-title"> <span class="icon"><i class="icon-ok"></i></span>
-                <h5>Add Driver</h5>
-              </div>
-              <div class="widget-content nopadding">
-                <form>
-                    <div class="form-group">
-                      <label for="exampleInputEmail1">Email address</label>
-                      <input class="form-control" id="exampleInputEmail1" type="email" aria-describedby="emailHelp" placeholder="Enter email">
+  </div>
+  <!-- ============================================================== -->
+  <!-- Preloader - style you can find in spinners.css -->
+  <!-- ============================================================== -->
+  <!-- ============================================================== -->
+  <!-- Login box.scss -->
+  <!-- ============================================================== -->
+  <div class="auth-wrapper d-flex no-block justify-content-center align-items-center bg-light-info">
+    <div class="auth-box bg-light border-top border-secondary">
+      <div>
+        <div class="text-center p-t-20 p-b-20">
+          <h3>Add New Admin Account</h3>
+        </div>
+      <form class="form-horizontal m-t-20" #f="ngForm">
+                      <div class="example-container">
+                        <mat-form-field>
+                          <input matInput class="form-control" id="exampleInputEmail1" type="email" aria-describedby="emailHelp" placeholder="Enter email" name="email" [formControl]="userEmail" [(ngModel)]="email" pattern="[^ @]*@[^ @]*" required>
+                          <mat-error *ngIf="userEmail.invalid">{{getErrorMessage()}}</mat-error>
+                        </mat-form-field>
+                        <mat-form-field>
+                          <input matInput class="form-control" id="exampleInputPassword1" type="password" placeholder="Password" [type]="hide ? 'password' : 'text'" [formControl]="userPassword" [(ngModel)]="password">
+                          <mat-icon matSuffix (click)="hide = !hide">{{hide ? 'visibility' : 'visibility_off'}}</mat-icon>
+                          <mat-error *ngIf="userPassword.invalid">{{getPasswordErrorMessage()}}</mat-error>
+                        </mat-form-field>
+                        <mat-form-field>
+                          <input matInput class="form-control" id="FullName" #fullname name="fullname" type="text" placeholder="Full Name">
+                        </mat-form-field>
                     </div>
-                    <div class="form-group">
-                      <label for="exampleInputPassword1">Password</label>
-                      <input class="form-control" id="exampleInputPassword1" type="password" placeholder="Password">
-                    </div>
-                    <div class="form-group">
-                      <label for="exampleInputPassword1">Full Name</label>
-                      <input class="form-control" id="FullName" [(ngModel)]="signup.fullname" name="fullname" type="text" placeholder="Password">
-                    </div>
-                    <button (click)="signup()" [disabled]="!email || !password || !fullname" class="btn btn-success btn-block">
+                    <button [disabled]="!email || !password || !fullname" (click)="signup(fullname.value)" class="btn btn-success btn-block">
                       Signup
                     </button>
                   </form>
@@ -32,5 +43,3 @@
               </div>
             </div>
           </div>
-        </div>
-      </div>

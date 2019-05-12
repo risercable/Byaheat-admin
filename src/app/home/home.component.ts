@@ -32,6 +32,20 @@ export class HomeComponent implements OnInit {
   lpending: number;
   message:string;
   ediUser: string;
+  workings: AngularFireList<any>;
+  today: number = Date.now();
+  lworkings: number;
+  timesx: number[];
+  enDate: string[];
+  nPrice: number[];
+  chartBarData: any[] = [];
+
+  public graph = {
+    data: [
+      { x: this.enDate, y: this.nPrice, type: 'bar' },
+    ],
+    layout: {width: 600, height: 420, title: 'A Fancy Plot'}
+  };
 
   constructor(private route: ActivatedRoute, location: Location, public authService: AuthService, private titleService: Title, private db: AngularFireDatabase, public storage: StorageService,  public router: Router) {
     var user = firebase.auth().currentUser;
@@ -46,15 +60,59 @@ export class HomeComponent implements OnInit {
     this.driversList = db.list('drivers');
     this.forApproval = db.list('pending');
     this.getAssigned = db.list('history');
+    this.workings = db.list('drivers_working');
 
-    this.assigns = db.list('history', ref => ref.orderByChild('timestamp').endAt(1532880205 ).limitToLast(5)).valueChanges();
+    let date = new Date(this.today);
+
+    let nowis = date.getTime();
+
+    this.assigns = db.list('history', ref => ref.orderByChild('timestamp').endAt(nowis ).limitToLast(5)).valueChanges();
 
     this.mostrates = db.list('drivers', ref => ref.orderByChild('total_ratingpo').startAt(1)).valueChanges();
+
+    this.workings.snapshotChanges().map(list => list.length).subscribe(length => this.lworkings = length);
 
     this.usersList.snapshotChanges().map(list => list.length).subscribe(length => this.length = length);
     this.carsList.snapshotChanges().map(list => list.length).subscribe(length => this.lcars = length);
     this.driversList.snapshotChanges().map(list => list.length).subscribe(length => this.ldrivers = length);
     this.forApproval.snapshotChanges().map(list => list.length).subscribe(length => this.lpending = length);
+
+    let data = firebase.database().ref('sales').child('cash');
+
+    this.enDate = [];
+    this.nPrice = [];
+
+    let chartAreaData = [
+      { y: '2006', a: 100, b: 90 },
+      { y: '2007', a: 75,  b: 65 },
+      { y: '2008', a: 50,  b: 40 },
+      { y: '2009', a: 75,  b: 65 },
+      { y: '2010', a: 50,  b: 40 },
+      { y: '2011', a: 75,  b: 65 },
+      { y: '2012', a: 100, b: 90 }
+    ];
+
+    this.chartBarData = chartAreaData;
+
+    const monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun",
+      "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"
+    ];
+
+    data.on('value', (item) => {
+      item.forEach(element => {
+
+        let toDate = new Date(element.val().en_date);
+        let toPrice = element.val().price;
+
+        let month = monthNames[toDate.getMonth()];
+        let day = toDate.getDate();
+        console.log("dates: ", month + ' ' + day);
+        this.enDate.push(month + day);
+
+        this.nPrice.push(toPrice);
+        // this.timesx.push(element.val().timestamp * 1000);
+      })
+    })
    }
 
   ngOnInit() {

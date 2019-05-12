@@ -64,6 +64,9 @@
   color: #1e242b;
   background-color: whitesmoke; }
 
+.mat-column-unassign {
+  width: 240px; }
+
 ngb-popover-window {
   position: absolute;
   width: auto !important;

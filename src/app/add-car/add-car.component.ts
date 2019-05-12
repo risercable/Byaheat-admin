@@ -31,7 +31,9 @@ export class AddCarComponent implements OnInit {
   brands = [
     {name: "Toyota"},
     {name: "Mitsubishi"},
-    {name: "Honda"}
+    {name: "Honda"},
+    {name: "Audi"},
+    {name: "BMW"}
   ];
   models = [];
 
@@ -76,7 +78,7 @@ export class AddCarComponent implements OnInit {
     });
   }
 
-  constructor(private carService : CarService, private titleService: Title, private db: AngularFireDatabase, public snackBar: MatSnackBar, private changeDetector: ChangeDetectorRef, public dialog: MatDialog) {
+  constructor(public carService : CarService, private titleService: Title, private db: AngularFireDatabase, public snackBar: MatSnackBar, private changeDetector: ChangeDetectorRef, public dialog: MatDialog) {
 
     // this.getCarID = db.list('cars_list', ref => ref.orderByChild('car'))
     this.carList = db.list('all_cars');
@@ -130,16 +132,29 @@ export class AddCarComponent implements OnInit {
         {name: "Civic"},
         {name: "CRV"}
       ]
+    } else if(this.selectedBrand == "Audi") {
+      this.models = [
+        {name: "A4"},
+        {name: "A5"},
+        {name: "A6"}
+      ]
+    } else if(this.selectedBrand == "BMW") {
+      this.models = [
+        {name: "BMW 6 Series Gran Coupé"},
+        {name: "BMW 7 Series Sedan"}
+      ]
     }
   }
   onRadioClick(event: MatRadioChange) {
     this.v = event.value;
-    if(this.v == "Single") {
+    if(this.v == "single") {
       this.car_capacity = 3;
-    } else if(this.v == "Family") {
+    } else if(this.v == "family") {
       this.car_capacity = 6;
-    } else if(this.v == "Barkada") {
+    } else if(this.v == "barkada") {
       this.car_capacity = 9;
+    } else if(this.v == "premium") {
+      this.car_capacity = 4;
     } else {
       this.car_capacity = 0;
     }
@@ -167,7 +182,7 @@ export class AddCarComponent implements OnInit {
   onSubmit(form: NgForm) {
     const dbRef = this.db.database.ref();
     dbRef.child('all_cars').orderByChild('car_plate_number').equalTo(this.car_plate_number).once('value', snapshot => {
-      if(snapshot.exists()) {
+      if (snapshot.exists()) {
         this.openDialog();
       } else {
         this.carList.push({
@@ -184,37 +199,8 @@ export class AddCarComponent implements OnInit {
         this.openSnackBar();
       }
     });
-    // if (form.value.$key == null) {
-    //   // this.carService.insertCar(form.value);
-    //   // this.carIncr++;
-    // }
-
-    // else
-    //   this.carService.updateCar(form.value);
   }
-
-//   loadCar(form?: NgForm) {
-//   this.carService.selectedCar = {
-//     $key: null,
-//     car_name: '',
-//     car_id: this.carID,
-//     car_capacity: 0,
-//     car_availability: '',
-//   }
-// }
-
   resetForm(form?: NgForm) {
-    // if (form != null)
-    //   form.reset();
-    // this.carService.selectedCar = {
-    //   $key: null,
-    //   car_plate_number: '',
-    //   car_brand: '',
-    //   car_model: '',
-    //   car_color: '',
-    //   car_type: '',
-    //   car_capacity: 0
-    // };
     this.car_plate_number = '';
     this.car_brand = '';
     this.car_model = '';

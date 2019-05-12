@@ -1,0 +1,18 @@
+<h1 mat-dialog-title>Dispatch Details</h1>
+<div mat-dialog-content>
+  <div class="example-container">
+    <p>Driver Full Name: {{full_name}}</p>
+    <p>Car Plate Number: {{car_pnum}}</p>
+    <p>Time In: {{time_in}}</p>
+    <p>Time to Park Car : {{time_out}}</p>
+    <p>Condition (ago): {{car_con}}</p>
+  </div>
+</div>
+<div mat-dialog-actions>
+  <div class="col-12">
+    <div class="row">
+      <button class="btn btn-outline-info offset-2 col-4" (click)="onNoClick()">Cancel</button>
+    </div>
+  </div>
+  <!-- <button mat-button (click)="onSubmit(driverForm)" cdkFocusInitial>Ok</button> -->
+</div>

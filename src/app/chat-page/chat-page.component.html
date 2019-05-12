@@ -1,0 +1,81 @@
+<!-- Page wrapper  -->
+<!-- ============================================================== -->
+<div class="page-wrapper">
+  <!-- ============================================================== -->
+  <!-- Bread crumb and right sidebar toggle -->
+  <!-- ============================================================== -->
+  <div class="page-breadcrumb">
+    <div class="row">
+      <div class="col-12 d-flex no-block align-items-center">
+        <h4 class="page-title">Chat Option</h4>
+        <div class="ml-auto text-right">
+          <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+              <li class="breadcrumb-item"><a href="#">Home</a></li>
+              <li class="breadcrumb-item active" aria-current="page">Library</li>
+            </ol>
+          </nav>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- ============================================================== -->
+  <!-- End Bread crumb and right sidebar toggle -->
+  <!-- ============================================================== -->
+  <!-- ============================================================== -->
+  <!-- Container fluid  -->
+  <!-- ============================================================== -->
+  <div class="container-fluid">
+    <!-- ============================================================== -->
+    <!-- Start Page Content -->
+    <!-- ============================================================== -->
+    <div class="row">
+      <div class="col-12">
+        <div class="card">
+          <div class="card-body">
+            <h4 class="card-title">Chat Option</h4>
+            <div class="chat-box scrollable" style="height:475px;">
+              <!--chat Row -->
+              <ul class="chat-list" *ngFor="let ch of chatsArray">
+                <!--chat Row -->
+                <li class="chat-item" [class.odd]="ch.is === 'admin'">
+                  <div class="chat-img" *ngIf="ch.is === 'driver'"><img src="../../assets/images/users/1.jpg" alt="user"></div>
+                  <!--<div class="chat-img" *ngIf="ch.is === 'admin'"><img src="../../assets/images/users/adminxd.png" alt="user"></div>-->
+                  <div class="chat-content">
+                    <h6 class="font-medium">{{ch.name}}</h6>
+                    <div class="box bg-light-info" *ngIf="ch.is === 'driver'">{{ch.text}}</div>
+                    <div class="box bg-light-inverse" *ngIf="ch.is === 'admin'">{{ch.text}}</div>
+                  </div>
+                  <div class="chat-time">{{ch.timestamp}}</div>
+                </li>
+                <!--chat Row -->
+              </ul>
+            </div>
+          </div>
+          <div class="card-body border-top">
+            <div class="row">
+              <div class="col-9">
+                <div class="input-field m-t-0 m-b-0">
+                  <textarea id="textarea1" #vntChat placeholder="Type and enter" class="form-control border-0"></textarea>
+                </div>
+              </div>
+              <div class="col-3">
+                <a class="btn-circle btn-lg btn-cyan float-right text-white" (click)="onsend(vntChat.value)"><i class="fas fa-paper-plane"></i></a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- ============================================================== -->
+    <!-- End PAge Content -->
+    <!-- ============================================================== -->
+    <!-- ============================================================== -->
+    <!-- Right sidebar -->
+    <!-- ============================================================== -->
+    <!-- .right-sidebar -->
+    <!-- ============================================================== -->
+    <!-- End Right sidebar -->
+    <!-- ============================================================== -->
+  </div>
+</div>

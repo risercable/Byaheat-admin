@@ -11,13 +11,30 @@ import {Router} from "@angular/router";
 })
 export class ClientComponent implements OnInit {
   itemList: PerClientPays[];
+  bbt: boolean = true;
   dataSource = new MatTableDataSource(this.itemList);
   displayedColumns = ['in1', '$key', 'actions'];
   noRecords: boolean;
+  hideTableX: boolean = false;
+  searchX: string = '';
 
-  @ViewChild(MatPaginator) paginator: MatPaginator;
+  private paginator: MatPaginator;
+  private sort: MatSort;
+  
+  @ViewChild(MatSort) set matSort(ms: MatSort) {
+    this.sort = ms;
+    this.setDataSourceAttributes();
+  }
 
-  @ViewChild(MatSort) sort: MatSort;
+  @ViewChild(MatPaginator) set matPaginator(mp: MatPaginator) {
+    this.paginator = mp;
+    this.setDataSourceAttributes();
+  }
+
+  setDataSourceAttributes() {
+    this.dataSource.paginator = this.paginator;
+    this.dataSource.sort = this.sort;
+  }
 
   applyFilter(filterValue: string) {
     filterValue = filterValue.trim(); // Remove whitespace
@@ -61,6 +78,12 @@ export class ClientComponent implements OnInit {
 
   ngOnInit() {
     this.titleService.setTitle("Lakbay | Payments Table");
+
+    this.hideTableX = true;
+  }
+
+  isEmptyString() {
+    this.hideTableX = this.searchX === '';
   }
   public setTitle( newTitle: string) {
     this.titleService.setTitle(newTitle);

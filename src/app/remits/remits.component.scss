@@ -1,0 +1,32 @@
+.mat-column-balance {
+  max-width: 120px;
+  text-align: center;
+}
+.mat-column-total_paypal {
+  max-width: 120px;
+  text-align: center;
+}
+.mat-column-total_cash {
+  max-width: 120px;
+  text-align: center;
+}
+.mat-column-actions {
+  text-align: center;
+}
+.mat-column-full_name {
+  text-align: center;
+}
+mat-header-cell {
+  display:flex;
+  justify-content: center;
+}
+
+.example-form {
+  min-width: 150px;
+  max-width: 500px;
+  width: 100%;
+}
+
+.example-full-width {
+  width: 100%;
+}

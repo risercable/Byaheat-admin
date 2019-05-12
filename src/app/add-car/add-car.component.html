@@ -41,7 +41,7 @@
                       <div class="controls">
                         <mat-form-field>
                           <mat-label>Car Plate Number</mat-label>
-                          <input matInput name="car_plate_number" [(ngModel)]="car_plate_number" [formControl]="car_pnE" placeholder="AAA-1111" mask='SSSS-0000' required>
+                          <input matInput name="car_plate_number" [(ngModel)]="car_plate_number" [formControl]="car_pnE" placeholder="AAA-1111" mask='SSS-0000' oninput="this.value = this.value.toUpperCase()" [dropSpecialCharacters]="false" required>
                           <mat-error *ngIf="car_pnE.invalid">{{getErrorMessage4()}}</mat-error>
                         </mat-form-field>
                       </div>
@@ -85,7 +85,7 @@
                         <!--<input type="text" class="form-control" name="car_color" #name="ngModel" [(ngModel)]="carService.selectedCar.car_color" minlength="4" placeholder="color" />-->
                         <mat-form-field>
                           <mat-label>Car Color</mat-label>
-                          <input matInput name="car_color" [(ngModel)]="car_color" [formControl]="car_colorE" minlength="3" maxlength="20" placeholder="color" [pattern]="'[a-zA-Z ]*'" required>
+                          <input matInput name="car_color" [(ngModel)]="car_color" minlength="3" maxlength="20" placeholder="color" [pattern]="'[a-zA-Z ]*'" required>
                           <mat-error *ngIf="car_colorE.invalid">{{getErrorMessage()}}</mat-error>
                         </mat-form-field>
                       </div>
@@ -97,9 +97,10 @@
                         <!--<input type="radio" value="Family" class="form-control" name="car_type" [(ngModel)]="carService.selectedCar.car_type" (click)="onRadioClick(1)"/>Family<br>-->
                         <!--<input type="radio" value="Barkada" class="form-control" name="car_type" [(ngModel)]="carService.selectedCar.car_type" (click)="onRadioClick(2)"/>Barkada-->
                           <mat-radio-group name="car_type" [(ngModel)]="car_type" (change)="onRadioClick($event)" required>
-                            <mat-radio-button value="Single">Single</mat-radio-button>
-                            <mat-radio-button value="Family">Family</mat-radio-button>
-                            <mat-radio-button value="Barkada">Barkada </mat-radio-button>
+                            <mat-radio-button value="single">Single</mat-radio-button>
+                            <mat-radio-button value="family">Family</mat-radio-button>
+                            <mat-radio-button value="barkada">Barkada </mat-radio-button>
+                            <mat-radio-button value="premium">PREMIUM </mat-radio-button>
                           </mat-radio-group>
                         <mat-error *ngIf="car_capacityE.invalid">{{getErrorMessage2()}}</mat-error>
                       </div>
@@ -128,15 +129,7 @@
         <div class="card">
           <form class="form-horizontal">
             <div class="card-body">
-              <p>Number of Toyota Cars: <span></span></p>
-            </div>
-          </form>
-        </div>
-        <div class="card">
-          <form class="form-horizontal">
-            <div class="card-body" style="height: auto; overflow: auto;">
-              <p style="margin: 0 auto;">Just another Under Construction div XD</p>
-              <img src="../../assets/images/ao2X1b0_700b.jpg" style="width: auto; height: auto;">
+              <p>Number of car per type: <span></span></p>
             </div>
           </form>
         </div>

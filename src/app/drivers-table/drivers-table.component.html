@@ -45,26 +45,37 @@
 
                                   <!-- Position Column -->
                                   <ng-container matColumnDef="user_firstname">
-                                    <mat-header-cell *matHeaderCellDef mat-sort-header>Driver Firstname</mat-header-cell>
+                                    <mat-header-cell *matHeaderCellDef mat-sort-header>Firstname</mat-header-cell>
                                     <mat-cell *matCellDef="let element"> {{element.user_firstname}} </mat-cell>
                                   </ng-container>
 
                                   <!-- Name Column -->
                                   <ng-container matColumnDef="user_lastname">
-                                    <mat-header-cell *matHeaderCellDef mat-sort-header>Driver Lastname </mat-header-cell>
+                                    <mat-header-cell *matHeaderCellDef mat-sort-header>Lastname </mat-header-cell>
                                     <mat-cell *matCellDef="let element"> {{element.user_lastname}} </mat-cell>
                                   </ng-container>
 
                                   <!-- Weight Column -->
                                   <ng-container matColumnDef="user_email">
-                                    <mat-header-cell *matHeaderCellDef mat-sort-header> Driver Email </mat-header-cell>
-                                    <mat-cell *matCellDef="let element"> {{element.user_email}} </mat-cell>
+                                    <mat-header-cell *matHeaderCellDef mat-sort-header>Email </mat-header-cell>
+                                    <mat-cell *matCellDef="let element"> {{ (element.user_email | limitTo: 18) + (element.user_email.length > 18 ? '...' : '') }} </mat-cell>
+                                  </ng-container>
+
+                                  <!-- Weight Column -->
+                                  <ng-container matColumnDef="total_rating">
+                                    <mat-header-cell *matHeaderCellDef mat-sort-header>Total Rating </mat-header-cell>
+                                    <mat-cell *matCellDef="let element"> {{element.total_rating}} </mat-cell>
+                                  </ng-container>
+
+                                  <ng-container matColumnDef="dispatched">
+                                    <mat-header-cell *matHeaderCellDef mat-sort-header>Dispatched</mat-header-cell>
+                                    <mat-cell *matCellDef="let element; let i = index;"> <button *ngIf="element.dispatched === false" class="btn btn-success" mat-button style="padding: 10px; background-color: #28b779;" (click)="openDispatch(element)">DISPATCH</button><button *ngIf="element.dispatched !== false" mat-button style="padding: 10px; background-color: #1b4584" (click)="dispatchDetails(element.$key)">DETAILS</button></mat-cell>
                                   </ng-container>
 
                                   <ng-container matColumnDef="actions" class="hideX">
                                     <mat-header-cell *matHeaderCellDef> Action </mat-header-cell>
                                     <mat-cell *matCellDef="let element; let i = index">
-                                      <button mat-icon-button color="accent" (click)="openDialog(element, element.user_email)"><i class="mdi mdi-pencil-box"></i> Edit</button>
+                                      <button mat-icon-button color="accent" (click)="openDialog(element, element.user_email)"><i class="mdi mdi-format-list-bulleted"></i> View</button>
                                     </mat-cell>
                                   </ng-container>
                                   <ng-container matColumnDef="location" class="hideX">
@@ -96,3 +107,38 @@
   </div>
 </div>
 </div>
+
+<!-- Driver Dispatch Modal -->
+<!--<div id="dispatchModal" class="modal fade" role="dialog">-->
+  <!--<div class="modal-dialog">-->
+
+    <!--&lt;!&ndash; Modal content&ndash;&gt;-->
+    <!--<div class="modal-content">-->
+      <!--<div class="modal-header">-->
+        <!--<button type="button" class="close" data-dismiss="modal">&times;</button>-->
+        <!--<h4 class="modal-title">Confirm Dispatch</h4>-->
+      <!--</div>-->
+      <!--<div class="modal-body">-->
+        <!--<table class="table table-bordered table-striped">-->
+          <!--<thead>-->
+          <!--<tr>-->
+            <!--<th>Driver Name</th>-->
+            <!--<th>Assign Now</th>-->
+          <!--</tr>-->
+          <!--</thead>-->
+          <!--<tbody>-->
+          <!--<tr class="odd gradeX">-->
+            <!--<td>{{adriver.user_firstname + " " + adriver.user_lastname}}</td>-->
+            <!--<td> <a class="btn btn-mini btn-primary" (click)="assignNow(adriver.key, adriver.user_email, this.pnumberToPass, this.typeToPass)" data-toggle="modal" data-target="#selectDriverModal">ASSIGN THIS DRIVER</a>-->
+            <!--</td>-->
+          <!--</tr>-->
+          <!--</tbody>-->
+        <!--</table>-->
+      <!--</div>-->
+      <!--<div class="modal-footer">-->
+        <!--<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>-->
+      <!--</div>-->
+    <!--</div>-->
+
+  <!--</div>-->
+<!--</div>-->

@@ -25,7 +25,8 @@
           <nav aria-label="breadcrumb">
             <ol class="breadcrumb">
               <li class="breadcrumb-item"><a routerLink="../../home">Home</a></li>
-              <li class="breadcrumb-item active" aria-current="page">Rides History for {{xD[0]?.customer_name}}</li>
+              <li class="breadcrumb-item"><a [routerLink]="['clients/table']">Clients</a></li>
+              <li class="breadcrumb-item active" aria-current="page">Rides History for {{fullname}}</li>
             </ol>
           </nav>
         </div>
@@ -34,7 +35,7 @@
             <!-- Mat Table Starts here -->
 
             <div class="mat-app-background basic-container">
-              <div class="example-container mat-elevation-z8">
+              <div class="example-container mat-elevation-z8" *ngIf="itemList.length > 0">
                 <div class="example-header">
                   <h3>Ride History for Client: {{xD[0]?.customer_name}}</h3>
                   <!--<mat-form-field style="width: 400px">-->
@@ -123,6 +124,12 @@
                                [pageSizeOptions]="[5, 10, 20]"
                                [showFirstLastButtons]="true">
                 </mat-paginator>
+              </div>
+              <div class="example-container mat-elevation-z8" *ngIf="!(itemList.length > 0)">
+              <mat-card style="padding:100px;">
+                <h3 style="text-align:center">No Client Ride Histoy
+                </h3>
+              </mat-card>
               </div>
             </div>
           </div>

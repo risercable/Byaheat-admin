@@ -8,8 +8,18 @@ import { Observable } from 'rxjs/Observable';
 import { ClientService } from '../drivers/shared/client.service';
 import { Client } from '../drivers/shared/client.model';
 import { NgForm } from '@angular/forms/src/directives/ng_form';
+import {ActivatedRoute, Router} from '@angular/router';
+import {AuthService} from '../auth.service';
+import {Title} from '@angular/platform-browser';
+import {AngularFireDatabase} from 'angularfire2/database';
+import {AngularFireList} from 'angularfire2/database/interfaces';
+import {Observable} from 'rxjs/Observable';
+import {ClientService} from '../drivers/shared/client.service';
+import {Client} from '../drivers/shared/client.model';
+import {NgForm} from '@angular/forms/src/directives/ng_form';
 import {MAT_DIALOG_DATA, MatDialog, MatDialogRef, MatPaginator, MatSort, MatTableDataSource} from "@angular/material";
-import {ViewDetailsDialog} from "../reservation/reservation.component";
+import * as firebase from "firebase";
+
 declare var jsPDF: any; // Important
 
 @Component({
@@ -30,26 +40,42 @@ export class AccountComponent implements OnInit {
   reverse: boolean = false;
   // clientColumns = ['in1', 'user_firstname', 'user_lastname', 'user_birthdate', 'user_mobile', 'actions'];
   clientColumns = ['user_firstname', 'user_lastname', 'user_birthdate', 'user_mobile', 'actions'];
-  itemPrint: Perclient[];
+  itemPrint = [];
   itemList: Perclient[];
-  clientSource = new MatTableDataSource(this.itemPrint);
+  clientSource = new MatTableDataSource(this.itemList);
   noRecords: boolean;
   hideTableX: boolean = false;
+  hideET: boolean = true;
+  bbt: boolean = true;
   searchX: string = '';
 
-  @ViewChild(MatPaginator) paginator: MatPaginator;
+  private paginator: MatPaginator;
+  private sort: MatSort;
 
-  @ViewChild(MatSort) sort: MatSort;
 
-  ngAfterViewInit() {
+  @ViewChild(MatSort) set matSort(ms: MatSort) {
+    this.sort = ms;
+    this.setDataSourceAttributes();
+  }
+
+  @ViewChild(MatPaginator) set matPaginator(mp: MatPaginator) {
+    this.paginator = mp;
+    this.setDataSourceAttributes();
+  }
+
+  setDataSourceAttributes() {
+    this.clientSource.paginator = this.paginator;
     this.clientSource.sort = this.sort;
   }
 
   applyFilter(filterValue: string) {
 
 
-    this.hideTableX = this.searchX === '';
-
+    if(this.hideET === true) {
+      this.hideTableX = this.searchX === '';
+    } else {
+      this.hideTableX = false;
+    }
     filterValue = filterValue.trim(); // Remove whitespace
     filterValue = filterValue.toLowerCase(); // MatTableDataSource defaults to lowercase matches
     this.clientSource.filter = filterValue;
@@ -75,16 +101,19 @@ export class AccountComponent implements OnInit {
         json['in1'] = i;
         // this.itemList.push(json as Item);
         this.itemList.push(json as Perclient);
+        this.itemPrint.push(json);
         // this.xD.push(json);
 
         i++
       });
 
-      this.clientSource = new MatTableDataSource(this.itemList);
+      this.clientSource = new MatTableDataSource(this.itemList.reverse());
       this.clientSource.sort = this.sort;
       this.clientSource.paginator = this.paginator;
 
     });
+
+    console.log(this.itemList);
    }
 
   setOrder(value: string) {
@@ -107,11 +136,11 @@ export class AccountComponent implements OnInit {
   }
 
   onSelect(element) {
-    this.router.navigate(['/user/history', element.$key]);
+    this.router.navigate(['/clients/table/history', element.$key, element.user_firstname + " " + element.user_lastname]);
   }
 
   ngOnInit() {
-    this.setTitle("Lakbay | Users");
+    this.setTitle("Lakbay | Clients Served");
     const x = this.clientService.getData();
     x.snapshotChanges().subscribe(item => {
       this.clientlist = [];
@@ -128,6 +157,8 @@ export class AccountComponent implements OnInit {
 
   isEmptyString() {
     this.hideTableX = this.searchX === '';
+
+    this.bbt = this.hideTableX;
   }
 
   logout() {
@@ -157,12 +188,26 @@ export class AccountComponent implements OnInit {
     this.clientService.selectedClient = Object.assign({},clientx);
   }
 
+  openPD() {
+    let dialogRef = this.dialog.open(PrintOptsDialog, {
+      width: 'auto',
+      data: { colsSel: this.clientColumns }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log('The dialog was closed');
+    });
+  }
+
   onPrint(){
     var doc = new jsPDF('p', 'pt');
   doc.text("Users List", 40, 50);
   var res = doc.autoTableHtmlToJson(document.getElementById("basic-table"), true);
-  var columns = [res.columns[0], res.columns[1], res.columns[2], res.columns[3]];
-  doc.autoTable(res.columns, res.data, {startY: 60});
+  var columns = [
+    {title: "BDate", dataKey: "user_birthdate"}
+  ];
+  let rows = this.itemPrint;
+  doc.autoTable(columns, rows, {tableWidth: 'auto', startY: false, margin: {top: 100}, theme: 'grid'});
   var pdfUrl = doc.output('datauri').substring(doc.output('datauri').indexOf(',')+1);
   var binary = atob(pdfUrl.replace(/\s/g, ''));
   var len = binary.length;
@@ -198,7 +243,8 @@ export interface Perclient {
   user_lastname: string;
   user_birthdate: string;
   user_mobile: string;
-  latest_ride: string;
+  latest_ride_id: string;
+  latest_ride_history: any[];
 }
 
 @Component({
@@ -212,6 +258,80 @@ export class ClientDetailsDialog {
   constructor(
     public dialogRef: MatDialogRef<ClientDetailsDialog>,
     @Inject(MAT_DIALOG_DATA) public data: any) { }
+
+  onNoClick(): void {
+    this.dialogRef.close();
+  }
+
+}
+
+@Component({
+  selector: 'print-opts-dialog',
+  templateUrl: 'print-opts-dialog.html',
+  encapsulation: ViewEncapsulation.None,
+})
+
+export class PrintOptsDialog {
+  cols = [];
+  sortedArray = [];
+  sortD = '';
+
+  constructor(
+    public dialogRef: MatDialogRef<PrintOptsDialog>,
+    @Inject(MAT_DIALOG_DATA) public data: any) {
+    data.colsSel.forEach(item => {
+
+      let val = {};
+      val['value'] = item;
+      this.cols.push(val);
+    });
+
+    let ind = this.cols.indexOf('actions');
+
+    this.cols.splice(ind, 1);
+
+    console.log(this.cols);
+
+  }
+
+  onGo() {
+    console.log(this.sortD);
+    firebase.database().ref('clients').orderByChild(this.sortD).on('value', (snapshot) => {
+      snapshot.forEach((stepSnap) => {
+        this.sortedArray.push(stepSnap.val());
+      })
+    });
+    console.log('sorted array: ',this.sortedArray);
+
+    var doc = new jsPDF('p', 'pt');
+    doc.text("Clients served list ordered by: " + this.sortD, 40, 50);
+    var res = doc.autoTableHtmlToJson(document.getElementById("basic-table"), true);
+    var columns = [
+      {title: "Client First Name", dataKey: "user_firstname"},
+      {title: "Client Last Name", dataKey: "user_lastname"},
+      {title: "Birthdate", dataKey: "user_birthdate"},
+      {title: "Client Mobile Number", dataKey: "user_mobile"}
+    ];
+    let rows = this.sortedArray;
+    doc.autoTable(columns, rows, {tableWidth: 'auto', startY: false, margin: {top: 100}, theme: 'grid'});
+    var pdfUrl = doc.output('datauri').substring(doc.output('datauri').indexOf(',')+1);
+    var binary = atob(pdfUrl.replace(/\s/g, ''));
+    var len = binary.length;
+    var buffer = new ArrayBuffer(len);
+    var view = new Uint8Array(buffer);
+    for (var i = 0; i < len; i++) {
+      view[i] = binary.charCodeAt(i);
+    }
+
+    var blob = new Blob( [view], { type: "application/pdf" });
+    var url = URL.createObjectURL(blob);
+
+    window.open(url);
+
+    this.dialogRef.close();
+
+    window.location.reload();
+  }
 
   onNoClick(): void {
     this.dialogRef.close();

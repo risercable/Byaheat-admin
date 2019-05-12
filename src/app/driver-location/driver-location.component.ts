@@ -23,7 +23,7 @@ export class DriverLocationComponent implements OnInit {
 
     this.key = this.route.snapshot.paramMap.get("$key").toString();
 
-    this.dbRef2 = this.db.list('drivers_location/' + this.key);
+    this.dbRef2 = this.db.list('drivers/' + this.key);
 
     this.geo.hits.subscribe(hits => this.markers1 = hits);
   }
@@ -36,7 +36,7 @@ export class DriverLocationComponent implements OnInit {
         this.lat = position.coords.latitude;
         this.lng = position.coords.longitude;
 
-        this.geo.getLocations(5000, [this.lat, this.lng]);
+        this.geo.getLocations(5000, [this.lat, this.lng], this.key);
       });
     }
   }

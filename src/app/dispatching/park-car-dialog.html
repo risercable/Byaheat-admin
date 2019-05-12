@@ -1,0 +1,25 @@
+<h1 mat-dialog-title>Confirm Park</h1>
+<div mat-dialog-content>
+  <div class="example-container">
+    <p>Driver Full Name: {{ dpdatadriver_fullname }}</p>
+    <p>Car Plate Number: {{ dpdatacar_plate_number }}</p>
+    <p class="float-right">Current Date and Time: {{ tNow }}</p>
+    <p>Time In: {{ dpdatatime_in }}</p>
+    <p>Time Out: {{ dpdatatime_out }}</p>
+    <!--<p>Condition: {{ dpdataArray.condition }}</p>-->
+
+    <mat-form-field class="example-full-width">
+      <input matInput placeholder="Condition" #carCondition>
+    </mat-form-field>
+    <p>(Previous: {{dpdatacar_condition}})</p>
+  </div>
+</div>
+<div mat-dialog-actions>
+  <div class="col-12">
+    <div class="row">
+      <button class="btn btn-success col-5" (click)="onPark(data.theKey.$key)">YES</button>
+      <button class="btn btn-outline-info col-5 offset-2" (click)="onNoClick()">Cancel</button>
+    </div>
+  </div>
+  <!-- <button mat-button (click)="onSubmit(driverForm)" cdkFocusInitial>Ok</button> -->
+</div>

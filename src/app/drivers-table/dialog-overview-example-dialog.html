@@ -1,27 +1,29 @@
-<h1 mat-dialog-title>Edit</h1>
+<h1 mat-dialog-title>Details</h1>
 <div mat-dialog-content>
-  <div class="example-container"  *ngFor="let f of f1ss | async">
+  <div class="example-container">
     <!--<mat-form-field>-->
     <!--<input matInput [(ngModel)]="f.user_firstname" name="user_firstname" placeholder="Firstname">-->
-    <p>User Name: {{ f.user_firstname }}</p>
+    <!--<p>User Name: {{allData.user_email}}</p>-->
     <!--</mat-form-field>-->
   </div>
   <form class="form-horizontal">
-    <input type="hidden" name="$key" #$key="ngModel" [(ngModel)]="driverService.selectedDriver.$key" />
+    <input type="hidden" name="$key" #$key="ngModel" [(ngModel)]="driverService.selectedDriver.$key" readonly/>
     <div class="control-group">
       <div class="controls">
         <!-- <label>First Name: </label> -->
         <!-- <input type="text" name="user_firstname" #name="ngModel" [(ngModel)]="driverService.selectedDriver.user_firstname" placeholder="First Name" /> -->
         <div class="example-container">
           <mat-form-field>
-            <input matInput [(ngModel)]="data.theKey.user_firstname" name="user_firstname" placeholder="Firstname">
+            <input matInput [(ngModel)]="data.theKey.user_firstname" name="user_firstname" placeholder="Firstname" readonly>
+            <mat-icon matSuffix><i class="mdi mdi-eye" style="font-size: small;"></i></mat-icon>
           </mat-form-field>
         </div>
         <!-- <label>Last Name: </label>
         <input type="text" name="user_lastname" #name="ngModel" [(ngModel)]="driverService.selectedDriver.user_lastname" placeholder="Last Name" /> -->
         <div class="example-container">
           <mat-form-field>
-            <input matInput name="user_lastname" [(ngModel)]="data.theKey.user_lastname" placeholder="Last Name">
+            <input matInput name="user_lastname" [(ngModel)]="data.theKey.user_lastname" placeholder="Last Name" readonly>
+            <mat-icon matSuffix><i class="mdi mdi-eye" style="font-size: small;"></i></mat-icon>
           </mat-form-field>
         </div>
       </div>
@@ -30,9 +32,8 @@
       <!-- <label class="control-label">Birthdate: </label> -->
       <div class="controls">
         <mat-form-field>
-          <input matInput [min]="minDate" [max]="maxDate" [matDatepicker]="picker" name="user_birthdate" [(ngModel)]="data.theKey.user_birthdate" placeholder="Choose a date">
-          <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-          <mat-datepicker #picker></mat-datepicker>
+          <input matInput name="user_birthdate" [ngModel]="data.theKey.user_birthdate | date:'MM/dd/yy'" (ngModelChange)="data.theKey.user_birthdate=$event" placeholder="Birthdate" readonly>
+          <mat-icon matSuffix><i class="mdi mdi-eye" style="font-size: small;"></i></mat-icon>
         </mat-form-field>
       </div>
     </div>
@@ -42,7 +43,8 @@
         <!-- <input type="text" class="form-control" name="user_address" #name="ngModel" [(ngModel)]="driverService.selectedDriver.user_address" placeholder="Address" /> -->
         <div class="example-container">
           <mat-form-field>
-            <input matInput name="user_address" [(ngModel)]="data.theKey.user_address" placeholder="Address">
+            <input matInput name="user_address" [(ngModel)]="data.theKey.user_address" placeholder="Address" readonly>
+            <mat-icon matSuffix><i class="mdi mdi-eye" style="font-size: small;"></i></mat-icon>
           </mat-form-field>
         </div>
       </div>
@@ -53,14 +55,15 @@
         <!-- <input type="number" class="form-control" name="user_mobile" #name="ngModel" [(ngModel)]="driverService.selectedDriver.user_mobile" placeholder="Salary" /> -->
         <div class="example-container">
           <mat-form-field>
-            <input matInput class="form-control" name="user_mobile" [(ngModel)]="data.theKey.user_mobile" placeholder="Mobile Number">
+            <input matInput class="form-control" name="user_mobile" [(ngModel)]="data.theKey.user_mobile" placeholder="Mobile Number" readonly>
+            <mat-icon matSuffix><i class="mdi mdi-eye" style="font-size: small;"></i></mat-icon>
           </mat-form-field>
         </div>
       </div>
     </div>
     <div class="form-actions">
       <!-- <button type="submit" class="btn btn-success pull-right" [disabled]="!driverForm.valid" onclick="$('.modal').modal('hide')"><span class="icon"><i class="fa fa-save"></i></span> Submit</button> -->
-      <button type="submit" class="pull-right" mat-raised-button color="primary"><span class="icon"><i class="fa fa-save"></i></span> Submit</button>
+      <!--<button type="submit" class="pull-right" mat-raised-button color="primary"><span class="icon"><i class="fa fa-save"></i></span> Submit</button>-->
     </div>
   </form>
 </div>

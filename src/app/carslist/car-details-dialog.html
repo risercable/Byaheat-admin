@@ -1,0 +1,12 @@
+<h1 mat-dialog-title>Car Details</h1>
+<div mat-dialog-content style="width: 660px;" class="container">
+  <!-- content here -->
+  <mat-form-field class="input1">
+    <label class="label1">Client UID: </label>
+    <input matInput name="customer_id" [ngModel]="data.cararray.$key" readonly>
+  </mat-form-field>
+</div>
+<div mat-dialog-actions>
+  <button class="btn btn-success" (click)="onNoClick()">Cancel</button>
+  <!-- <button mat-button (click)="onSubmit(driverForm)" cdkFocusInitial>Ok</button> -->
+</div>

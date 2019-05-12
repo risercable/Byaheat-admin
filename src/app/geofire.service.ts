@@ -20,8 +20,6 @@ export class GeofireService {
   constructor(private db: AngularFireDatabase) {
 
     //reference database location for GeoFire
-    this.dbRef = this.db.list('/drivers_available/');
-    this.geoFire = new GeoFire(this.dbRef.query.ref);
   }
 
   setLocation(key: string, coords: Array<number>) {
@@ -31,7 +29,11 @@ export class GeofireService {
   }
 
   /// Queries database for nearby locations, then maps to BehaviorSubject
-  getLocations(radius: number, coords: Array<number>) {
+  getLocations(radius: number, coords: Array<number>, key: string) {
+
+    this.dbRef = this.db.list('/drivers/' + key + '/currently/');
+    this.geoFire = new GeoFire(this.dbRef.query.ref);
+
     this.geoFire.query({
       center: coords,
       radius: radius
@@ -43,6 +45,7 @@ export class GeofireService {
         };
 
         let currentHits = this.hits.value;
+        currentHits.splice(0);
         currentHits.push(hit);
         this.hits.next(currentHits);
       })

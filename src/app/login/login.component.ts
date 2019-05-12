@@ -7,6 +7,7 @@ import * as firebase from 'firebase/app';
 import { AngularFireAuthModule } from 'angularfire2/auth';
 import { AuthService } from '../auth.service';
 import { Title } from '@angular/platform-browser';
+import {AngularFireDatabase} from "angularfire2/database";
 
 @Component({
   selector: 'app-login',
@@ -16,10 +17,13 @@ import { Title } from '@angular/platform-browser';
 export class LoginComponent implements OnInit {
   email: string;
   password: string;
+  show: boolean;
   link: any;
   showLost: boolean;
+  items: Observable<any[]>;
 
-  constructor(public authService: AuthService, private route: ActivatedRoute, private router: Router, private titleService: Title) {
+  constructor(public authService: AuthService, private route: ActivatedRoute, private router: Router, private titleService: Title, public afAuth: AngularFireAuth, db: AngularFireDatabase) {
+    this.show = false;
 
    }
 
@@ -35,6 +39,10 @@ export class LoginComponent implements OnInit {
     }
 
     this.showLost = false;
+  }
+
+  passwordX() {
+    this.show = !this.show;
   }
 
   public setTitle( newTitle: string) {
@@ -53,5 +61,10 @@ export class LoginComponent implements OnInit {
 
   logout() {
     this.authService.logout();
+  }
+
+  toRegister() {
+    this.router.dispose();
+    this.router.navigate(['signup']);
   }
 }

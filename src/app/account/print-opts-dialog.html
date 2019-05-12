@@ -1,0 +1,15 @@
+<h1 mat-dialog-title>Print Menu</h1>
+<div mat-dialog-content>
+  <p>sort data</p>
+  <mat-form-field>
+    <mat-select placeholder="Select data" [(value)]="sortD">
+      <mat-option *ngFor="let col of cols" [value]="col.value">
+        {{ col.value }}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+</div>
+<div mat-dialog-actions>
+  <button mat-button (click)="onGo()">Go</button>
+  <button mat-button (click)="onNoClick()">No Thanks</button>
+</div>
