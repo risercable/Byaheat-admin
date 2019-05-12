@@ -47,7 +47,7 @@ import { CustomFormsModule } from 'ng4-validators'
 import { AngularFireAuthModule } from 'angularfire2/auth';
 import { environment } from '../environments/environment';
 import { AuthService } from './auth.service';
-import { AngularFireDatabase } from 'angularfire2/database-deprecated';
+import { AngularFireDatabase } from 'angularfire2/database';
 import { AuthGuard } from './auth/auth.guard';
 import { LoginGuard } from './login.guard';
 import { AngularFireModule } from 'angularfire2';
@@ -166,19 +166,7 @@ import { DriverLocationComponent } from './driver-location/driver-location.compo
   ],
   entryComponents: [DialogOverviewExampleDialog, PizzaPartyComponent, PlateExistExampleDialog, ViewDetailsDialog, ClientDetailsDialog, CarDetailsDialog],
   providers: [AuthService, AuthGuard, AngularFireDatabase, LoginGuard, DriverService, CarService, ClientService, StorageService, MatDatepickerModule],
-    TruncatePipe,
-    HomeLayoutComponent,
-    LoginLayoutComponent,
-    TableComponent,
-    ClientComponent,
-    NotFoundLayoutComponent,
-    SendEmailComponent,
-    NotcComponent,
-    DriverLocationComponent,
-    DriverLocationDialog
-  ],
-  entryComponents: [DialogOverviewExampleDialog, DriverLocationDialog, PizzaPartyComponent, PlateExistExampleDialog, ViewDetailsDialog, ClientDetailsDialog, CarDetailsDialog],
-  providers: [AuthService, AuthGuard, AngularFireDatabase, LoginGuard, DriverService, CarService, ClientService, StorageService, MatDatepickerModule, GeofireService, HttpClient],
+
   bootstrap: [ AppComponent ]
 })
 export class AppModule { }

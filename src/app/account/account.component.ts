@@ -3,7 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { AuthService } from '../auth.service';
 import { Title }     from '@angular/platform-browser';
 import { AngularFireDatabase } from 'angularfire2/database';
-import { AngularFireList } from 'angularfire2/database/interfaces';
+import { AngularFireList } from 'angularfire2/database';
 import { Observable } from 'rxjs/Observable';
 import { ClientService } from '../drivers/shared/client.service';
 import { Client } from '../drivers/shared/client.model';
@@ -28,7 +28,7 @@ export class AccountComponent implements OnInit {
   optionSelected: any;
   order: string = 'cfull_name';
   reverse: boolean = false;
-  clientColumns = ['in1', 'user_firstname', 'user_lastname', 'user_birthdate', 'user_mobile', 'actions'];
+  // clientColumns = ['in1', 'user_firstname', 'user_lastname', 'user_birthdate', 'user_mobile', 'actions'];
   clientColumns = ['user_firstname', 'user_lastname', 'user_birthdate', 'user_mobile', 'actions'];
   itemPrint: Perclient[];
   itemList: Perclient[];

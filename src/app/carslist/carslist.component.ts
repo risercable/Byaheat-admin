@@ -1,6 +1,6 @@
 import {Component, Inject, OnInit, ViewChild, ViewEncapsulation} from '@angular/core';
 import { AngularFireDatabase } from 'angularfire2/database';
-import { AngularFireList } from 'angularfire2/database/interfaces';
+import { AngularFireList } from 'angularfire2/database';
 import { Observable } from 'rxjs/Observable';
 import { CarService } from '../drivers/shared/car.service';
 import { Car } from '../drivers/shared/car.model';
@@ -43,7 +43,6 @@ export class CarslistComponent implements OnInit {
   isGreen: boolean = false;
   dataSource = new MatTableDataSource(this.itemList);
   displayedColumns = ['in1', 'car_model', 'car_type', 'car_plate_number', 'car_driver', 'actions'];
-  noRecords: boolean
   noRecords: boolean;
 
   @ViewChild(MatPaginator) paginator: MatPaginator;

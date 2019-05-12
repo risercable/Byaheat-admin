@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { AngularFireObject, AngularFireList } from 'angularfire2/database/interfaces';
+import { AngularFireObject, AngularFireList } from 'angularfire2/database';
 import { AuthService } from '../auth.service';
 import { AngularFireDatabase } from 'angularfire2/database';
 import { Title } from '@angular/platform-browser';

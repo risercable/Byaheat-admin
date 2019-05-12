@@ -1,6 +1,5 @@
 import { NgModule }              from '@angular/core';
 import { RouterModule, Routes }  from '@angular/router';
-
 import { CrisisListComponent }   from './crisis-list.component';
 // import { HeroListComponent }  from './hero-list.component';  // <-- delete this line
 import { PageNotFoundComponent } from './not-found.component';
@@ -21,23 +20,6 @@ import { CarslistComponent } from './carslist/carslist.component';
 import { AddCarComponent } from './add-car/add-car.component';
 import { ReservationComponent } from './reservation/reservation.component';
 import {ClientHistoryComponent} from "./client-history/client-history.component";
-
-const routes: Routes = [
-  { path:'',   component: HomeComponent, canActivate: [AuthGuard] },
-  { path:'users/table', component: AccountComponent, canActivate: [AuthGuard] },
-  { path:'user/history/:$key', component:ClientHistoryComponent, canActivate: [AuthGuard]},
-  { path:'login',   component: LoginComponent},
-  { path:'cars/table', component: CarslistComponent, canActivate: [AuthGuard]},
-  { path:'reservations', component: ReservationComponent, canActivate: [AuthGuard]},
-  { path:'cars/add-car', component: AddCarComponent, canActivate: [AuthGuard] },
-  { path: 'packages', component: PackagesComponent, canActivate: [AuthGuard] },
-  { path: 'drivers/add-driver', component: DriversComponent, canActivate: [AuthGuard] },
-  { path: 'assign', component: AssignDriverComponent, canActivate: [AuthGuard] },
-  { path: 'signup', component: SignupComponent, canActivate: [AuthGuard] },
-  { path: 'drivers/table', component: DriversTableComponent, canActivate: [AuthGuard] },
-  { path: 'this', component: ThisdriverComponent, canActivate: [AuthGuard] },
-  { path: 'not-found', component: NotFoundComponent },
-  { path: '**', redirectTo: 'not-found' }
 import { HomeLayoutComponent } from './layouts/home-layout/home-layout.component';
 import { LoginLayoutComponent } from './layouts/login-layout/login-layout.component';
 import {TableComponent} from "./payments/table/table.component";

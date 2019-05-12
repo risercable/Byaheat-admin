@@ -5,7 +5,7 @@ import {Perclient} from "../account/account.component";
 import {MatPaginator, MatSort, MatTableDataSource} from "@angular/material";
 import {query} from "@angular/animations";
 import {Observable} from "rxjs/Observable";
-import {AngularFireList} from "angularfire2/database/interfaces";
+import {AngularFireList} from "angularfire2/database";
 
 
 @Component({
