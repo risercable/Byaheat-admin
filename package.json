@@ -73,6 +73,7 @@
     "plotly.js": "^1.41.3",
     "print-js": "^1.0.43",
     "rxjs": "^5.5.10",
+    "rxjs-compat": "^6.5.5",
     "zone.js": "^0.8.26"
   },
   "devDependencies": {
