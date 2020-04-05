@@ -8,15 +8,6 @@ import { Observable } from 'rxjs/Observable';
 import { ClientService } from '../drivers/shared/client.service';
 import { Client } from '../drivers/shared/client.model';
 import { NgForm } from '@angular/forms/src/directives/ng_form';
-import {ActivatedRoute, Router} from '@angular/router';
-import {AuthService} from '../auth.service';
-import {Title} from '@angular/platform-browser';
-import {AngularFireDatabase} from 'angularfire2/database';
-import {AngularFireList} from 'angularfire2/database/interfaces';
-import {Observable} from 'rxjs/Observable';
-import {ClientService} from '../drivers/shared/client.service';
-import {Client} from '../drivers/shared/client.model';
-import {NgForm} from '@angular/forms/src/directives/ng_form';
 import {MAT_DIALOG_DATA, MatDialog, MatDialogRef, MatPaginator, MatSort, MatTableDataSource} from "@angular/material";
 import * as firebase from "firebase";
 
@@ -116,6 +107,10 @@ export class AccountComponent implements OnInit {
     console.log(this.itemList);
    }
 
+   store1(value: boolean) {
+    localStorage.setItem("showTableBtn", value.toString());
+   }
+
   setOrder(value: string) {
     if (this.order === value) {
       this.reverse = !this.reverse;
@@ -152,7 +147,11 @@ export class AccountComponent implements OnInit {
     });
     this.ipp = 10;
 
-    this.hideTableX = true;
+    let showtblbtn = localStorage.getItem("showTableBtn");
+
+    this.hideTableX = showtblbtn === 'true' ? false: true;
+
+    this.bbt = this.hideTableX;
   }
 
   isEmptyString() {

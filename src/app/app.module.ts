@@ -98,7 +98,6 @@ import { RemitsComponent } from './remits/remits.component';
 import { RemitsHistoryComponent } from './remits-history/remits-history.component';
 import { RatespageComponent } from './ratespage/ratespage.component';
 import { PlotlyModule } from 'angular-plotly.js';
-import { CountdownModule } from 'ngx-countdown';
 import { CountdownTimerModule } from 'ngx-countdown-timer';
 
 import { DispatchingComponent, ParkCarDialog } from './dispatching/dispatching.component';
@@ -140,7 +139,6 @@ import { MorrisJsModule } from 'angular-morris-js';
     MatSortModule,
     MatCardModule,
     PlotlyModule,
-    CountdownModule,
     CountdownTimerModule.forRoot(),
     NgbModule.forRoot(),
     AngularFireStorageModule,
