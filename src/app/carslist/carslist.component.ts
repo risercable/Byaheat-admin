@@ -7,14 +7,6 @@ import { Car } from '../drivers/shared/car.model';
 import { NgForm } from '@angular/forms/src/directives/ng_form';
 import { Title } from '@angular/platform-browser';
 import {MatDialog, MatDialogRef, MAT_DIALOG_DATA, MatTableDataSource, MatPaginator, MatSort} from '@angular/material';
-import {AngularFireDatabase} from 'angularfire2/database';
-import {AngularFireList} from 'angularfire2/database/interfaces';
-import {Observable} from 'rxjs/Observable';
-import {CarService} from '../drivers/shared/car.service';
-import {Car} from '../drivers/shared/car.model';
-import {NgForm} from '@angular/forms/src/directives/ng_form';
-import {Title} from '@angular/platform-browser';
-import {MAT_DIALOG_DATA, MatDialog, MatDialogRef, MatPaginator, MatSort, MatTableDataSource} from '@angular/material';
 import {ClientDetailsDialog} from "../account/account.component";
 import * as firebase from "firebase";
 
