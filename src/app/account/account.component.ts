@@ -106,6 +106,10 @@ export class AccountComponent implements OnInit {
     console.log(this.itemList);
    }
 
+   store1(value: boolean) {
+    localStorage.setItem("showTableBtn", value.toString());
+   }
+
   setOrder(value: string) {
     if (this.order === value) {
       this.reverse = !this.reverse;
@@ -142,7 +146,11 @@ export class AccountComponent implements OnInit {
     });
     this.ipp = 10;
 
-    this.hideTableX = true;
+    let showtblbtn = localStorage.getItem("showTableBtn");
+
+    this.hideTableX = showtblbtn === 'true' ? false: true;
+
+    this.bbt = this.hideTableX;
   }
 
   isEmptyString() {

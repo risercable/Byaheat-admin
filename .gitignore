@@ -43,3 +43,6 @@ Thumbs.db
 "sendgrid.env" 
 "sendgrid.env" 
 "sendgrid.env" 
+
+# environment keys
+./src/environments/*.ts
