@@ -41,9 +41,9 @@ export class AuthService {
     // store the URL so we can redirect after logging in
     redirectUrl: string;
 
-    constructor(public firebaseAuth: AngularFireAuth, private router: Router,public db: AngularFireDatabase) {
+    constructor(public firebaseAuth: AngularFireAuth, private router: Router, public db: AngularFireDatabase) {
       this.user = firebaseAuth.authState;
-      this.usersRef = firebase.database().ref("drivers");
+      this.usersRef = firebase.database().ref('drivers');
       this.driverList = db.list('drivers');
     this.drivers = this.driverList.snapshotChanges().map(changes => {
       return changes.map(c => ({ key: c.payload.key, ...c.payload.val() }));

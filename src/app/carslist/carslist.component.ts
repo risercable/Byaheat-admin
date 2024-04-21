@@ -46,6 +46,8 @@ export class CarslistComponent implements OnInit {
   dataSource = new MatTableDataSource(this.itemList);
   displayedColumns = ['in1', 'car_model', 'car_type', 'car_plate_number', 'car_driver', 'unassign'];
   noRecords: boolean;
+  // const
+  carColumnsToDisplay: ['car_brand', 'car_model', 'car_type', 'car_plate_number', 'car_driver', 'actions'];
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
 
@@ -72,6 +74,7 @@ export class CarslistComponent implements OnInit {
   constructor(private db: AngularFireDatabase,private carService: CarService, private titleService: Title, public dialog: MatDialog) {
     // this.carList = db.list('all_cars');
     this.cList = db.list('all_cars');
+
     this.driversList = db.list('reservations');
     this.drvList = db.list('drivers');
     // this.cars = this.carList.snapshotChanges().map(changes => {
@@ -94,8 +97,10 @@ export class CarslistComponent implements OnInit {
     data.snapshotChanges().subscribe(item => {
       this.itemList = [];
       let i = 1;
+
       item.forEach(element => {
         let json = element.payload.toJSON();
+        // console.log(json);
         json["$key"] = element.key;
         json["in1"] = i;
         // this.itemList.push(json as Item);
@@ -109,6 +114,8 @@ export class CarslistComponent implements OnInit {
       this.dataSource.sort = this.sort;
       this.dataSource.paginator = this.paginator;
     });
+
+    console.log(this.dataSource);
    }
 
   openDialog(i: any): void {

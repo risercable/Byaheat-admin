@@ -27,32 +27,6 @@
           <!-- Map is Here -->
           <div *ngIf="lat && lng">
 
-            <agm-map [latitude]="lat" [longitude]="lng">
-
-              <agm-marker [latitude]="lat" [longitude]="lng">
-
-                <agm-info-window>
-                  <h3><strong>Howdy!</strong></h3>
-                  <p>You are here!</p>
-                </agm-info-window>
-
-              </agm-marker>
-
-              <agm-marker *ngFor="let marker of markers"
-              [latitude]="marker.location[0]"
-              [longitude]="marker.location[1]"
-              [iconUrl]="'../../assets/images/if_car_1055099.svg'">
-
-                <agm-info-window>
-                  <h3><strong>Location Details</strong></h3>
-                  <p>You are {{ marker.distance }} kilometers from this point</p>
-                </agm-info-window>
-
-
-              </agm-marker>
-
-            </agm-map>
-
           </div>
           <!--<div *ngIf="smarknulldiv">-->
             <!--<p>{{smarknull}}</p>-->

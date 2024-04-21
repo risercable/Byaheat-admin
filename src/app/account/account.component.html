@@ -34,6 +34,7 @@
             <h5>Users Table</h5>
           </div>
           <div class="widget-content nopadding">
+          </div>
     <!-- ============================================================== -->
     <!-- Start Page Content -->
     <!-- ============================================================== -->
@@ -54,6 +55,7 @@
                 <div class="example-header">
                   <mat-form-field style="width: 400px">
                     <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Search..." maxlength="30" matTooltip="*Maximum character is 30" matTooltipPosition="after">
+                  </mat-form-field>
                   <div class="container h-100">
                     <div class="row h-100 justify-content-center align-items-center">
                   <mat-form-field style="width: 400px; text-align: center;" class="col-6">
@@ -67,6 +69,7 @@
                         </div>
                       </div>
                     </div>
+                  </div>
 
                     <div class="row h-100 justify-content-center align-items-center" [hidden]="hideTableX">
                       <mat-card *ngIf="!clientSource?.filteredData.length">
@@ -156,4 +159,6 @@
       </div>
     </div>
   </div>
+</div>
+</div>
 </div>

@@ -79,30 +79,25 @@ import { AngularFireStorageModule } from 'angularfire2/storage';
 
 import { OrderModule } from 'ngx-order-pipe';
 import { ClientHistoryComponent } from './client-history/client-history.component';
-import { HomeLayoutComponent } from './layouts/home-layout/home-layout.component';
-import { LoginLayoutComponent } from './layouts/login-layout/login-layout.component';
 import { SidebarModule } from 'ng-sidebar';
 import {NgxMaskModule} from 'ngx-mask';
-import { TableComponent } from './payments/table/table.component';
-import { ClientComponent } from './payments/client/client.component';
-import { NotFoundLayoutComponent } from './layouts/not-found-layout/not-found-layout.component';
 
-import {AgmCoreModule} from '@agm/core';
 import {DriversMapComponent} from "./drivers-map/drivers-map.component";
-import {GeofireService} from "./geofire.service";
-import { SendEmailComponent } from './send-email/send-email.component';
 import {HttpClient, HttpClientModule} from "@angular/common/http";
-import { NotcComponent } from './notc/notc.component';
-import { DriverLocationComponent } from './driver-location/driver-location.component';
-import { RemitsComponent } from './remits/remits.component';
-import { RemitsHistoryComponent } from './remits-history/remits-history.component';
-import { RatespageComponent } from './ratespage/ratespage.component';
 import { PlotlyModule } from 'angular-plotly.js';
 import { CountdownTimerModule } from 'ngx-countdown-timer';
-
-import { DispatchingComponent, ParkCarDialog } from './dispatching/dispatching.component';
-import { ChatPageComponent } from './chat-page/chat-page.component';
 import { MorrisJsModule } from 'angular-morris-js';
+import {ClientComponent} from './payments/client/client.component';
+import {TableComponent} from './payments/table/table.component';
+import {ChatPageComponent} from './chat-page/chat-page.component';
+import {DispatchingComponent} from './dispatching/dispatching.component';
+import {RatespageComponent} from './ratespage/ratespage.component';
+import {RemitsComponent} from './remits/remits.component';
+import {RemitsHistoryComponent} from './remits-history/remits-history.component';
+import {SendEmailComponent} from './send-email/send-email.component';
+import {LoginLayoutComponent} from './layouts/login-layout/login-layout.component';
+import {NotFoundLayoutComponent} from './layouts/not-found-layout/not-found-layout.component';
+import {NotcComponent} from './notc/notc.component';
 
 @NgModule({
   imports: [
@@ -142,9 +137,6 @@ import { MorrisJsModule } from 'angular-morris-js';
     CountdownTimerModule.forRoot(),
     NgbModule.forRoot(),
     AngularFireStorageModule,
-    AgmCoreModule.forRoot({
-      apiKey: environment.googleMapsKey
-    }),
     StarRatingModule.forRoot(),
     SidebarModule.forRoot(),
     NgxMaskModule.forRoot(),
@@ -183,9 +175,38 @@ import { MorrisJsModule } from 'angular-morris-js';
     CarDetailsDialog,
     AssignCarDialog,
     ClientHistoryComponent,
-    TruncatePipe
+    TruncatePipe,
+    ClientComponent,
+    TableComponent,
+    ChatPageComponent,
+    DispatchingComponent,
+    RatespageComponent,
+    RemitsComponent,
+    RemitsHistoryComponent,
+    SendEmailComponent,
+    LoginLayoutComponent,
+    NotFoundLayoutComponent,
+    NotcComponent
   ],
-  entryComponents: [DialogOverviewExampleDialog, PizzaPartyComponent, PlateExistExampleDialog, ViewDetailsDialog, ClientDetailsDialog, CarDetailsDialog],
+  entryComponents: [
+    DialogOverviewExampleDialog,
+    PizzaPartyComponent,
+    PlateExistExampleDialog,
+    ViewDetailsDialog,
+    ClientDetailsDialog,
+    CarDetailsDialog,
+    ClientComponent,
+    TableComponent,
+    ChatPageComponent,
+    DispatchingComponent,
+    RatespageComponent,
+    RemitsComponent,
+    RemitsHistoryComponent,
+    SendEmailComponent,
+    LoginLayoutComponent,
+    NotFoundLayoutComponent,
+    NotcComponent
+  ],
   providers: [AuthService, AuthGuard, AngularFireDatabase, LoginGuard, DriverService, CarService, ClientService, StorageService, MatDatepickerModule],
   bootstrap: [ AppComponent ]
 })

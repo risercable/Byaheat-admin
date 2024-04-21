@@ -19,21 +19,20 @@ import { ThisdriverComponent } from './thisdriver/thisdriver.component';
 import { CarslistComponent } from './carslist/carslist.component';
 import { AddCarComponent } from './add-car/add-car.component';
 import { ReservationComponent } from './reservation/reservation.component';
-import {ClientHistoryComponent} from "./client-history/client-history.component";
-import { HomeLayoutComponent } from './layouts/home-layout/home-layout.component';
+import {ClientHistoryComponent} from './client-history/client-history.component';
 import { LoginLayoutComponent } from './layouts/login-layout/login-layout.component';
-import {TableComponent} from "./payments/table/table.component";
-import {ClientComponent} from "./payments/client/client.component";
-import {DriversMapComponent} from "./drivers-map/drivers-map.component";
-import {SendEmailComponent} from "./send-email/send-email.component";
-import {NotcComponent} from "./notc/notc.component";
-import {NotFoundLayoutComponent} from "./layouts/not-found-layout/not-found-layout.component";
-import {DriverLocationComponent} from "./driver-location/driver-location.component";
-import {RemitsComponent} from "./remits/remits.component";
-import {RemitsHistoryComponent} from "./remits-history/remits-history.component";
-import {RatespageComponent} from "./ratespage/ratespage.component";
-import {DispatchingComponent} from "./dispatching/dispatching.component";
-import {ChatPageComponent} from "./chat-page/chat-page.component";
+import {TableComponent} from './payments/table/table.component';
+import {ClientComponent} from './payments/client/client.component';
+import {DriversMapComponent} from './drivers-map/drivers-map.component';
+import {SendEmailComponent} from './send-email/send-email.component';
+import {NotcComponent} from './notc/notc.component';
+import {NotFoundLayoutComponent} from './layouts/not-found-layout/not-found-layout.component';
+import {DriverLocationComponent} from './driver-location/driver-location.component';
+import {RemitsComponent} from './remits/remits.component';
+import {RemitsHistoryComponent} from './remits-history/remits-history.component';
+import {RatespageComponent} from './ratespage/ratespage.component';
+import {DispatchingComponent} from './dispatching/dispatching.component';
+import {ChatPageComponent} from './chat-page/chat-page.component';
 
 const routes: Routes = [
   // { path:'', redirectTo: 'home', pathMatch: 'full', canActivate: [AuthGuard] },
@@ -57,7 +56,6 @@ const routes: Routes = [
   {
     path: '',
     canActivate: [AuthGuard],
-    component: HomeLayoutComponent,
     // {2}
     children: [
       {
@@ -68,16 +66,17 @@ const routes: Routes = [
       },
       {
         path: 'home',
-        component: HomeComponent
+        component: HomeComponent,
+        pathMatch: 'full',
       },
-      { path:'clients/table', component: AccountComponent},
-      { path:'clients/table/history/:$key/:fullname', component:ClientHistoryComponent},
-      { path:'payments/table', component:ClientComponent},
-      { path:'payments/table/client/:$key', component:TableComponent},
-      { path:'cars/table', component: CarslistComponent},
-      { path:'chatpage', component: ChatPageComponent },
-      { path:'reservations', component: ReservationComponent},
-      { path:'cars/add-car', component: AddCarComponent},
+      { path: 'clients/table', component: AccountComponent},
+      { path: 'clients/table/history/:$key/:fullname', component: ClientHistoryComponent},
+      { path: 'payments/table', component: ClientComponent},
+      { path: 'payments/table/client/:$key', component: TableComponent},
+      { path: 'cars/table', component: CarslistComponent},
+      { path: 'chatpage', component: ChatPageComponent },
+      { path: 'reservations', component: ReservationComponent},
+      { path: 'cars/add-car', component: AddCarComponent},
       { path: 'packages', component: PackagesComponent},
       { path: 'drivers/add-driver', component: DriversComponent},
       { path: 'assign', component: AssignDriverComponent},

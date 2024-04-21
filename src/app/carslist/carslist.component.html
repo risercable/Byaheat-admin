@@ -16,7 +16,10 @@
               Popover on top
             </button>
           </div>
-          <div class="widget-content">
+        </div>
+      </div>
+    </div>
+  </div>
 <!-- Page wrapper  -->
 <!-- ============================================================== -->
 <div class="page-wrapper">
@@ -67,6 +70,7 @@
                         </div>
                       <mat-table #table [dataSource]="dataSource" matSort id="basic-table">
 
+                        <mat-header-row *matHeaderRowDef="carColumnsToDisplay"></mat-header-row>
                         <!--- Note that these columns can be defined in any order.
                               The actual rendered columns are set as a property on the row definition" -->
                         <ng-container matColumnDef="in1">
@@ -107,9 +111,10 @@
                             <button mat-icon-button style="color: #2d6987;"><i class="icon-list"></i> DETAILS</button>
                           </mat-cell>
                         </ng-container>
+                        <mat-form-field>
                             <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Search here..." maxlength="30" matTooltip="*Maximum characters is 30" matTooltipPosition="after" style="width: 500px;">
-                          </mat-form-field>
-                        </div>
+                        </mat-form-field>
+                      </mat-table>
                       <mat-table #table [dataSource]="dataSource" matSort id="basic-table">
 
                         <!--- Note that these columns can be defined in any order.
@@ -187,7 +192,6 @@
 </div>
       </div>
     </div>
-  </div>
 <!-- Select Driver Modal -->
 <div id="selectDriverModal" class="modal fade" role="dialog">
   <div class="modal-dialog">
