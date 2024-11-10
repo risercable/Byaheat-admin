@@ -107,7 +107,7 @@ import {NotcComponent} from './notc/notc.component';
     FormsModule,
     AppRoutingModule,
     AngularFireAuthModule,
-    DataTablesModule,
+    DataTablesModule.forRoot(),
     AngularFireModule.initializeApp(environment.firebase),
     NgxPaginationModule,
     FilterPipeModule,
