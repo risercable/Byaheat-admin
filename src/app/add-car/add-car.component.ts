@@ -9,7 +9,6 @@ import {MatRadioModule} from '@angular/material/radio';
 import {FormControl, Validators} from "@angular/forms";
 import {MAT_DIALOG_DATA, MatDialog, MatDialogRef, MatSnackBar} from '@angular/material';
 import { MatRadioChange } from '@angular/material';
-import {CustomValidators} from "ng4-validators";
 import {MatButtonModule} from '@angular/material/button';
 import {Observable} from "rxjs/Observable";
 

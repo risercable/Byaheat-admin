@@ -18,7 +18,6 @@ import { MatSelectModule } from '@angular/material';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MatRadioModule } from '@angular/material';
 import {MatSnackBarModule} from '@angular/material/snack-bar';
-import { StarRatingModule } from 'angular-star-rating';
 import {MatTableModule} from '@angular/material/table';
 import {MatPaginatorModule} from '@angular/material';
 import {MatSortModule} from "@angular/material";
@@ -46,7 +45,6 @@ import { HomeComponent } from './home/home.component';
 import { LoginComponent } from './login/login.component';
 import { AccountComponent } from './account/account.component';
 import { FormsModule } from '@angular/forms';
-import { CustomFormsModule } from 'ng4-validators'
 
 import { AngularFireAuthModule } from 'angularfire2/auth';
 import { environment } from '../environments/environment';
@@ -85,8 +83,6 @@ import {NgxMaskModule} from 'ngx-mask';
 import {DriversMapComponent} from "./drivers-map/drivers-map.component";
 import {HttpClient, HttpClientModule} from "@angular/common/http";
 import { PlotlyModule } from 'angular-plotly.js';
-import { CountdownTimerModule } from 'ngx-countdown-timer';
-import { MorrisJsModule } from 'angular-morris-js';
 import {ClientComponent} from './payments/client/client.component';
 import {TableComponent} from './payments/table/table.component';
 import {ChatPageComponent} from './chat-page/chat-page.component';
@@ -102,7 +98,6 @@ import {NotcComponent} from './notc/notc.component';
 @NgModule({
   imports: [
     BrowserModule,
-    MorrisJsModule,
     RouterModule,
     FormsModule,
     AppRoutingModule,
@@ -112,7 +107,6 @@ import {NotcComponent} from './notc/notc.component';
     NgxPaginationModule,
     FilterPipeModule,
     Ng2SearchPipeModule,
-    CustomFormsModule,
     MatButtonModule,
     MatCheckboxModule,
     MatDatepickerModule,
@@ -134,10 +128,8 @@ import {NotcComponent} from './notc/notc.component';
     MatSortModule,
     MatCardModule,
     PlotlyModule,
-    CountdownTimerModule.forRoot(),
     NgbModule.forRoot(),
     AngularFireStorageModule,
-    StarRatingModule.forRoot(),
     SidebarModule.forRoot(),
     NgxMaskModule.forRoot(),
     OrderModule
