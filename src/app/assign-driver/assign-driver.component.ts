@@ -1,10 +1,10 @@
+
+import {map} from 'rxjs/operators';
 import { Component, OnInit } from '@angular/core';
 import {AngularFireDatabase,AngularFireList} from 'angularfire2/database';
-import { Observable } from 'rxjs/Observable';
-import 'rxjs/add/operator/map';
+import { Observable ,  BehaviorSubject ,  Subscription } from 'rxjs';
+
 import { AngularFireAction } from 'angularfire2/database';
-import { BehaviorSubject } from 'rxjs/BehaviorSubject';
-import { Subscription } from 'rxjs/Subscription';
 import * as firebase from 'firebase/app';
 import { NgForm } from '@angular/forms/src/directives/ng_form';
 import { Router } from '@angular/router/src/router';
@@ -42,30 +42,30 @@ export class AssignDriverComponent implements OnInit{
     this.pendingsList = db.list('reservations', ref => ref.orderByChild('assign').equalTo('not yet assigned'));
     this.assignsList = db.list('reservations', ref => ref.orderByChild('assigned').equalTo('true'));
 
-    this.reserves = this.reservationsList.snapshotChanges().map(changes => {
+    this.reserves = this.reservationsList.snapshotChanges().pipe(map(changes => {
       return changes.map(c => ({ key: c.payload.key, ...c.payload.val() }));
-    });
+    }));
 
-    this.pendings = this.pendingsList.snapshotChanges().map(changes => {
+    this.pendings = this.pendingsList.snapshotChanges().pipe(map(changes => {
       return changes.map(c => ({ key: c.payload.key, ...c.payload.val() }));
-    });
+    }));
 
-    this.assigns = this.assignsList.snapshotChanges().map(changes => {
+    this.assigns = this.assignsList.snapshotChanges().pipe(map(changes => {
       return changes.map(c => ({ key: c.payload.key, ...c.payload.val() }));
-    });
+    }));
 
     this.driversNow = db.list('drivers');
     this.driversList = db.list('drivers', ref => ref.orderByChild('status').equalTo('available'));
 
-    this.avdrivers = this.driversList.snapshotChanges().map(changes => {
+    this.avdrivers = this.driversList.snapshotChanges().pipe(map(changes => {
       return changes.map(c => ({ key: c.payload.key, ...c.payload.val() }));
-    });
+    }));
 
-    this.selections = this.driversNow.snapshotChanges().map(changes => {
+    this.selections = this.driversNow.snapshotChanges().pipe(map(changes => {
       return changes.map(c => ({ key: c.payload.key, ...c.payload.val() }));
-    });
+    }));
 
-    this.pendingsList.snapshotChanges().map(list => list.length).subscribe(length => this.lpending = length);
+    this.pendingsList.snapshotChanges().pipe(map(list => list.length)).subscribe(length => this.lpending = length);
 
   }
 

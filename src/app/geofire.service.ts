@@ -3,7 +3,7 @@ import {AngularFireDatabase} from "angularfire2/database";
 
 import {GeoFire} from 'geofire';
 
-import { BehaviorSubject } from "rxjs/BehaviorSubject";
+import { BehaviorSubject } from "rxjs";
 
 
 @Injectable()

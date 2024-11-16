@@ -1,3 +1,5 @@
+
+import {map} from 'rxjs/operators';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Router, RouterModule } from '@angular/router';
@@ -5,8 +7,7 @@ import { Location } from '@angular/common';
 import { AuthService } from '../auth.service';
 import { Title } from '@angular/platform-browser';
 import { AngularFireDatabase, AngularFireList } from 'angularfire2/database';
-import { Observable } from 'rxjs/Observable';
-import 'rxjs/Rx'
+import { Observable } from 'rxjs';
 import { AssignDriverComponent } from '../assign-driver/assign-driver.component';
 import { StorageService } from '../storage.service';
 import * as firebase from 'firebase';
@@ -70,12 +71,12 @@ export class HomeComponent implements OnInit {
 
     this.mostrates = db.list('drivers', ref => ref.orderByChild('total_ratingpo').startAt(1)).valueChanges();
 
-    this.workings.snapshotChanges().map(list => list.length).subscribe(length => this.lworkings = length);
+    this.workings.snapshotChanges().pipe(map(list => list.length)).subscribe(length => this.lworkings = length);
 
-    this.usersList.snapshotChanges().map(list => list.length).subscribe(length => this.length = length);
-    this.carsList.snapshotChanges().map(list => list.length).subscribe(length => this.lcars = length);
-    this.driversList.snapshotChanges().map(list => list.length).subscribe(length => this.ldrivers = length);
-    this.forApproval.snapshotChanges().map(list => list.length).subscribe(length => this.lpending = length);
+    this.usersList.snapshotChanges().pipe(map(list => list.length)).subscribe(length => this.length = length);
+    this.carsList.snapshotChanges().pipe(map(list => list.length)).subscribe(length => this.lcars = length);
+    this.driversList.snapshotChanges().pipe(map(list => list.length)).subscribe(length => this.ldrivers = length);
+    this.forApproval.snapshotChanges().pipe(map(list => list.length)).subscribe(length => this.lpending = length);
 
     let data = firebase.database().ref('sales').child('cash');
 

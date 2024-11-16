@@ -1,3 +1,5 @@
+
+import {map} from 'rxjs/operators';
 import { Component, OnInit } from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
 import { Routes, RouterModule } from '@angular/router';
@@ -41,7 +43,7 @@ export class NavbarComponent implements OnInit {
 
   constructor(public authService: AuthService, public storage: StorageService, private db: AngularFireDatabase, public router: Router) {
     this.getPending = db.list('reservations', ref => ref.orderByChild('assign').equalTo('not yet assigned'));
-    this.getPending.snapshotChanges().map(list => list.length).subscribe(length => this.lpending = length);
+    this.getPending.snapshotChanges().pipe(map(list => list.length)).subscribe(length => this.lpending = length);
    }
 
   ngOnInit() {

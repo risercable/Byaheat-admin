@@ -1,10 +1,12 @@
+
+import {map} from 'rxjs/operators';
 import {Component, OnInit, Inject, ViewChild} from '@angular/core';
 import { DriverService } from '../drivers/shared/driver.service';
 import { AngularFireList, AngularFireDatabase } from 'angularfire2/database';
 import { Driver } from '../drivers/shared/driver.model';
 import { NgForm } from '@angular/forms/src/directives/ng_form';
 import { AuthService } from '../auth.service';
-import { Observable } from 'rxjs/Observable';
+import { Observable } from 'rxjs';
 import { Title } from '@angular/platform-browser';
 
 import {MatDatepickerModule} from '@angular/material/datepicker';
@@ -123,11 +125,11 @@ export class DriversTableComponent implements OnInit {
     });
 
     this.driverList = db.list('drivers');
-    this.drivers = this.driverList.snapshotChanges().map(actions => {
+    this.drivers = this.driverList.snapshotChanges().pipe(map(actions => {
       return actions.map(action => ({ key: action.payload.key, ...action.payload.val() }));
-    }).map(items => {
+    }),map(items => {
       return items.map(item => item.key);
-    });
+    }),);
 
     this.setClickedRow = function(index){
       this.selectedRow = index;
@@ -312,9 +314,9 @@ export class DriversTableComponent implements OnInit {
 
   passKey(theKey: string) {
     this.driverEdit = this.db.list('drivers');
-    this.edits = this.driverEdit.snapshotChanges().map(changes => {
+    this.edits = this.driverEdit.snapshotChanges().pipe(map(changes => {
       return changes.map(c => ({ key: c.payload.key, ...c.payload.val() }));
-    });
+    }));
   }
 
   changeH() {

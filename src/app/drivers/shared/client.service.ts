@@ -1,8 +1,10 @@
+
+import {map} from 'rxjs/operators';
 import { Injectable } from '@angular/core';
 import { AngularFireDatabase } from 'angularfire2/database';
 import { AuthService } from '../../auth.service';
 import { AngularFireList } from 'angularfire2/database';
-import { Observable } from 'rxjs/Observable';
+import { Observable } from 'rxjs';
 import { Client } from './client.model';
 
 @Injectable()
@@ -14,9 +16,9 @@ export class ClientService {
 
   constructor(public authService: AuthService, db: AngularFireDatabase) {
     this.clientList = db.list('clients');
-    this.clients = this.clientList.snapshotChanges().map(changes => {
+    this.clients = this.clientList.snapshotChanges().pipe(map(changes => {
       return changes.map(c => ({ key: c.payload.key, ...c.payload.val() }));
-    });
+    }));
    }
 
    getData(){

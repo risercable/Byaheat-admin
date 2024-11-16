@@ -1,7 +1,9 @@
+
+import {map} from 'rxjs/operators';
 import { Injectable } from '@angular/core';
 import {AngularFireDatabase,AngularFireList} from 'angularfire2/database';
 import { Driver } from './driver.model';
-import { Observable } from 'rxjs/Observable';
+import { Observable } from 'rxjs';
 import { AuthService } from '../../auth.service';
 import { AddDriverComponent } from '../add-driver/add-driver.component';
 
@@ -25,9 +27,9 @@ export class DriverService{
 
     this.updriver = false;
     this.driverList = db.list('drivers');
-    this.drivers = this.driverList.snapshotChanges().map(changes => {
+    this.drivers = this.driverList.snapshotChanges().pipe(map(changes => {
       return changes.map(c => ({ key: c.payload.key, ...c.payload.val() }));
-    });
+    }));
   }
 
   ngOnInit() {

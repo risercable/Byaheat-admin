@@ -94,6 +94,7 @@ import {SendEmailComponent} from './send-email/send-email.component';
 import {LoginLayoutComponent} from './layouts/login-layout/login-layout.component';
 import {NotFoundLayoutComponent} from './layouts/not-found-layout/not-found-layout.component';
 import {NotcComponent} from './notc/notc.component';
+import {HomeLayoutComponent} from './layouts/home-layout/home-layout.component';
 
 @NgModule({
   imports: [
@@ -178,7 +179,8 @@ import {NotcComponent} from './notc/notc.component';
     SendEmailComponent,
     LoginLayoutComponent,
     NotFoundLayoutComponent,
-    NotcComponent
+    NotcComponent,
+    HomeLayoutComponent
   ],
   entryComponents: [
     DialogOverviewExampleDialog,

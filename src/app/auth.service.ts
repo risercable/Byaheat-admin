@@ -1,20 +1,19 @@
+
+import {map, switchMap} from 'rxjs/operators';
 import * as firebase from 'firebase/app';
 import { Injectable } from '@angular/core';
-import { BehaviorSubject } from 'rxjs/BehaviorSubject';
+import { BehaviorSubject ,  Observable , of} from 'rxjs';
 import { AngularFireAuth } from 'angularfire2/auth';
-import { Observable } from 'rxjs/Observable';
-import 'rxjs/add/observable/of';
-import 'rxjs/add/operator/do';
-import 'rxjs/add/operator/delay';
-import 'rxjs/add/operator/map';
-import 'rxjs/add/operator/take';
+
+
+
+
+
 import { Router } from '@angular/router';
 import { AddDriverComponent } from './drivers/add-driver/add-driver.component';
 import { DriverService } from './drivers/shared/driver.service';
 import { Driver } from './drivers/shared/driver.model';
 import {AngularFireDatabase,AngularFireList} from 'angularfire2/database';
-import {switchMap} from "rxjs/operators";
-import {of} from "rxjs/observable/of";
 
 @Injectable()
 export class AuthService {
@@ -45,9 +44,9 @@ export class AuthService {
       this.user = firebaseAuth.authState;
       this.usersRef = firebase.database().ref('drivers');
       this.driverList = db.list('drivers');
-    this.drivers = this.driverList.snapshotChanges().map(changes => {
+    this.drivers = this.driverList.snapshotChanges().pipe(map(changes => {
       return changes.map(c => ({ key: c.payload.key, ...c.payload.val() }));
-    });
+    }));
 
       this.user$ = firebaseAuth.authState
         .pipe(switchMap(user_ => {

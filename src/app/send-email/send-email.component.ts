@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { URLSearchParams} from "@angular/http";
 import { HttpClient, HttpHeaders, HttpResponse } from "@angular/common/http";
-import 'rxjs/add/operator/toPromise';
+
 
 @Component({
   selector: 'app-send-email',

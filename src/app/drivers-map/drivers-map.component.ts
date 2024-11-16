@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import {GeofireService} from "../geofire.service";
 import {GeoFire} from "geofire";
 import {AngularFireDatabase} from "angularfire2/database";
-import {BehaviorSubject} from "../../../node_modules/rxjs/BehaviorSubject";
+import {BehaviorSubject} from "rxjs";
 import {ActivatedRoute} from "@angular/router";
 import * as firebase from "firebase";
 import {PerPays} from "../payments/table/table.component";
