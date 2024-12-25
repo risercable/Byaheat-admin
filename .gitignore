@@ -40,9 +40,10 @@ testem.log
 # System Files
 .DS_Store
 Thumbs.db
-"sendgrid.env" 
-"sendgrid.env" 
-"sendgrid.env" 
+"sendgrid.env"
+"sendgrid.env"
+"sendgrid.env"
 
 # environment keys
-./src/environments/*.ts
+./src/environments/environment.ts
+./src/environments/environment.prod.ts
