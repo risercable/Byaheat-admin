@@ -45,143 +45,120 @@
       <div class="col-12">
         <div class="card">
           <div class="card-body">
-            <div class="container-fluid">
-              <h6 class="card-subtitle">Search for clients and view their details.</h6>
-              <button class="btn btn-primary" style="background-color: #6610f2; color: white; float: right;" mat-button (click)="openPD()">Print Report</button>
-              <div class="d-flex justify-content-center">
-              </div>
-            </div>
-            <div class="row justify-content-center align-items-center" [hidden]="hideTableX">-->
-              <mat-card *ngIf="!clientSource?.filteredData.length">
-                <div>
-                  <h3 style="text-align:center">We couldn't find data for
-                    <span style="color:red">"{{clientSource.filter}}"</span>
-                  </h3>
-                </div>
-              </mat-card>
-              <mat-card *ngIf="clientSource?.filteredData.length">
-
-                <!-- Search here -->
-                <div class="container h-100">
-                  <div class="row h-100 justify-content-center align-items-center">
-                    <mat-form-field style="width: 400px; text-align: center;" class="col-6">
-                      <input class="text-center" matInput (keyup)="applyFilter($event.target.value)" [(ngModel)]="searchX" (ngModelChange)="isEmptyString()" placeholder="Enter your search term here..." maxlength="30" matTooltip="*Maximum characters is 30" matTooltipPosition="below">
-                    </mat-form-field>
-                    <span><i class="mdi mdi-information-outline"></i></span>
-                    <div class="container-fluid">
-                      <h6 class="text-center"  *ngIf="bbt">or</h6>
-                      <div class="d-flex justify-content-center">
-                        <button style="background-color: #6610f2; outline: white; color: white;" (click)="hideTableX=false;bbt=false;store1(true);" class="btn text-center"  mat-button *ngIf="bbt">show table</button>
-                      </div>
+            <div class="row justify-content-center align-items-center">
+              <div class="col-12">
+                <!-- Search bar (always visible) -->
+                <mat-card>
+                  <div class="container h-100">
+                    <div class="row h-100 justify-content-center align-items-center">
+                      <mat-form-field style="width: 400px; text-align: center;" class="col-6">
+                        <input
+                          class="text-center"
+                          matInput
+                          (keyup)="applyFilter($event.target.value)"
+                          [(ngModel)]="searchX"
+                          (ngModelChange)="isEmptyString()"
+                          placeholder="Enter your search term here..."
+                          maxlength="30"
+                          matTooltip="*Maximum characters is 30"
+                          matTooltipPosition="below">
+                      </mat-form-field>
                     </div>
                   </div>
-                </div>
+                </mat-card>
 
-                <div class="row justify-content-center align-items-center" [hidden]="hideTableX">
-                  <mat-card *ngIf="!clientSource?.filteredData.length">
-                    <div><h3 style="text-align:center">We couldn't find data for
-                      <span style="color:red">"{{clientSource.filter}}"</span>
-                    </h3></div>
+                <div class="row h-100 justify-content-center align-items-center" [hidden]="hideTableX">
+                  <mat-card *ngIf="clientSource?.filteredData.length" style="width: 100%">
+                    <mat-table #table [dataSource]="clientSource" matSort id="basic-table" class="col-12 table-responsive">
+
+                    <!--- Note that these columns can be defined in any order.
+                          The actual rendered columns are set as a property on the row definition" -->
+                    <ng-container matColumnDef="in1">
+                      <mat-header-cell *matHeaderCellDef mat-sort-header>No</mat-header-cell>
+                      <mat-cell *matCellDef="let celement"> {{celement.in1}} </mat-cell>
+                    </ng-container>
+                    <!--<ng-container matColumnDef="in1">-->
+                    <!--<mat-header-cell *matHeaderCellDef mat-sort-header>No</mat-header-cell>-->
+                    <!--<mat-cell *matCellDef="let celement"> {{celement.in1}} </mat-cell>-->
+                    <!--</ng-container>-->
+                    <!-- Position Column -->
+                    <ng-container matColumnDef="user_firstname">
+                      <mat-header-cell *matHeaderCellDef mat-sort-header>Firstname</mat-header-cell>
+                      <mat-cell *matCellDef="let element"> {{element.user_firstname}} </mat-cell>
+                    </ng-container>
+
+                    <!-- Name Column -->
+                    <ng-container matColumnDef="user_lastname">
+                      <mat-header-cell *matHeaderCellDef mat-sort-header>Lastname </mat-header-cell>
+                      <mat-cell *matCellDef="let element"> {{element.user_lastname}} </mat-cell>
+                    </ng-container>
+
+                    <!-- Weight Column -->
+                    <ng-container matColumnDef="user_birthdate">
+                      <mat-header-cell *matHeaderCellDef mat-sort-header>Birthdate</mat-header-cell>
+                      <mat-cell *matCellDef="let element"> {{element.user_birthdate}} </mat-cell>
+                    </ng-container>
+
+                    <!-- Symbol Column -->
+                    <ng-container matColumnDef="user_mobile">
+                      <mat-header-cell *matHeaderCellDef mat-sort-header>Mobile Number </mat-header-cell>
+                      <mat-cell *matCellDef="let element"> {{element.user_mobile}} </mat-cell>
+                    </ng-container>
+
+                    <!--<ng-container matColumnDef="timestamp">-->
+                    <!--<mat-header-cell *matHeaderCellDef mat-sort-header> Time </mat-header-cell>-->
+                    <!--<mat-cell *matCellDef="let element"> {{element.timestamp * 1000 | date:'yyyy-MM-dd HH:mm:ss Z'}} </mat-cell>-->
+                    <!--</ng-container>-->
+
+                    <ng-container matColumnDef="actions">
+                      <mat-header-cell *matHeaderCellDef> Actions </mat-header-cell>
+                      <mat-cell *matCellDef="let element" style="white-space: nowrap;">
+                        <div style="display: flex; align-items: center; gap: 8px; flex-wrap: wrap;">
+                          <!-- Icon button with consistent spacing -->
+                          <button mat-icon-button color="accent" (click)="openDialog(element)" title="View Details">
+                            <i class="mdi mdi-open-in-new"></i>
+                          </button>
+
+                          <!-- Optional conditional button -->
+                          <button
+                            mat-button
+                            class="btn btn-outline-info"
+                            (click)="onSelect(element)"
+                            *ngIf="element.latest_ride_id !== 'none'"
+                            style="font-size: 12px;">
+                            History Details
+                          </button>
+
+                          <!-- Conditional text for no history -->
+                          <span
+                            *ngIf="element.latest_ride_id === 'none'"
+                            style="color: red; margin-left: 8px; font-size: 12px;"> No Ride History </span>
+                        </div>
+                      </mat-cell>
+                    </ng-container>
+
+                    <mat-header-row *matHeaderRowDef="clientColumns"></mat-header-row>
+                    <mat-row *matRowDef="let row; columns: clientColumns;"></mat-row>
+
+                    </mat-table>
                   </mat-card>
                 </div>
-
-                <span><i class="mdi mdi-information-outline"></i></span>
-                <div class="container-fluid">
-                  <h6 class="text-center"  *ngIf="bbt">or</h6>
-                  <div class="d-flex justify-content-center">
-                    <button style="background-color: #6610f2; outline: white; color: white;" (click)="hideTableX=false;bbt=false;store1(true);" class="btn text-center"  mat-button *ngIf="bbt">show table</button>
-                  </div>
-                </div>
-
-                <mat-table #table [dataSource]="clientSource" matSort id="basic-table" class="col-12 table-responsive">
-
-                  <!--- Note that these columns can be defined in any order.
-                        The actual rendered columns are set as a property on the row definition" -->
-                  <ng-container matColumnDef="in1">
-                    <mat-header-cell *matHeaderCellDef mat-sort-header>No</mat-header-cell>
-                    <mat-cell *matCellDef="let celement"> {{celement.in1}} </mat-cell>
-                  </ng-container>
-                  <!--<ng-container matColumnDef="in1">-->
-                  <!--<mat-header-cell *matHeaderCellDef mat-sort-header>No</mat-header-cell>-->
-                  <!--<mat-cell *matCellDef="let celement"> {{celement.in1}} </mat-cell>-->
-                  <!--</ng-container>-->
-                  <!-- Position Column -->
-                  <ng-container matColumnDef="user_firstname">
-                    <mat-header-cell *matHeaderCellDef mat-sort-header>Firstname</mat-header-cell>
-                    <mat-cell *matCellDef="let element"> {{element.user_firstname}} </mat-cell>
-                  </ng-container>
-
-                  <!-- Name Column -->
-                  <ng-container matColumnDef="user_lastname">
-                    <mat-header-cell *matHeaderCellDef mat-sort-header>Lastname </mat-header-cell>
-                    <mat-cell *matCellDef="let element"> {{element.user_lastname}} </mat-cell>
-                  </ng-container>
-
-                  <!-- Weight Column -->
-                  <ng-container matColumnDef="user_birthdate">
-                    <mat-header-cell *matHeaderCellDef mat-sort-header>Birthdate</mat-header-cell>
-                    <mat-cell *matCellDef="let element"> {{element.user_birthdate}} </mat-cell>
-                  </ng-container>
-
-                  <!-- Symbol Column -->
-                  <ng-container matColumnDef="user_mobile">
-                    <mat-header-cell *matHeaderCellDef mat-sort-header>Mobile Number </mat-header-cell>
-                    <mat-cell *matCellDef="let element"> {{element.user_mobile}} </mat-cell>
-                  </ng-container>
-
-                  <!--<ng-container matColumnDef="timestamp">-->
-                  <!--<mat-header-cell *matHeaderCellDef mat-sort-header> Time </mat-header-cell>-->
-                  <!--<mat-cell *matCellDef="let element"> {{element.timestamp * 1000 | date:'yyyy-MM-dd HH:mm:ss Z'}} </mat-cell>-->
-                  <!--</ng-container>-->
-
-                  <ng-container matColumnDef="actions">
-                    <mat-header-cell *matHeaderCellDef> Actions </mat-header-cell>
-                    <mat-cell *matCellDef="let element" style="white-space: nowrap;">
-                      <div style="display: flex; align-items: center; gap: 8px; flex-wrap: wrap;">
-                        <!-- Icon button with consistent spacing -->
-                        <button mat-icon-button color="accent" (click)="openDialog(element)" title="View Details">
-                          <i class="mdi mdi-open-in-new"></i>
-                        </button>
-
-                        <!-- Optional conditional button -->
-                        <button
-                          mat-button
-                          class="btn btn-outline-info"
-                          (click)="onSelect(element)"
-                          *ngIf="element.latest_ride_id !== 'none'"
-                          style="font-size: 12px;">
-                          History Details
-                        </button>
-
-                        <!-- Conditional text for no history -->
-                        <span
-                          *ngIf="element.latest_ride_id === 'none'"
-                          style="color: red; margin-left: 8px; font-size: 12px;">
-        No Ride History
-      </span>
-                      </div>
-                    </mat-cell>
-                  </ng-container>
-
-                  <mat-header-row *matHeaderRowDef="clientColumns"></mat-header-row>
-                  <mat-row *matRowDef="let row; columns: clientColumns;"></mat-row>
-
-                </mat-table>
-                <mat-card  *ngIf="noRecords" style="padding:100px;">
-                  <h3 style="text-align:center">We couldn't find data for
-                    <span style="color:red">"{{clientSource.filter}}"</span>
-                  </h3>
-                </mat-card>
                 <mat-paginator #paginator
                                [pageSize]="5"
                                [pageSizeOptions]="[5, 10, 20]"
                                [showFirstLastButtons]="true">
                 </mat-paginator>
-              </mat-card>
 
+                <mat-card  *ngIf="noRecords" style="padding:100px;">
+                  <h3 style="text-align:center">We couldn't find data for
+                    <span style="color:red">"{{clientSource.filter}}"</span>
+                  </h3>
+                </mat-card>
+              </div>
+            </div>
           </div>
         </div>
+      </div>
     </div>
   </div>
-</div>
 </div>
