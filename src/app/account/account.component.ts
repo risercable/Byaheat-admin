@@ -145,6 +145,8 @@ export class AccountComponent implements OnInit {
     dialogRef.afterClosed().subscribe(result => {
       console.log('The dialog was closed');
     });
+
+    // this.utilities.seedData();
   }
 
   onSelect(element) {
