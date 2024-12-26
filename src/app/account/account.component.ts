@@ -10,6 +10,7 @@ import { Client } from '../drivers/shared/client.model';
 import { NgForm } from '@angular/forms/src/directives/ng_form';
 import {MAT_DIALOG_DATA, MatDialog, MatDialogRef, MatPaginator, MatSort, MatTableDataSource} from "@angular/material";
 import * as firebase from "firebase";
+import { UtilService } from '../util.service';
 
 declare var jsPDF: any; // Important
 
@@ -75,7 +76,16 @@ export class AccountComponent implements OnInit {
     this.noRecords = this.clientSource.filteredData.length === 0;
   }
 
-  constructor(private db: AngularFireDatabase,private clientService: ClientService, public authService: AuthService, private route: ActivatedRoute, private titleService: Title, public dialog: MatDialog, private router: Router) {
+  constructor(
+    private db: AngularFireDatabase,
+    private clientService: ClientService,
+    public authService: AuthService,
+    private route: ActivatedRoute,
+    private titleService: Title,
+    public dialog: MatDialog,
+    private router: Router,
+    private utilities: UtilService
+) {
     // this.clientList = db.list('clients');
     // this.clients = this.clientList.snapshotChanges().map(changes => {
     //   return changes.map(c => ({ key: c.payload.key, ...c.payload.val() }));
@@ -126,7 +136,8 @@ export class AccountComponent implements OnInit {
   }
 
   openDialog(i: any): void {
-    let dialogRef = this.dialog.open(ClientDetailsDialog, {
+    i.$key = this.utilities.hideCharacters(i.$key);
+    const dialogRef = this.dialog.open(ClientDetailsDialog, {
       width: 'auto',
       data: { clientarray: i }
     });
