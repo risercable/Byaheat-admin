@@ -47,3 +47,6 @@ Thumbs.db
 # environment keys
 ./src/environments/environment.ts
 ./src/environments/environment.prod.ts
+/src/environments/environment.prod.ts
+/src/app/util.service.spec.ts
+/src/environments/environment.ts
