@@ -15,10 +15,8 @@ import {MatDialog, MatDialogRef, MAT_DIALOG_DATA, MatTableDataSource, MatPaginat
 import {MatButtonModule} from '@angular/material/button';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
-import {Item} from "../reservation/reservation.component";
 import {Router} from "@angular/router";
 import {GeoFire} from "geofire";
-import {GeofireService} from "../geofire.service";
 import * as firebase from "firebase";
 
 declare var jsPDF: any; // Important
@@ -49,10 +47,10 @@ export class DriversTableComponent implements OnInit {
   minDate = new Date(2000, 0, 1);
   maxDate = new Date();
   options: FormGroup;
-  itemList: Item[];
+  itemList: Item[] = [];
   itemRating: any[];
   dataSource = new MatTableDataSource(this.itemList);
-  displayedColumns = ['in1', 'user_firstname', 'user_lastname', 'user_email', 'total_rating', 'dispatched', 'actions', 'location'];
+  displayedColumns = ['in1', 'firstName', 'lastName', 'email', 'actions',];
   noRecords: boolean;
   order: string;
   reverse: boolean = false;
@@ -80,61 +78,37 @@ export class DriversTableComponent implements OnInit {
     }
   }
 
-  constructor(public authService: AuthService, public driverService : DriverService, public db: AngularFireDatabase, private titleService: Title, public dialog: MatDialog, fb: FormBuilder, public router: Router, private geo: GeofireService) {
+  constructor(
+    public authService: AuthService,
+    public driverService: DriverService,
+    public db: AngularFireDatabase,
+    private titleService: Title,
+    public dialog: MatDialog,
+    fb: FormBuilder,
+    public router: Router,
+    private drvrService: DriverService
+  ) {
     this.options = fb.group({
       'color': 'primary',
       'fontSize': [16, Validators.min(10)],
     });
 
-    let data = db.list('drivers');
-    this.itemList = [];
+    this.driverService.getDrivers().subscribe((data) => {
 
-    data.snapshotChanges().subscribe(item => {
-      this.itemList = [];
-      this.itemRating = [];
-      let i = 1;
-      item.forEach(element => {
-        let json = element.payload.toJSON();
+      if (data && data.length) {
+        // Push the received data into itemList
+        data.forEach((element) => {
+          this.itemList.push(element as Item);
+        });
 
+        // Initialize MatTableDataSource with populated itemList
+        this.dataSource = new MatTableDataSource(this.itemList);
 
-        json["$key"] = element.key;
-        json["in1"] = i;
-        let crx = [];
-
-        element.payload.child('rating').forEach(childR => {
-
-          crx.push(childR.val());
-        })
-
-        let sum = crx.reduce((acc, cur) => acc + cur, 0);
-        json["total_rating"] = sum;
-
-        // this.itemList.push(json as Item);
-        this.itemList.push(json as Item);
-
-        i++;
-
-      });
-
-      this.dataSource = new MatTableDataSource(this.itemList);
-      this.dataSource.sort = this.sort;
-      this.dataSource.paginator = this.paginator;
-
-      console.log('ratings:', this.itemList);
-      console.log('logsRates: ', this.itemRating);
+        // Ensure the table is updated correctly
+        this.dataSource.sort = this.sort;
+        this.dataSource.paginator = this.paginator;
+      }
     });
-
-    this.driverList = db.list('drivers');
-    this.drivers = this.driverList.snapshotChanges().pipe(map(actions => {
-      return actions.map(action => ({ key: action.payload.key, ...action.payload.val() }));
-    }),map(items => {
-      return items.map(item => item.key);
-    }),);
-
-    this.setClickedRow = function(index){
-      this.selectedRow = index;
-    }
-
   }
 
   ngOnInit() {
@@ -142,18 +116,7 @@ export class DriversTableComponent implements OnInit {
     this.inlineOne = 'h-default';
 
     this.titleService.setTitle("Lakbay | Drivers List");
-
-    const x = this.driverService.getData();
-    x.snapshotChanges().subscribe(item => {
-      this.driverlist = [];
-      item.forEach(element => {
-        const y = element.payload.toJSON();
-        y["$key"] = element.key;
-        this.driverlist.push(y as Driver);
-      });
-    });
-
-    this.ipp = 10;
+    this.itemRating = [];
   }
 
   public setTitle( newTitle: string) {
@@ -330,12 +293,12 @@ export class DriversTableComponent implements OnInit {
 }
 
 export interface Item {
-  in1: number;
-  user_firstname: string;
-  user_lastname: string;
-  user_email: string;
-  total_rating: number;
-  dispatched: boolean;
+  in1?: number;
+  firstName: string;
+  lastName: string;
+  email: string;
+  total_rating?: number;
+  dispatched?: boolean;
 }
 
 @Component({
