@@ -12,9 +12,6 @@ app.use(cors({
 
 app.use(express.json());
 
-// Initialize Firebase
-const firebaseApp = initializeApp(config.firebaseConfig);
-
 // Middleware, routes, etc.
 app.get("/", (req, res) => {
   res.send("Node.js Backend with Firebase!");
@@ -22,6 +19,9 @@ app.get("/", (req, res) => {
 
 // API route for user registration
 app.post('/api/drivernew', authController.registerDriver);
+
+// API route for user login
+app.post('/api/driverlogin', authController.login);
 
 app.get('/api/getAllDrivers', async (req, res) => {
   try {

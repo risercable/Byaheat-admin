@@ -23,7 +23,7 @@ export class AuthService {
   loggedIn$ = new BehaviorSubject<boolean>(this.loggedIn);
   private In = new BehaviorSubject<boolean>(false);
 
-  private apiUrl = 'http://localhost:3000/api/drivernew'; // Backend API endpoint
+  private baseUrl = 'http://localhost:3000/api'; // Backend API endpoint
 
   user: Observable<firebase.User>;
   err: String;
@@ -188,7 +188,13 @@ export class AuthService {
   registerUser(objectVar): Observable<any> {
       const { email, password, firstName, lastName } = objectVar;
     const payload = {  email, password, firstName, lastName };
-    return this.http.post<any>(this.apiUrl, payload);
+    return this.http.post<any>(`${this.baseUrl}/drivernew`, payload);
+  }
+
+  loginUser(objectVar): Observable<any> {
+    const { email, password } = objectVar;
+    const payload = {  email, password };
+    return this.http.post<any>(`${this.baseUrl}/driverlogin`, payload);
   }
 }
 

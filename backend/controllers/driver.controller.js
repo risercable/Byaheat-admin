@@ -1,5 +1,29 @@
-const { app, database } = require('../config/firebase');
-const { ref, get } = require('firebase/database');
+const { firebase } = require('../config/firebase')
+
+exports.login = async (req, res) => {
+  try {
+    const { email, password } = req.body;
+
+    await firebase.auth().signInWithEmailAndPassword(email,password).then((userCredential) => {
+      console.log(userCredential);
+      // ...
+      res.status(201).json({
+        result: true,
+        message: 'success'
+      });
+    })
+    .catch((error) => {
+      const errorCode = error.code;
+      const errorMessage = error.message;
+      // ...
+    });
+  } catch (error) {
+    res.status(500).json({
+      message: 'Error registering driver',
+      error: error.message,
+    });
+  }
+}
 
 exports.registerDriver = async (req, res) => {
   try {
@@ -10,7 +34,7 @@ exports.registerDriver = async (req, res) => {
     }
 
     // Create a user in Firebase Authentication using Admin SDK
-    const userRecord = await app.auth().createUser({
+    const userRecord = await firebase.auth().createUser({
       email,
       password,
       displayName: `${firstName} ${lastName}`,
