@@ -1,7 +1,9 @@
+
+import {map} from 'rxjs/operators';
 import {Component, Inject, OnInit, ViewChild, ViewEncapsulation} from '@angular/core';
 import { AngularFireDatabase } from 'angularfire2/database';
 import { AngularFireList } from 'angularfire2/database';
-import { Observable } from 'rxjs/Observable';
+import { Observable } from 'rxjs';
 import { CarService } from '../drivers/shared/car.service';
 import { Car } from '../drivers/shared/car.model';
 import { NgForm } from '@angular/forms/src/directives/ng_form';
@@ -83,9 +85,9 @@ export class CarslistComponent implements OnInit {
 
     this.adriversList = db.list('drivers', ref => ref.orderByChild('assigned_car').equalTo('none'));
 
-    this.adrivers = this.adriversList.snapshotChanges().map(changes => {
+    this.adrivers = this.adriversList.snapshotChanges().pipe(map(changes => {
       return changes.map(c => ({ key: c.payload.key, ...c.payload.val() }));
-    });
+    }));
 
     // this.notAssigned = db.list('all_cars', ref => ref.orderByChild('car_driver').equalTo('none'));
 
@@ -186,9 +188,9 @@ export class CarslistComponent implements OnInit {
 
     this.unDriverList = this.db.list('drivers', ref => ref.orderByChild('user_email').equalTo(this.theDriver));
 
-    this.undrivers = this.unDriverList.snapshotChanges().map(changes => {
+    this.undrivers = this.unDriverList.snapshotChanges().pipe(map(changes => {
       return changes.map(c => ({ key: c.payload.key, ...c.payload.val() }));
-    });
+    }));
   }
 
   assignNow(drkey: string, dremail: string, platenum: string, type: string) {

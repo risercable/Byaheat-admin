@@ -1,8 +1,10 @@
+
+import {map} from 'rxjs/operators';
 import { Injectable, OnInit } from '@angular/core';
 import { AngularFireDatabase } from 'angularfire2/database';
 import { AuthService } from '../../auth.service';
 import { AngularFireList } from 'angularfire2/database';
-import { Observable } from 'rxjs/Observable';
+import { Observable } from 'rxjs';
 import { Car } from './car.model';
 import * as firebase from 'firebase';
 
@@ -21,9 +23,9 @@ export class CarService implements OnInit{
 
   constructor(public authService: AuthService, db: AngularFireDatabase) {
     this.carList = db.list('all_cars');
-    this.cars = this.carList.snapshotChanges().map(changes => {
+    this.cars = this.carList.snapshotChanges().pipe(map(changes => {
       return changes.map(c => ({ key: c.payload.key, ...c.payload.val() }));
-    });
+    }));
 
     this.up1 = firebase.database.ServerValue.TIMESTAMP;
    }

@@ -4,12 +4,13 @@ import { AuthService } from '../auth.service';
 import { Title }     from '@angular/platform-browser';
 import { AngularFireDatabase } from 'angularfire2/database';
 import { AngularFireList } from 'angularfire2/database';
-import { Observable } from 'rxjs/Observable';
+import { Observable } from 'rxjs';
 import { ClientService } from '../drivers/shared/client.service';
 import { Client } from '../drivers/shared/client.model';
 import { NgForm } from '@angular/forms/src/directives/ng_form';
 import {MAT_DIALOG_DATA, MatDialog, MatDialogRef, MatPaginator, MatSort, MatTableDataSource} from "@angular/material";
 import * as firebase from "firebase";
+import { UtilService } from '../util.service';
 
 declare var jsPDF: any; // Important
 
@@ -60,21 +61,31 @@ export class AccountComponent implements OnInit {
   }
 
   applyFilter(filterValue: string) {
-
-
-    if(this.hideET === true) {
-      this.hideTableX = this.searchX === '';
+    filterValue = filterValue.trim().toLowerCase();
+    if (!filterValue) {
+      this.clientSource.filter = '';
+      this.clientSource.data = [...this.itemList]; // Reset data source to all data
     } else {
-      this.hideTableX = false;
-    }
-    filterValue = filterValue.trim(); // Remove whitespace
-    filterValue = filterValue.toLowerCase(); // MatTableDataSource defaults to lowercase matches
-    this.clientSource.filter = filterValue;
+      this.clientSource.filter = filterValue;
 
-    this.noRecords = this.clientSource.filteredData.length == 0;
+      filterValue = filterValue.trim(); // Remove whitespace
+      filterValue = filterValue.toLowerCase(); // MatTableDataSource defaults to lowercase matches
+    }
+    this.clientSource.filter = filterValue;
+    // Update the flag for no records found
+    this.noRecords = this.clientSource.filteredData.length === 0;
   }
 
-  constructor(private db: AngularFireDatabase,private clientService: ClientService, public authService: AuthService, private route: ActivatedRoute, private titleService: Title, public dialog: MatDialog, private router: Router) {
+  constructor(
+    private db: AngularFireDatabase,
+    private clientService: ClientService,
+    public authService: AuthService,
+    private route: ActivatedRoute,
+    private titleService: Title,
+    public dialog: MatDialog,
+    private router: Router,
+    private utilities: UtilService
+) {
     // this.clientList = db.list('clients');
     // this.clients = this.clientList.snapshotChanges().map(changes => {
     //   return changes.map(c => ({ key: c.payload.key, ...c.payload.val() }));
@@ -84,27 +95,32 @@ export class AccountComponent implements OnInit {
     this.itemList = [];
 
     data.snapshotChanges().subscribe(item => {
+      const tempItemList = [];
+      const tempItemPrint = [];
       let i = 1;
 
       item.forEach(element => {
-        let json = element.payload.toJSON();
+        const json = element.payload.val(); // Updated to use val() for Firebase updates.
         json["$key"] = element.key;
         json['in1'] = i;
-        // this.itemList.push(json as Item);
-        this.itemList.push(json as Perclient);
-        this.itemPrint.push(json);
-        // this.xD.push(json);
 
-        i++
+        tempItemList.push(json as Perclient);
+        tempItemPrint.push(json);
+
+        i++;
       });
 
+      // Assign data after the loop is complete.
+      this.itemList = tempItemList;
+      // this.itemPrint = tempItemPrint;
+
+      // Update the data source after the list is ready.
       this.clientSource = new MatTableDataSource(this.itemList.reverse());
       this.clientSource.sort = this.sort;
       this.clientSource.paginator = this.paginator;
 
+      console.log(this.itemList); // Now logs the populated list.
     });
-
-    console.log(this.itemList);
    }
 
    store1(value: boolean) {
@@ -120,7 +136,8 @@ export class AccountComponent implements OnInit {
   }
 
   openDialog(i: any): void {
-    let dialogRef = this.dialog.open(ClientDetailsDialog, {
+    i.$key = this.utilities.hideCharacters(i.$key);
+    const dialogRef = this.dialog.open(ClientDetailsDialog, {
       width: 'auto',
       data: { clientarray: i }
     });
@@ -128,6 +145,8 @@ export class AccountComponent implements OnInit {
     dialogRef.afterClosed().subscribe(result => {
       console.log('The dialog was closed');
     });
+
+    // this.utilities.seedData();
   }
 
   onSelect(element) {
@@ -147,15 +166,9 @@ export class AccountComponent implements OnInit {
     });
     this.ipp = 10;
 
-    let showtblbtn = localStorage.getItem("showTableBtn");
+    const showtblbtn = localStorage.getItem("showTableBtn");
 
-    this.hideTableX = showtblbtn === 'true' ? false: true;
-
-    this.bbt = this.hideTableX;
-  }
-
-  isEmptyString() {
-    this.hideTableX = this.searchX === '';
+    this.hideTableX = showtblbtn !== 'true';
 
     this.bbt = this.hideTableX;
   }

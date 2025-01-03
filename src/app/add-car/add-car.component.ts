@@ -1,3 +1,5 @@
+
+import {map} from 'rxjs/operators';
 import {ChangeDetectorRef, Component, Inject, OnInit} from '@angular/core';
 import { DriverService } from '../drivers/shared/driver.service';
 import { NgForm } from '@angular/forms/src/directives/ng_form';
@@ -9,9 +11,8 @@ import {MatRadioModule} from '@angular/material/radio';
 import {FormControl, Validators} from "@angular/forms";
 import {MAT_DIALOG_DATA, MatDialog, MatDialogRef, MatSnackBar} from '@angular/material';
 import { MatRadioChange } from '@angular/material';
-import {CustomValidators} from "ng4-validators";
 import {MatButtonModule} from '@angular/material/button';
-import {Observable} from "rxjs/Observable";
+import {Observable} from "rxjs";
 
 @Component({
   selector: 'app-add-car',
@@ -89,9 +90,9 @@ export class AddCarComponent implements OnInit {
 
     this.toyotaCount = db.list('/all_cars', ref => ref.orderByChild('car_brand').equalTo('Toyota'));
 
-    this.tcount = this.toyotaCount.snapshotChanges().map(changes => {
+    this.tcount = this.toyotaCount.snapshotChanges().pipe(map(changes => {
         return changes.map(c => ({ key: c.payload.key, ...c.payload.val() }));
-      });
+      }));
   }
 
   openDialog(): void {

@@ -1,10 +1,11 @@
+
+import { map } from 'rxjs/operators';
 import {Component, OnInit, ViewChild, Inject, ViewEncapsulation} from '@angular/core';
 import { NgForm } from '@angular/forms/src/directives/ng_form';
 import {AngularFireDatabase,AngularFireList} from 'angularfire2/database';
-import { Observable } from 'rxjs/Observable';
-import 'rxjs/add/operator/map';
+import { Observable } from 'rxjs';
+
 import {MatPaginator, MatSort, MatTableDataSource, Sort, MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material';
-import {map} from "rxjs/operators";
 import { OrderPipe } from 'ngx-order-pipe';
 import {Title} from "@angular/platform-browser";
 import {PrintOptsDialog} from "../account/account.component";
@@ -179,9 +180,9 @@ export class ReservationComponent implements OnInit {
   viewThis(i: string) {
     this.historyList = this.db.list('history', ref => ref.orderByKey().equalTo(i));
 
-    this.more = this.historyList.snapshotChanges().map(changes => {
+    this.more = this.historyList.snapshotChanges().pipe(map(changes => {
       return changes.map(c => ({ key: c.payload.key, ...c.payload.val() }));
-    });
+    }));
 
     var ele = document.getElementById("selectReservation") as any;
 
@@ -195,21 +196,21 @@ export class ReservationComponent implements OnInit {
 
     this.moreList2 = this.db.list('drivers', ref => ref.orderByKey().equalTo(rsDriver));
 
-    this.more = this.moreList.snapshotChanges().map(changes => {
+    this.more = this.moreList.snapshotChanges().pipe(map(changes => {
       return changes.map(c => ({ key: c.payload.key, ...c.payload.val() }));
-    });
+    }));
 
-    this.more2 = this.moreList2.snapshotChanges().map(changes => {
+    this.more2 = this.moreList2.snapshotChanges().pipe(map(changes => {
       return changes.map(c => ({ key: c.payload.key, ...c.payload.val() }));
-    });
+    }));
 
-    this.destination = this.historyList.snapshotChanges().map(changes => {
+    this.destination = this.historyList.snapshotChanges().pipe(map(changes => {
       return changes.map(c => ({ key: c.payload.key, ...c.payload.val() }));
-    });
+    }));
 
-    this.time = this.reservationsList.snapshotChanges().map(changes => {
+    this.time = this.reservationsList.snapshotChanges().pipe(map(changes => {
       return changes.map(c => ({ key: c.payload.key, ...c.payload.val() }));
-    });
+    }));
   }
 
   onPrint(){

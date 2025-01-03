@@ -1,9 +1,12 @@
+
+import {map} from 'rxjs/operators';
 import { Injectable } from '@angular/core';
 import {AngularFireDatabase,AngularFireList} from 'angularfire2/database';
 import { Driver } from './driver.model';
-import { Observable } from 'rxjs/Observable';
+import { Observable } from 'rxjs';
 import { AuthService } from '../../auth.service';
 import { AddDriverComponent } from '../add-driver/add-driver.component';
+import {HttpClient} from '@angular/common/http';
 
 
 @Injectable()
@@ -21,13 +24,15 @@ export class DriverService{
   selectedRow : Number;
   setClickedRow : Function;
 
-  constructor(public authService: AuthService, db: AngularFireDatabase) {
+  private apiUrl = 'http://localhost:3000/api/getAllDrivers';
+
+  constructor(public authService: AuthService, db: AngularFireDatabase,  private http: HttpClient) {
 
     this.updriver = false;
     this.driverList = db.list('drivers');
-    this.drivers = this.driverList.snapshotChanges().map(changes => {
+    this.drivers = this.driverList.snapshotChanges().pipe(map(changes => {
       return changes.map(c => ({ key: c.payload.key, ...c.payload.val() }));
-    });
+    }));
   }
 
   ngOnInit() {
@@ -94,5 +99,9 @@ export class DriverService{
 
    this.deldriver = true;
  }
+
+  getDrivers() {
+    return this.http.get<any>(this.apiUrl);
+  }
 
 }

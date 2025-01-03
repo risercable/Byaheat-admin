@@ -1,19 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { HomeLayoutComponent } from './home-layout.component';
 
-describe('HomeLayoutComponent', () => {
-  let component: HomeLayoutComponent;
-  let fixture: ComponentFixture<HomeLayoutComponent>;
+import { DriverExistComponent } from './driver-exist.component';
+
+describe('DriverExistComponent', () => {
+  let component: DriverExistComponent;
+  let fixture: ComponentFixture<DriverExistComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ HomeLayoutComponent ]
+      declarations: [ DriverExistComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(HomeLayoutComponent);
+    fixture = TestBed.createComponent(DriverExistComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

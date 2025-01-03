@@ -1,20 +1,20 @@
+
+import {map, switchMap} from 'rxjs/operators';
 import * as firebase from 'firebase/app';
 import { Injectable } from '@angular/core';
-import { BehaviorSubject } from 'rxjs/BehaviorSubject';
+import { BehaviorSubject ,  Observable , of} from 'rxjs';
 import { AngularFireAuth } from 'angularfire2/auth';
-import { Observable } from 'rxjs/Observable';
-import 'rxjs/add/observable/of';
-import 'rxjs/add/operator/do';
-import 'rxjs/add/operator/delay';
-import 'rxjs/add/operator/map';
-import 'rxjs/add/operator/take';
+
+
+
+
+
 import { Router } from '@angular/router';
 import { AddDriverComponent } from './drivers/add-driver/add-driver.component';
 import { DriverService } from './drivers/shared/driver.service';
 import { Driver } from './drivers/shared/driver.model';
 import {AngularFireDatabase,AngularFireList} from 'angularfire2/database';
-import {switchMap} from "rxjs/operators";
-import {of} from "rxjs/observable/of";
+import {HttpClient} from '@angular/common/http';
 
 @Injectable()
 export class AuthService {
@@ -22,6 +22,8 @@ export class AuthService {
   public loggedIn: boolean;
   loggedIn$ = new BehaviorSubject<boolean>(this.loggedIn);
   private In = new BehaviorSubject<boolean>(false);
+
+  private apiUrl = 'http://localhost:3000/api/drivernew'; // Backend API endpoint
 
   user: Observable<firebase.User>;
   err: String;
@@ -41,13 +43,18 @@ export class AuthService {
     // store the URL so we can redirect after logging in
     redirectUrl: string;
 
-    constructor(public firebaseAuth: AngularFireAuth, private router: Router, public db: AngularFireDatabase) {
+    constructor(
+      public firebaseAuth: AngularFireAuth,
+      private router: Router,
+      public db: AngularFireDatabase,
+      private http: HttpClient
+    ) {
       this.user = firebaseAuth.authState;
       this.usersRef = firebase.database().ref('drivers');
       this.driverList = db.list('drivers');
-    this.drivers = this.driverList.snapshotChanges().map(changes => {
+    this.drivers = this.driverList.snapshotChanges().pipe(map(changes => {
       return changes.map(c => ({ key: c.payload.key, ...c.payload.val() }));
-    });
+    }));
 
       this.user$ = firebaseAuth.authState
         .pipe(switchMap(user_ => {
@@ -175,6 +182,13 @@ export class AuthService {
         this.router.navigate(['home']);
       }
     });
+  }
+
+  // Call the backend to register the user
+  registerUser(objectVar): Observable<any> {
+      const { email, password, firstName, lastName } = objectVar;
+    const payload = {  email, password, firstName, lastName };
+    return this.http.post<any>(this.apiUrl, payload);
   }
 }
 

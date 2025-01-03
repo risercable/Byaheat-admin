@@ -1,0 +1,70 @@
+.bg-image {
+  background-image: url('../../assets/images/background/driver-new-main1.jpg'); /* Path to your image */
+  background-size: cover; /* Ensure the background covers the entire area */
+  background-position: center;
+  background-repeat: no-repeat; /* Prevent tiling */
+  height: 100vh; /* Full height of the viewport */
+  display: flex; /* Flexbox container */
+  flex-direction: column; /* Stack children vertically */
+  justify-content: center; /* Center vertically */
+  align-items: center; /* Center horizontally */
+}
+
+.middleWrapper {
+  color: white;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.6); /* Make text stand out */
+  margin: 10px 0; /* Add spacing between elements */
+}
+
+.get-started-btn {
+  padding: 10px 20px;
+  font-size: 18px;
+  border-radius: 25px;
+  text-transform: uppercase;
+  transition: all 0.3s ease;
+}
+
+.get-started-btn:hover {
+  background-color: #0056b3; /* Change the button color on hover */
+  transform: scale(1.05); /* Slight zoom effect on hover */
+}
+
+.register-card {
+  padding: 20px;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+  border-radius: 8px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  height: 100%;
+}
+
+.full-width {
+  width: 100%;
+}
+
+mat-card-header {
+  text-align: center;
+}
+
+mat-card-title {
+  font-size: 1.5rem;
+  font-weight: bold;
+}
+
+button {
+  width: 100%;
+  font-size: 1rem;
+  margin-top: 20px;
+}
+
+mat-form-field {
+  margin-bottom: 15px;
+}
+
+.register-form {
+  display: flex;
+  flex-direction: column; /* Ensures the fields are stacked vertically */
+  align-items: stretch; /* Ensures form elements take full width */
+  justify-content: center; /* Centers form content vertically */
+}
