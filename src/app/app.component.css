@@ -1,3 +1,13 @@
-
+.footerStyle {
+  color: white; /* Ensure text is visible */
+  text-align: center;
+  background: transparent; /* Make the footer blend with the background */
+  position: absolute; /* Ensure it stays at the bottom */
+  bottom: 0;
+  width: 100%;
+  z-index: 1; /* Bring it above other content */
+  padding: 10px 0;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.6); /* Add shadow for better text readability */
+}
 
 /*# sourceMappingURL=app.component.css.map */

@@ -1,7 +1,7 @@
 <!--top-Header-menu-->
   <!-- Topbar header - style you can find in pages.scss -->
   <!-- ============================================================== -->
-  <header class="topbar" data-navbarbg="skin5">
+  <header class="topbar" data-navbarbg="skin5" *ngIf="isNavbarVisible">
     <nav class="navbar top-navbar navbar-expand-md navbar-dark">
       <div class="navbar-header" data-logobg="skin5">
 </div>
@@ -175,7 +175,7 @@
               <li routerLinkActive="active" [routerLinkActiveOptions]="{exact:
                 true}"><a routerLink="drivers/add-driver"><span>Add Driver</span></a></li>
               <li routerLinkActive="active" [routerLinkActiveOptions]="{exact:
-                true}"><a routerLink="drivers/table" (click)="clicked();"> <span>Drivers Table</span></a></li>
+                true}"><a routerLink="/admin/drivers/table" (click)="clicked();"> <span>Drivers Table</span></a></li>
           <!-- ============================================================== -->
           <!-- User profile and search -->
           <!-- ============================================================== -->
@@ -209,7 +209,7 @@
   <!-- ============================================================== -->
   <!-- Left Sidebar - style you can find in sidebar.scss  -->
   <!-- ============================================================== -->
-  <aside class="left-sidebar collapse" data-sidebarbg="skin5" [class.show]="show" id="sidebar">
+  <aside class="left-sidebar collapse" data-sidebarbg="skin5" [class.show]="show" id="sidebar" *ngIf="isNavbarVisible">
     <!-- Sidebar scroll-->
     <div class="scroll-sidebar" id="sidebar-collapse">
       <!-- Sidebar navigation-->
@@ -226,7 +226,7 @@
             <ul aria-expanded="false" class="collapse first-level" ngbDropdownMenu>
               <li class="sidebar-item"><a class="sidebar-link" [routerLink]="['/drivers/dispatch']" [routerLinkActive]="'active'"><i class="mdi mdi-account-key"></i><span class="hide-menu"> Dispatched Drivers </span></a></li>
               <li class="sidebar-item"><a class="sidebar-link" [routerLink]="['/drivers/add-driver']" [routerLinkActive]="'active'"><i class="mdi mdi-library-plus"></i><span class="hide-menu"> Add Driver </span></a></li>
-              <li class="sidebar-item"><a [routerLink]="['/drivers/table']" class="sidebar-link" [routerLinkActive]="'active'"><i class="mdi mdi-format-list-bulleted"></i><span class="hide-menu"> Drivers Table </span></a></li>
+              <li class="sidebar-item"><a [routerLink]="['/admin/drivers/table']" class="sidebar-link" [routerLinkActive]="'active'"><i class="mdi mdi-format-list-bulleted"></i><span class="hide-menu"> Drivers Table </span></a></li>
             </ul>
           </li>
           <!-- end of Drivers Dropdown -->

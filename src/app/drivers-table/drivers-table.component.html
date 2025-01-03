@@ -44,33 +44,33 @@
                                   </ng-container>
 
                                   <!-- Position Column -->
-                                  <ng-container matColumnDef="user_firstname">
+                                  <ng-container matColumnDef="firstName">
                                     <mat-header-cell *matHeaderCellDef mat-sort-header>Firstname</mat-header-cell>
-                                    <mat-cell *matCellDef="let element"> {{element.user_firstname}} </mat-cell>
+                                    <mat-cell *matCellDef="let element"> {{element.firstName}} </mat-cell>
                                   </ng-container>
 
                                   <!-- Name Column -->
-                                  <ng-container matColumnDef="user_lastname">
+                                  <ng-container matColumnDef="lastName">
                                     <mat-header-cell *matHeaderCellDef mat-sort-header>Lastname </mat-header-cell>
-                                    <mat-cell *matCellDef="let element"> {{element.user_lastname}} </mat-cell>
+                                    <mat-cell *matCellDef="let element"> {{element.lastName}} </mat-cell>
                                   </ng-container>
 
                                   <!-- Weight Column -->
-                                  <ng-container matColumnDef="user_email">
+                                  <ng-container matColumnDef="email">
                                     <mat-header-cell *matHeaderCellDef mat-sort-header>Email </mat-header-cell>
-                                    <mat-cell *matCellDef="let element"> {{ (element.user_email | limitTo: 18) + (element.user_email.length > 18 ? '...' : '') }} </mat-cell>
+                                    <mat-cell *matCellDef="let element"> {{ (element.email | limitTo: 18) + (element.email.length > 18 ? '...' : '') }} </mat-cell>
                                   </ng-container>
 
-                                  <!-- Weight Column -->
-                                  <ng-container matColumnDef="total_rating">
-                                    <mat-header-cell *matHeaderCellDef mat-sort-header>Total Rating </mat-header-cell>
-                                    <mat-cell *matCellDef="let element"> {{element.total_rating}} </mat-cell>
-                                  </ng-container>
+<!--                                  &lt;!&ndash; Weight Column &ndash;&gt;-->
+<!--                                  <ng-container matColumnDef="total_rating">-->
+<!--                                    <mat-header-cell *matHeaderCellDef mat-sort-header>Total Rating </mat-header-cell>-->
+<!--                                    <mat-cell *matCellDef="let element"> {{element.total_rating}} </mat-cell>-->
+<!--                                  </ng-container>-->
 
-                                  <ng-container matColumnDef="dispatched">
-                                    <mat-header-cell *matHeaderCellDef mat-sort-header>Dispatched</mat-header-cell>
-                                    <mat-cell *matCellDef="let element; let i = index;"> <button *ngIf="element.dispatched === false" class="btn btn-success" mat-button style="padding: 10px; background-color: #28b779;" (click)="openDispatch(element)">DISPATCH</button><button *ngIf="element.dispatched !== false" mat-button style="padding: 10px; background-color: #1b4584" (click)="dispatchDetails(element.$key)">DETAILS</button></mat-cell>
-                                  </ng-container>
+<!--                                  <ng-container matColumnDef="dispatched">-->
+<!--                                    <mat-header-cell *matHeaderCellDef mat-sort-header>Dispatched</mat-header-cell>-->
+<!--                                    <mat-cell *matCellDef="let element; let i = index;"> <button *ngIf="element.dispatched === false" class="btn btn-success" mat-button style="padding: 10px; background-color: #28b779;" (click)="openDispatch(element)">DISPATCH</button><button *ngIf="element.dispatched !== false" mat-button style="padding: 10px; background-color: #1b4584" (click)="dispatchDetails(element.$key)">DETAILS</button></mat-cell>-->
+<!--                                  </ng-container>-->
 
                                   <ng-container matColumnDef="actions" class="hideX">
                                     <mat-header-cell *matHeaderCellDef> Action </mat-header-cell>
@@ -78,12 +78,12 @@
                                       <button mat-icon-button color="accent" (click)="openDialog(element, element.user_email)"><i class="mdi mdi-format-list-bulleted"></i> View</button>
                                     </mat-cell>
                                   </ng-container>
-                                  <ng-container matColumnDef="location" class="hideX">
-                                    <mat-header-cell *matHeaderCellDef> Location </mat-header-cell>
-                                  <mat-cell *matCellDef="let element; let i = index">
-                                    <button mat-icon-button color="accent" (click)="onLocation(element, element.user_firstname, element.user_lastname)"><i class="mdi mdi-crosshairs-gps"></i> View</button>
-                                  </mat-cell>
-                                  </ng-container>
+<!--                                  <ng-container matColumnDef="location" class="hideX">-->
+<!--                                    <mat-header-cell *matHeaderCellDef> Location </mat-header-cell>-->
+<!--                                  <mat-cell *matCellDef="let element; let i = index">-->
+<!--                                    <button mat-icon-button color="accent" (click)="onLocation(element, element.user_firstname, element.user_lastname)"><i class="mdi mdi-crosshairs-gps"></i> View</button>-->
+<!--                                  </mat-cell>-->
+<!--                                  </ng-container>-->
 
                                   <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
                                   <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>

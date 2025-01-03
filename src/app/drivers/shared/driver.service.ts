@@ -6,6 +6,7 @@ import { Driver } from './driver.model';
 import { Observable } from 'rxjs';
 import { AuthService } from '../../auth.service';
 import { AddDriverComponent } from '../add-driver/add-driver.component';
+import {HttpClient} from '@angular/common/http';
 
 
 @Injectable()
@@ -23,7 +24,9 @@ export class DriverService{
   selectedRow : Number;
   setClickedRow : Function;
 
-  constructor(public authService: AuthService, db: AngularFireDatabase) {
+  private apiUrl = 'http://localhost:3000/api/getAllDrivers';
+
+  constructor(public authService: AuthService, db: AngularFireDatabase,  private http: HttpClient) {
 
     this.updriver = false;
     this.driverList = db.list('drivers');
@@ -96,5 +99,9 @@ export class DriverService{
 
    this.deldriver = true;
  }
+
+  getDrivers() {
+    return this.http.get<any>(this.apiUrl);
+  }
 
 }

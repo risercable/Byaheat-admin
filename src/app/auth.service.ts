@@ -14,6 +14,7 @@ import { AddDriverComponent } from './drivers/add-driver/add-driver.component';
 import { DriverService } from './drivers/shared/driver.service';
 import { Driver } from './drivers/shared/driver.model';
 import {AngularFireDatabase,AngularFireList} from 'angularfire2/database';
+import {HttpClient} from '@angular/common/http';
 
 @Injectable()
 export class AuthService {
@@ -21,6 +22,8 @@ export class AuthService {
   public loggedIn: boolean;
   loggedIn$ = new BehaviorSubject<boolean>(this.loggedIn);
   private In = new BehaviorSubject<boolean>(false);
+
+  private apiUrl = 'http://localhost:3000/api/drivernew'; // Backend API endpoint
 
   user: Observable<firebase.User>;
   err: String;
@@ -40,7 +43,12 @@ export class AuthService {
     // store the URL so we can redirect after logging in
     redirectUrl: string;
 
-    constructor(public firebaseAuth: AngularFireAuth, private router: Router, public db: AngularFireDatabase) {
+    constructor(
+      public firebaseAuth: AngularFireAuth,
+      private router: Router,
+      public db: AngularFireDatabase,
+      private http: HttpClient
+    ) {
       this.user = firebaseAuth.authState;
       this.usersRef = firebase.database().ref('drivers');
       this.driverList = db.list('drivers');
@@ -174,6 +182,13 @@ export class AuthService {
         this.router.navigate(['home']);
       }
     });
+  }
+
+  // Call the backend to register the user
+  registerUser(objectVar): Observable<any> {
+      const { email, password, firstName, lastName } = objectVar;
+    const payload = {  email, password, firstName, lastName };
+    return this.http.post<any>(this.apiUrl, payload);
   }
 }
 

@@ -1,0 +1,11 @@
+.bg-image {
+    background-image: url('../../assets/images/background/steer.jpg'); /* Path to your image */
+    background-size: cover; /* Ensure the background covers the entire area */
+    background-position: center;
+    background-repeat: no-repeat; /* Prevent tiling */
+    height: 100vh; /* Full height of the viewport */
+    display: flex; /* Flexbox container */
+    flex-direction: column; /* Stack children vertically */
+    justify-content: center; /* Center vertically */
+    align-items: center; /* Center horizontally */
+  }

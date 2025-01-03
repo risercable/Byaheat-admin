@@ -1,6 +1,6 @@
 
 import {map} from 'rxjs/operators';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
 import { Routes, RouterModule } from '@angular/router';
 import {AngularFireAuth} from 'angularfire2/auth';
@@ -40,6 +40,7 @@ export class NavbarComponent implements OnInit {
   show:boolean = true;
   css1: boolean = false;
   navbarOpen = false;
+  @Input() isNavbarVisible: boolean = true; // Default: visible
 
   constructor(public authService: AuthService, public storage: StorageService, private db: AngularFireDatabase, public router: Router) {
     this.getPending = db.list('reservations', ref => ref.orderByChild('assign').equalTo('not yet assigned'));
