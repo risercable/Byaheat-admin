@@ -96,6 +96,7 @@ import {NotFoundLayoutComponent} from './layouts/not-found-layout/not-found-layo
 import {NotcComponent} from './notc/notc.component';
 import {HomeLayoutComponent} from './layouts/home-layout/home-layout.component';
 import { DriverNewComponent } from './driver-new/driver-new.component';
+import { DriverExistComponent } from './driver-exist/driver-exist.component';
 
 @NgModule({
   imports: [
@@ -182,7 +183,8 @@ import { DriverNewComponent } from './driver-new/driver-new.component';
     NotFoundLayoutComponent,
     NotcComponent,
     HomeLayoutComponent,
-    DriverNewComponent
+    DriverNewComponent,
+    DriverExistComponent
   ],
   entryComponents: [
     DialogOverviewExampleDialog,

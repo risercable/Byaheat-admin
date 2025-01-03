@@ -8,7 +8,7 @@
   "license": "MIT",
   "scripts": {
     "ng": "ng",
-    "start": "node start.js",
+    "start": "ng serve --open | nodemon backend/server.js",
     "build": "ng build --prod",
     "test": "ng test",
     "lint": "ng lint",

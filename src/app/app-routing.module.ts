@@ -34,12 +34,18 @@ import {RatespageComponent} from './ratespage/ratespage.component';
 import {DispatchingComponent} from './dispatching/dispatching.component';
 import {ChatPageComponent} from './chat-page/chat-page.component';
 import {DriverNewComponent} from './driver-new/driver-new.component';
+import { DriverExistComponent } from './driver-exist/driver-exist.component';
 
 const routes: Routes = [
   {
     path: '',
     redirectTo: 'driver-register', // Default route
     pathMatch: 'full',
+  },
+  {
+    path: 'login',
+    pathMatch: 'full',
+    component: DriverExistComponent
   },
   {
     path: 'driver-register',
