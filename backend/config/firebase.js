@@ -1,6 +1,6 @@
 const firebase = require('firebase/app'); // Import Firebase Client SDK
 const admin = require('firebase-admin');
-const serviceAccount = require('./byaheatbp-019a6780b9f6.json');
+const serviceAccount = require('./xxxxxxxxxxxxxxxxxxxxx.json');
 require('firebase/auth'); // Import Firebase Authentication
 require('firebase/database'); // Import Firebase Realtime Database
 require('dotenv').config();
