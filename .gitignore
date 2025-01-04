@@ -51,3 +51,4 @@ Thumbs.db
 /src/app/util.service.spec.ts
 /src/environments/environment.ts
 .env
+./backend/config/xxxxxxxxxxxxxxxxxxxxx.json
