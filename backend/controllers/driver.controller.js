@@ -64,7 +64,8 @@ exports.registerDriver = async (req, res) => {
 
 exports.getDrivers = async () => {
   try {
-    const driversRef = database.ref('drivers'); // Reference to the drivers node
+    const db = firebase.database();
+    const driversRef = db.ref('drivers'); // Reference to the drivers node
     const snapshot = await driversRef.orderByChild('lastName').once('value'); // Query by 'firstName'
 
     if (snapshot.exists()) {
