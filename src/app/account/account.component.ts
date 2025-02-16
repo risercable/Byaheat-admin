@@ -34,7 +34,7 @@ export class AccountComponent implements OnInit {
   clientColumns = ['user_firstname', 'user_lastname', 'user_birthdate', 'user_mobile', 'actions'];
   itemPrint = [];
   itemList: Perclient[];
-  clientSource = new MatTableDataSource(this.itemList);
+  clientSource = new MatTableDataSource([]);
   noRecords: boolean;
   hideTableX: boolean = false;
   hideET: boolean = true;
@@ -64,7 +64,7 @@ export class AccountComponent implements OnInit {
     filterValue = filterValue.trim().toLowerCase();
     if (!filterValue) {
       this.clientSource.filter = '';
-      this.clientSource.data = [...this.itemList]; // Reset data source to all data
+      this.clientSource.data = this.itemList; // Reset data source to all data
     } else {
       this.clientSource.filter = filterValue;
 

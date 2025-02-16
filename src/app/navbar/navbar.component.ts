@@ -12,6 +12,8 @@ import { AngularFireDatabase, AngularFireList } from 'angularfire2/database';
 import { trigger, state, style, transition, animate } from '@angular/animations';
 import { BehaviorSubject, Subject } from 'rxjs';
 
+import 'firebase/auth';
+
 @Component({
   selector: 'app-navbar',
   templateUrl: './navbar.component.html',
@@ -40,6 +42,7 @@ export class NavbarComponent implements OnInit {
   show:boolean = true;
   css1: boolean = false;
   navbarOpen = false;
+  hideThis = false;
   @Input() isNavbarVisible: boolean = true; // Default: visible
 
   constructor(public authService: AuthService, public storage: StorageService, private db: AngularFireDatabase, public router: Router) {
@@ -81,12 +84,6 @@ export class NavbarComponent implements OnInit {
   }
 
   logout() {
-    const that = this;
-    firebase.auth().signOut().then(function() {
-      alert("successfully signed out!");
-        that.router.navigate(['login']);
-    }).catch(function(error) {
-      // An error happened.
-    });
+    this.authService.adminLogout();
   }
 }

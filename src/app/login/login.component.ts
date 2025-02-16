@@ -8,6 +8,8 @@ import { AngularFireAuthModule } from 'angularfire2/auth';
 import { AuthService } from '../auth.service';
 import { Title } from '@angular/platform-browser';
 import {AngularFireDatabase} from "angularfire2/database";
+import {AppComponent} from '../app.component';
+import { GlobalDataService } from '../global-data.service';
 
 @Component({
   selector: 'app-login',
@@ -22,7 +24,16 @@ export class LoginComponent implements OnInit {
   showLost: boolean;
   items: Observable<any[]>;
 
-  constructor(public authService: AuthService, private route: ActivatedRoute, private router: Router, private titleService: Title, public afAuth: AngularFireAuth, db: AngularFireDatabase) {
+  constructor(
+    public authService: AuthService, 
+    private route: ActivatedRoute, 
+    private router: Router, 
+    private titleService: Title, 
+    public afAuth: AngularFireAuth, 
+    db: AngularFireDatabase, 
+    private appComponent: AppComponent,
+    private globalDataService: GlobalDataService
+  ) {
     this.show = false;
 
    }
@@ -55,12 +66,25 @@ export class LoginComponent implements OnInit {
   // }
 
   login() {
-    this.authService.login(this.email, this.password);
+    const variables = {
+      email: this.email,
+      password: this.password
+    };
+
+    this.authService.adminLogin(variables).subscribe(
+      (response) => {
+        this.globalDataService.setUser(response);
+      },
+      (error) => {
+      }
+    );
+
     this.email = this.password = '';
+    this.appComponent.showNavbar = true;
   }
 
   logout() {
-    this.authService.logout();
+    // this.authService.adminLogout();
   }
 
   toRegister() {
