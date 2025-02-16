@@ -15,6 +15,7 @@ import { DriverService } from './drivers/shared/driver.service';
 import { Driver } from './drivers/shared/driver.model';
 import {AngularFireDatabase,AngularFireList} from 'angularfire2/database';
 import {HttpClient} from '@angular/common/http';
+import { GlobalDataService } from './global-data.service';
 
 @Injectable()
 export class AuthService {
@@ -47,7 +48,8 @@ export class AuthService {
       public firebaseAuth: AngularFireAuth,
       private router: Router,
       public db: AngularFireDatabase,
-      private http: HttpClient
+      private http: HttpClient,
+      private globalDataService: GlobalDataService
     ) {
       this.user = firebaseAuth.authState;
       this.usersRef = firebase.database().ref('drivers');
@@ -195,6 +197,33 @@ export class AuthService {
     const { email, password } = objectVar;
     const payload = {  email, password };
     return this.http.post<any>(`${this.baseUrl}/driverlogin`, payload);
+  }
+
+  adminLogin(objectVar): Observable<any> {
+    const { email, password } = objectVar;
+    const payload = {  email, password };
+    return this.http.post<any>(`${this.baseUrl}/login`, payload);
+  }
+
+  adminLogout(){
+    const { user } = this.globalDataService.getUser();
+
+    if (user) {
+      // Call the backend to revoke session
+      this.http.post(`${this.baseUrl}/logout`, { uid: user.uid }).subscribe(
+        () => {
+          firebase.auth().signOut().then(() => {
+            localStorage.removeItem('user'); // Clear stored user data
+            sessionStorage.clear(); // Clear session storage
+            this.router.navigate(['login']);
+            alert('Successfully signed out!');
+          });
+        },
+        (error) => {
+          console.error('Error during logout:', error);
+        }
+      );
+    }
   }
 }
 

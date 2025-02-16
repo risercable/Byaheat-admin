@@ -11,6 +11,7 @@ import { Observable } from 'rxjs';
 import { AssignDriverComponent } from '../assign-driver/assign-driver.component';
 import { StorageService } from '../storage.service';
 import * as firebase from 'firebase';
+import { GlobalDataService } from '../global-data.service';
 
 @Component({
   selector: 'app-home',
@@ -48,7 +49,16 @@ export class HomeComponent implements OnInit {
     layout: {width: 600, height: 420, title: 'A Fancy Plot'}
   };
 
-  constructor(private route: ActivatedRoute, location: Location, public authService: AuthService, private titleService: Title, private db: AngularFireDatabase, public storage: StorageService,  public router: Router) {
+  constructor(
+    private route: ActivatedRoute, 
+    location: Location, 
+    public authService: AuthService, 
+    private titleService: Title, 
+    private db: AngularFireDatabase, 
+    public storage: StorageService,  
+    public router: Router,
+    private globalDataService: GlobalDataService
+  ) {
     var user = firebase.auth().currentUser;
     if(user!=null) {
       this.ediUser = user.displayName;
@@ -129,6 +139,10 @@ export class HomeComponent implements OnInit {
     //     this.router.navigate(['/not-connected']);
     //   }
     // });
+
+    const appigo = this.globalDataService.getUser();
+
+    console.log(appigo);
   }
 
   redirectNC() {

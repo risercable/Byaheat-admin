@@ -1,5 +1,5 @@
 
-import {tap, map} from 'rxjs/operators';
+import {take, map} from 'rxjs/operators';
 
 
 
@@ -17,13 +17,19 @@ export class AuthGuard implements CanActivate {
 
   canActivate(
     next: ActivatedRouteSnapshot,
-    state: RouterStateSnapshot): Observable<boolean> | Promise<boolean> | boolean {
+    state: RouterStateSnapshot
+  ): Observable<boolean> | Promise<boolean> | boolean {
     return this.authService.firebaseAuth.authState.pipe(
-      map(authState => !!authState),
-      tap(authenticated => {
-        if (!authenticated) {
-            this.router.navigate(['/login']);
+      map(authState => {
+        // Check if the user is authenticated
+        if (!authState) {
+          // Redirect if not authenticated
+          this.router.navigate(['/admin/login'], { queryParams: { returnUrl: state.url } });
+          return false;
         }
-      }),);
+        return true;
+      }),
+      take(1) // Ensure the observable completes after the first emission
+    );
   }
 }

@@ -3,6 +3,7 @@ const cors = require('cors');  // Import cors
 const { initializeApp } = require("firebase/app");
 const config = require("./config/firebase");
 const authController = require("./controllers/driver.controller");
+const adminController = require("./controllers/admin.controller");
 
 const app = express();
 
@@ -12,10 +13,26 @@ app.use(cors({
 
 app.use(express.json());
 
+app.use((req, res, next) => {
+  // Mock user data from a database or auth middleware
+  const user = {
+    isAdmin: true,
+    firstName: 'John',
+    lastName: 'Doe',
+  };
+
+  res.locals.user = user; // Save user data in res.locals
+  next();
+});
+
 // Middleware, routes, etc.
 app.get("/", (req, res) => {
   res.send("Node.js Backend with Firebase!");
 });
+
+app.post('/api/login', adminController.login);
+
+app.post('/api/logout', adminController.logout);
 
 // API route for user registration
 app.post('/api/drivernew', authController.registerDriver);

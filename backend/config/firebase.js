@@ -1,13 +1,21 @@
 const firebase = require('firebase/app'); // Import Firebase Client SDK
-const admin = require('firebase-admin');
-const serviceAccount = require('./xxxxxxxxxxxxxxxxxxxxx.json');
 require('firebase/auth'); // Import Firebase Authentication
 require('firebase/database'); // Import Firebase Realtime Database
+
+const admin = require('firebase-admin'); // Firebase Admin SDK
+const serviceAccount = require('./xxxxxxxxxxxxxxxxxxxxx.json');
 require('dotenv').config();
 
-// Firebase Client SDK Configuration (For client-like behavior)
+// 🔹 Initialize Firebase Admin SDK
+if (!admin.apps.length) {
+  admin.initializeApp({
+    credential: admin.credential.cert(serviceAccount),
+    databaseURL: process.env.FIREBASE_DATABASE_URL,
+  });
+}
+
+// 🔹 Firebase Client SDK Configuration (WITHOUT `credential`)
 const clientConfig = {
-  credential: admin.credential.cert(serviceAccount),
   apiKey: process.env.FIREBASE_API_KEY,
   authDomain: process.env.FIREBASE_AUTH_DOMAIN,
   databaseURL: process.env.FIREBASE_DATABASE_URL,
@@ -17,9 +25,13 @@ const clientConfig = {
   appId: process.env.FIREBASE_APP_ID,
 };
 
-firebase.initializeApp(clientConfig);
+// 🔹 Initialize Firebase Client SDK
+if (!firebase.apps.length) {
+  firebase.initializeApp(clientConfig);
+}
 
-// Export both SDKs
+// 🔹 Export Both SDKs
 module.exports = {
-  firebase, // For user-scoped actions or client-side simulation
+  firebase, // Client-side Firebase
+  admin, // Admin SDK for server-side operations
 };

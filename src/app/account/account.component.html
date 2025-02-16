@@ -56,8 +56,6 @@
                           class="text-center"
                           matInput
                           (keyup)="applyFilter($event.target.value)"
-                          [(ngModel)]="searchX"
-                          (ngModelChange)="isEmptyString()"
                           placeholder="Enter your search term here..."
                           maxlength="30"
                           matTooltip="*Maximum characters is 30"
@@ -68,7 +66,7 @@
                 </mat-card>
 
                 <div class="row h-100 justify-content-center align-items-center" [hidden]="hideTableX">
-                  <mat-card *ngIf="clientSource?.filteredData.length" style="width: 100%">
+                  <mat-card *ngIf="clientSource.filteredData.length" style="width: 100%">
                     <mat-table #table [dataSource]="clientSource" matSort id="basic-table" class="col-12 table-responsive">
 
                     <!--- Note that these columns can be defined in any order.
