@@ -81,6 +81,8 @@ export class NavbarComponent implements OnInit {
     if(this.isaha2 == true) {
       this.isaha2 = false;
     }
+
+    console.log('clicked');
   }
 
   logout() {

@@ -25,9 +25,9 @@
 
     <nav class="navbar top-navbar navbar-expand-md navbar-dark">
       <div class="navbar-header" data-logobg="skin5">
-        
+
 </div>
-  
+
 <ng-template #hideThis>
     <div id="user-nav" class="navbar navbar-inverse">
 
@@ -87,7 +87,7 @@
         <!-- ============================================================== -->
         <!-- toggle and nav items -->
         <!-- ============================================================== -->
-        
+
           <!--<li class="nav-item d-none d-md-block"><a class="nav-link sidebartoggler waves-effect waves-light" href="javascript:void(0)" data-sidebartype="mini-sidebar"><i class="mdi mdi-menu font-24"></i></a></li>-->
           <!-- ============================================================== -->
           <!-- create new -->
@@ -186,7 +186,7 @@
           <!-- ============================================================== -->
           <!-- End Messages -->
           <!-- ============================================================== -->
-        
+
   </div>
 </ng-template>
 </nav>
@@ -211,16 +211,16 @@
           <li class="sidebar-item"> <a class="sidebar-link waves-effect waves-dark sidebar-link" [routerLink]="['/chatpage']" [routerLinkActive]="'active'" aria-expanded="false"><i class="mdi mdi-message-text-outline"></i><span class="hide-menu">Chat</span></a></li>
           <!-- Drivers Dropdown -->
           <li class="sidebar-item" ngbDropdown [routerLinkActive]="['active']"> <a class="sidebar-link has-arrow waves-effect waves-dark" href="javascript:void(0)" aria-expanded="false" [routerLinkActive]="'active'" ngbDropdownToggle><i class="mdi mdi-contact-mail"></i><span class="hide-menu">Drivers </span></a>
-            <ul aria-expanded="false" class="collapse first-level" ngbDropdownMenu>
-              <li class="sidebar-item"><a class="sidebar-link" [routerLink]="['/drivers/dispatch']" [routerLinkActive]="'active'"><i class="mdi mdi-account-key"></i><span class="hide-menu"> Dispatched Drivers </span></a></li>
-              <li class="sidebar-item"><a class="sidebar-link" [routerLink]="['/drivers/add-driver']" [routerLinkActive]="'active'"><i class="mdi mdi-library-plus"></i><span class="hide-menu"> Add Driver </span></a></li>
-              <li class="sidebar-item"><a [routerLink]="['/admin/drivers/table']" class="sidebar-link" [routerLinkActive]="'active'"><i class="mdi mdi-format-list-bulleted"></i><span class="hide-menu"> Drivers Table </span></a></li>
+            <ul aria-expanded="false" class="first-level" ngbDropdownMenu>
+              <li class="sidebar-item"><a class="sidebar-link" [routerLink]="['/drivers/dispatch']"><i class="mdi mdi-account-key"></i><span class="hide-menu"> Dispatched Drivers </span></a></li>
+              <li class="sidebar-item"><a class="sidebar-link" [routerLink]="['/drivers/add-driver']"><i class="mdi mdi-library-plus"></i><span class="hide-menu"> Add Driver </span></a></li>
+              <li class="sidebar-item"><a [routerLink]="['/drivers/table']" class="sidebar-link"><i class="mdi mdi-format-list-bulleted"></i><span class="hide-menu"> Drivers Table </span></a></li>
             </ul>
           </li>
           <!-- end of Drivers Dropdown -->
           <!-- Cars Dropdown -->
           <li class="sidebar-item" ngbDropdown [routerLinkActive]="['active']"> <a class="sidebar-link has-arrow waves-effect waves-dark" href="javascript:void(0)" aria-expanded="false" [routerLinkActive]="'active'" ngbDropdownToggle><i class="mdi mdi-car"></i><span class="hide-menu">Cars </span></a>
-            <ul aria-expanded="false" class="collapse  first-level" ngbDropdownMenu>
+            <ul aria-expanded="false" class="first-level" ngbDropdownMenu>
               <li class="sidebar-item"><a [routerLink]="['/cars/add-car']" class="sidebar-link" [routerLinkActive]="'active'"><i class="mdi mdi-library-plus"></i><span class="hide-menu"> Add Car </span></a></li>
               <li class="sidebar-item"><a class="sidebar-link" [routerLink]="['/cars/table']" [routerLinkActive]="'active'"><i class="mdi mdi-format-list-bulleted"></i><span class="hide-menu"> Cars Table </span></a></li>
             </ul>

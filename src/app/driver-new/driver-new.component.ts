@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {AppComponent} from '../app.component';
 import { AuthService } from '../auth.service';
+import { MyAuthService } from '../sql-services/my-auth-service.service';
 
 @Component({
   selector: 'app-driver-new',
@@ -16,7 +17,7 @@ export class DriverNewComponent implements OnInit {
   firstName: string = '';
   lastName: string = '';
 
-  constructor(private appComponent: AppComponent, private authService: AuthService) {
+  constructor(private appComponent: AppComponent, private authService: AuthService, private myAuthService: MyAuthService) {
     this.appComponent.showNavbar = false;
   }
 
@@ -27,15 +28,19 @@ export class DriverNewComponent implements OnInit {
     this.isLoginOrRegister = false;
   }
 
-  onRegister() {
-    const variables = {
+  async onRegister () {
+    let variables = {
       email: this.email,
       password: this.password,
       firstName: this.firstName,
-      lastName: this.lastName
+      lastName: this.lastName,
+      salt: ''
     };
 
-    this.authService.registerUser(variables).subscribe(
+    variables.password = this.password;
+    variables.salt = '';
+
+    this.myAuthService.registerUser(variables).subscribe(
       (response) => {
         this.successMessage = response.message;
         this.errorMessage = '';
