@@ -9,7 +9,8 @@
   "scripts": {
     "ng": "ng",
     "devstart": "ng serve",
-    "backend": "nodemon backend/mysqlserver",
+    "backend": "nodemon bin/www",
+    "backend:debug": "nodemon --inspect-brk bin/www",
     "build": "ng build --prod",
     "test": "ng test",
     "lint": "ng lint",
