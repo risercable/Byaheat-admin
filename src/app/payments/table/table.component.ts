@@ -1,6 +1,6 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
 import {MatDialog, MatPaginator, MatSort, MatTableDataSource} from "@angular/material";
-import {PerCar} from "../../carslist/carslist.component";
+import { Car as PerCar } from '../../shared/models/car.model';
 import {AngularFireDatabase} from "angularfire2/database";
 import {CarService} from "../../drivers/shared/car.service";
 import {Title} from "@angular/platform-browser";

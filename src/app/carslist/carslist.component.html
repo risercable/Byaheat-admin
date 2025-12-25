@@ -68,87 +68,40 @@
                             <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Search here..." maxlength="30" matTooltip="*Maximum character is 30" matTooltipPosition="after" style="width: 500px;">
                           </mat-form-field>
                         </div>
-                      <mat-table #table [dataSource]="dataSource" matSort id="basic-table">
-
-                        <mat-header-row *matHeaderRowDef="carColumnsToDisplay"></mat-header-row>
-                        <!--- Note that these columns can be defined in any order.
-                              The actual rendered columns are set as a property on the row definition" -->
-                        <ng-container matColumnDef="in1">
-                          <mat-header-cell *matHeaderCellDef mat-sort-header>*NO*</mat-header-cell>
-                          <mat-cell *matCellDef="let element; let i = index;"> {{element.in1}} </mat-cell>
-                        </ng-container>
-
-                        <ng-container matColumnDef="car_brand">
-                          <mat-header-cell *matHeaderCellDef mat-sort-header>*BRAND*</mat-header-cell>
-                          <mat-cell *matCellDef="let element; let i = index;"> {{element.car_brand}} </mat-cell>
-                        </ng-container>
-
-                        <!-- Position Column -->
-
-                        <ng-container matColumnDef="car_model">
-                            <mat-header-cell *matHeaderCellDef mat-sort-header>*MODEL*</mat-header-cell>
-                            <mat-cell *matCellDef="let element"> {{element.car_model}} </mat-cell>
-                          </ng-container>
-
-                        <ng-container matColumnDef="car_type">
-                          <mat-header-cell *matHeaderCellDef mat-sort-header>*TYPE*</mat-header-cell>
-                          <mat-cell *matCellDef="let element"> {{element.car_type}} </mat-cell>
-                        </ng-container>
-
-                        <ng-container matColumnDef="car_plate_number">
-                          <mat-header-cell *matHeaderCellDef mat-sort-header>*PLATE NUMBER*</mat-header-cell>
-                          <mat-cell *matCellDef="let element"> {{element.car_plate_number}} </mat-cell>
-                        </ng-container>
-
-                        <ng-container matColumnDef="car_driver">
-                          <mat-header-cell *matHeaderCellDef mat-sort-header>*DRIVER*</mat-header-cell>
-                          <mat-cell *matCellDef="let element" [style.color]="(element.car_driver === 'none') ? 'red' : '' ">{{(element.car_driver | limitTo: 20) + (element.car_driver.length > 20 ? '...' : '')}} <br><a style="color: #2d6987" *ngIf="element.car_driver === 'none'"><i class="icon-key"></i> ASSIGN NOW</a></mat-cell>
-                        </ng-container>
-
-                        <ng-container matColumnDef="actions" class="hideX">
-                          <mat-header-cell *matHeaderCellDef>*ACTION*</mat-header-cell>
-                          <mat-cell *matCellDef="let element; let i = index">
-                            <button mat-icon-button style="color: #2d6987;"><i class="icon-list"></i> DETAILS</button>
-                          </mat-cell>
-                        </ng-container>
-                        <mat-form-field>
-                            <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Search here..." maxlength="30" matTooltip="*Maximum characters is 30" matTooltipPosition="after" style="width: 500px;">
-                        </mat-form-field>
-                      </mat-table>
-                      <mat-table #table [dataSource]="dataSource" matSort id="basic-table">
+                      <mat-table #table [dataSource]="carSource" matSort id="basic-table">
 
                         <!--- Note that these columns can be defined in any order.
                               The actual rendered columns are set as a property on the row definition" -->
                         <ng-container matColumnDef="in1">
                           <mat-header-cell *matHeaderCellDef mat-sort-header>*NO*</mat-header-cell>
-                          <mat-cell *matCellDef="let element; let i = index;"> {{element.in1}} </mat-cell>
+                          <mat-cell *matCellDef="let element; let i = index;"> {{element.id}} </mat-cell>
                         </ng-container>
 
-                        <ng-container matColumnDef="car_brand">
+                        <ng-container matColumnDef="carBrand">
                           <mat-header-cell *matHeaderCellDef mat-sort-header>*BRAND*</mat-header-cell>
-                          <mat-cell *matCellDef="let element; let i = index;"> {{element.car_brand}} </mat-cell>
+                          <mat-cell *matCellDef="let element; let i = index;"> {{element.carBrand}} </mat-cell>
                         </ng-container>
 
                         <!-- Position Column -->
 
-                        <ng-container matColumnDef="car_model">
+                        <ng-container matColumnDef="carModel">
                             <mat-header-cell *matHeaderCellDef mat-sort-header>*MODEL*</mat-header-cell>
-                            <mat-cell *matCellDef="let element"> {{element.car_model}} </mat-cell>
+                            <mat-cell *matCellDef="let element"> {{element.carModel}} </mat-cell>
                           </ng-container>
 
-                        <ng-container matColumnDef="car_type">
+                        <ng-container matColumnDef="carType">
                           <mat-header-cell *matHeaderCellDef mat-sort-header>*TYPE*</mat-header-cell>
-                          <mat-cell *matCellDef="let element"> {{element.car_type}} </mat-cell>
+                          <mat-cell *matCellDef="let element"> {{element.carType}} </mat-cell>
                         </ng-container>
 
-                        <ng-container matColumnDef="car_plate_number">
+                        <ng-container matColumnDef="carPlateNumber">
                           <mat-header-cell *matHeaderCellDef mat-sort-header>*PLATE NUMBER*</mat-header-cell>
-                          <mat-cell *matCellDef="let element"> {{element.car_plate_number}} </mat-cell>
+                          <mat-cell *matCellDef="let element"> {{element.carPlateNumber}} </mat-cell>
                         </ng-container>
 
-                        <ng-container matColumnDef="car_driver">
+                        <ng-container matColumnDef="carDriver">
                           <mat-header-cell *matHeaderCellDef mat-sort-header>*DRIVER*</mat-header-cell>
-                          <mat-cell *matCellDef="let element" [style.color]="(element.car_driver === 'none') ? 'red' : '' ">{{(element.car_driver | limitTo: 20) + (element.car_driver.length > 20 ? '...' : '')}} <br><a style="color: #2d6987" *ngIf="element.car_driver === 'none'" (click)="passKey(element.$key, element.car_plate_number, element.car_brand, element.car_model, element.car_capacity, element.car_color, element.car_type)" data-toggle="modal" data-target="#selectDriverModal" ><i class="mdi mdi-key-plus"></i> ASSIGN NOW</a></mat-cell>
+                          <mat-cell *matCellDef="let element" [style.color]="(element.carDriver === 'none') ? 'red' : '' ">{{(element.carDriver | limitTo: 20) + (element.carDriver.length > 20 ? '...' : '')}} <br><a style="color: #2d6987" *ngIf="element.carDriver === 'none'" (click)="passKey(element.$key, element.carPlateNumber, element.carBrand, element.carModel, element.carCapacity, element.car_color, element.carType)" data-toggle="modal" data-target="#selectDriverModal" ><i class="mdi mdi-key-plus"></i> ASSIGN NOW</a></mat-cell>
                         </ng-container>
                         <ng-container matColumnDef="actions" class="hideX">
                           <mat-header-cell *matHeaderCellDef>*ACTION*</mat-header-cell>
@@ -159,7 +112,7 @@
                           <ng-container matColumnDef="unassign">
                             <mat-header-cell *matHeaderCellDef mat-sort-header>*UNASSIGN*</mat-header-cell>
                             <mat-cell *matCellDef="let element">
-                              <button *ngIf="element.car_driver != 'none' " href="" class="btn btn-mini btn-danger pull-right" (click)="passunKey(element.$key, element.car_plate_number, element.car_brand, element.car_model, element.car_capacity, element.car_color, element.car_type, element.car_driver)" data-toggle="modal" data-target="#unassignDriver" style="width: auto;"><i class="mdi mdi-alert"></i> UNASSIGN</button>
+                              <button *ngIf="element.carDriver != 'none' " href="" class="btn btn-mini btn-danger pull-right" (click)="passunKey(element.$key, element.carPlateNumber, element.carBrand, element.carModel, element.carCapacity, element.car_color, element.carType, element.carDriver)" data-toggle="modal" data-target="#unassignDriver" style="width: auto;"><i class="mdi mdi-alert"></i> UNASSIGN</button>
                             </mat-cell>
                           </ng-container>
 

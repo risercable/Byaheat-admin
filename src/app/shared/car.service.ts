@@ -15,4 +15,8 @@ export class CarService {
       body: payload
     });
   }
+
+  getAll(): Observable<any> {
+    return this.api.get('/car/getAll');
+  }
 }

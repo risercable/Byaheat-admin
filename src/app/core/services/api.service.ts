@@ -28,6 +28,12 @@ class ApiService {
     });
   }
 
+  get<T>(url: string, params?: Record<string, any>) {
+    return this.http.get<T>(`${this.baseUrl}${url}`, {
+      params: this.buildParams(params)
+    });
+  }
+
   private buildParams(params?: Record<string, any>): HttpParams {
     let httpParams = new HttpParams();
     if (!params) {

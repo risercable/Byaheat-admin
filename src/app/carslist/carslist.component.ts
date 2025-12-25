@@ -1,6 +1,6 @@
 
 import {map} from 'rxjs/operators';
-import {Component, Inject, OnInit, ViewChild, ViewEncapsulation} from '@angular/core';
+import {Component, Inject, OnInit, ViewChild, ViewEncapsulation, AfterViewInit} from '@angular/core';
 import { AngularFireDatabase } from 'angularfire2/database';
 import { AngularFireList } from 'angularfire2/database';
 import { Observable } from 'rxjs';
@@ -11,6 +11,8 @@ import { Title } from '@angular/platform-browser';
 import {MatDialog, MatDialogRef, MAT_DIALOG_DATA, MatTableDataSource, MatPaginator, MatSort} from '@angular/material';
 import {ClientDetailsDialog} from "../account/account.component";
 import * as firebase from "firebase";
+import { Car as PerCar } from '../shared/models/car.model';
+import {CarService as CarService2} from '../shared/car.service';
 
 declare var jsPDF: any; // Important
 
@@ -19,7 +21,7 @@ declare var jsPDF: any; // Important
   templateUrl: './carslist.component.html',
   styleUrls: ['./carslist.component.scss']
 })
-export class CarslistComponent implements OnInit {
+export class CarslistComponent implements OnInit, AfterViewInit {
   p: number = 1;
   carList: AngularFireList<any>;
   cars: Observable<any>;
@@ -45,11 +47,19 @@ export class CarslistComponent implements OnInit {
   length: number;
   itemList: PerCar[];
   isGreen: boolean = false;
-  dataSource = new MatTableDataSource(this.itemList);
-  displayedColumns = ['in1', 'car_model', 'car_type', 'car_plate_number', 'car_driver', 'unassign'];
+  carSource = new MatTableDataSource<PerCar>();
+  displayedColumns = [
+    'carBrand',
+    'carModel',
+    'carType',
+  ];
   noRecords: boolean;
   // const
-  carColumnsToDisplay: ['car_brand', 'car_model', 'car_type', 'car_plate_number', 'car_driver', 'actions'];
+  carColumnsToDisplay: [
+    'carBrand',
+    'carModel',
+    'carType',
+  ];
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
 
@@ -57,67 +67,37 @@ export class CarslistComponent implements OnInit {
   elementsCar: any;
 
   ngAfterViewInit() {
-    this.dataSource.sort = this.sort;
+    this.carSource.sort = this.sort;
   }
 
   applyFilter(filterValue: string) {
-    filterValue = filterValue.trim(); // Remove whitespace
-    filterValue = filterValue.toLowerCase(); // MatTableDataSource defaults to lowercase matches
-    this.dataSource.filter = filterValue;
+    // Extract the value from the input event
+    const filterVal = !filterValue ? (event.target as HTMLInputElement).value : filterValue;
 
-    if(this.dataSource.filteredData.length == 0) {
-      this.noRecords = true;
-    } else {
-      this.noRecords = false;
+    // Apply the filter: trim whitespace and convert to lowercase
+    // MatTableDataSource expects a lowercase string for its internal search
+    this.carSource.filter = filterVal.trim().toLowerCase();
+
+    // If you have pagination, reset to the first page after filtering
+    if (this.carSource.paginator) {
+      this.carSource.paginator.firstPage();
     }
   }
 
 
-  constructor(private db: AngularFireDatabase,private carService: CarService, private titleService: Title, public dialog: MatDialog) {
-    // this.carList = db.list('all_cars');
-    this.cList = db.list('all_cars');
-
-    this.driversList = db.list('reservations');
-    this.drvList = db.list('drivers');
-    // this.cars = this.carList.snapshotChanges().map(changes => {
-    //   return changes.map(c => ({ key: c.payload.key, ...c.payload.val() }));
-    // });
-
-    this.adriversList = db.list('drivers', ref => ref.orderByChild('assigned_car').equalTo('none'));
-
-    this.adrivers = this.adriversList.snapshotChanges().pipe(map(changes => {
-      return changes.map(c => ({ key: c.payload.key, ...c.payload.val() }));
-    }));
-
-    // this.notAssigned = db.list('all_cars', ref => ref.orderByChild('car_driver').equalTo('none'));
-
-    // this.notAssigned.snapshotChanges().map(list => list.length).subscribe(length => this.length = length);
-
-    let data = db.list('all_cars');
-    this.itemList = [];
-
-    data.snapshotChanges().subscribe(item => {
-      this.itemList = [];
-      let i = 1;
-
-      item.forEach(element => {
-        let json = element.payload.toJSON();
-        // console.log(json);
-        json["$key"] = element.key;
-        json["in1"] = i;
-        // this.itemList.push(json as Item);
-        this.itemList.push(json as PerCar);
-
-        i++;
-
-      });
-
-      this.dataSource = new MatTableDataSource(this.itemList);
-      this.dataSource.sort = this.sort;
-      this.dataSource.paginator = this.paginator;
+  constructor(
+    private db: AngularFireDatabase,
+    private carService: CarService,
+    private titleService: Title,
+    public dialog: MatDialog,
+    private carService2: CarService2,
+  ) {
+    this.carService2.getAll().subscribe(cars => {
+      // Assign the data array to the dataSource.data property
+      this.carSource.data = cars;
+      this.carSource.paginator = this.paginator;
+      this.carSource.sort = this.sort;
     });
-
-    console.log(this.dataSource);
    }
 
   openDialog(i: any): void {
@@ -278,17 +258,6 @@ export class CarslistComponent implements OnInit {
   sendPlateNumber(element) {
     this.elementsCar = element;
   }
-}
-
-export interface PerCar {
-  in1: number;
-  car_brand: string;
-  car_capacity: string;
-  car_color: string;
-  car_driver: string;
-  car_model: string;
-  car_plate_number: string;
-  car_type: string;
 }
 
 @Component({
