@@ -12,6 +12,7 @@ import { AssignDriverComponent } from '../assign-driver/assign-driver.component'
 import { StorageService } from '../storage.service';
 import * as firebase from 'firebase';
 import { GlobalDataService } from '../global-data.service';
+import {CarService} from '../shared/car.service';
 
 @Component({
   selector: 'app-home',
@@ -50,14 +51,15 @@ export class HomeComponent implements OnInit {
   };
 
   constructor(
-    private route: ActivatedRoute, 
-    location: Location, 
-    public authService: AuthService, 
-    private titleService: Title, 
-    private db: AngularFireDatabase, 
-    public storage: StorageService,  
+    private route: ActivatedRoute,
+    location: Location,
+    public authService: AuthService,
+    private titleService: Title,
+    private db: AngularFireDatabase,
+    public storage: StorageService,
     public router: Router,
-    private globalDataService: GlobalDataService
+    private globalDataService: GlobalDataService,
+    private carService: CarService,
   ) {
     var user = firebase.auth().currentUser;
     if(user!=null) {
@@ -84,7 +86,7 @@ export class HomeComponent implements OnInit {
     this.workings.snapshotChanges().pipe(map(list => list.length)).subscribe(length => this.lworkings = length);
 
     this.usersList.snapshotChanges().pipe(map(list => list.length)).subscribe(length => this.length = length);
-    this.carsList.snapshotChanges().pipe(map(list => list.length)).subscribe(length => this.lcars = length);
+    this.carService.getAll().subscribe(cars => this.lcars = cars.length);
     this.driversList.snapshotChanges().pipe(map(list => list.length)).subscribe(length => this.ldrivers = length);
     this.forApproval.snapshotChanges().pipe(map(list => list.length)).subscribe(length => this.lpending = length);
 
