@@ -58,7 +58,7 @@ export class CarslistComponent implements OnInit, AfterViewInit {
   carColumnsToDisplay: [
     'carBrand',
     'carModel',
-    'carType',
+    'carType'
   ];
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
@@ -134,7 +134,7 @@ export class CarslistComponent implements OnInit, AfterViewInit {
       this.carlist = [];
       item.forEach(element => {
         const y = element.payload.toJSON();
-        y["$key"] = element.key;
+        y["id"] = element.key;
         this.carlist.push(y as Car);
       });
     });
@@ -194,7 +194,7 @@ export class CarslistComponent implements OnInit, AfterViewInit {
   }
 
   onSubmit(form: NgForm) {
-    if (form.value.$key == null)
+    if (form.value.id == null)
       this.carService.insertCar(form.value);
     else
       this.carService.updateCar(form.value);
@@ -205,19 +205,19 @@ export class CarslistComponent implements OnInit, AfterViewInit {
     if (form != null)
       form.reset();
     this.carService.selectedCar = {
-      $key: null,
-      car_brand: "",
-      car_capacity: 0,
-      car_type: "",
-      car_color: "",
-      car_model: "",
-      car_plate_number: ""
+      id: null,
+      carBrand: "",
+      carCapacity: 0,
+      carType: "",
+      carColor: "",
+      carModel: "",
+      carPlateNumber: ""
     }
   }
 
   onDelete(form: NgForm) {
     if (confirm('Are you sure to delete this record ?') == true) {
-      this.carService.deleteDriver(form.value.$key);
+      this.carService.deleteDriver(form.value.id);
       this.resetForm(form);
     }
   }

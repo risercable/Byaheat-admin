@@ -50,6 +50,12 @@ export class NavbarComponent implements OnInit {
     this.getPending.snapshotChanges().pipe(map(list => list.length)).subscribe(length => this.lpending = length);
    }
 
+  // Function to check if the current route partially matches a given path
+  isRouteActive(routePath: string): boolean {
+    // We use 'false' as the second argument for a partial/prefix match
+    return this.router.isActive(routePath, false);
+  }
+
   ngOnInit() {
     this.aha = "!clicked";
     this.isaha = false;

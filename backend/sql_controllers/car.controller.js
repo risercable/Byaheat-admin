@@ -27,6 +27,22 @@ exports.saveCar = async (req, res) => {
 
 exports.getAll = async (req, res) => {
   try {
+    const sql = 'SELECT * FROM car';
+    connection.query(sql, (err, results) => {
+      if (err) {
+        console.error('Error fetching data:', err);
+        return res.status(500).send('Error fetching data');
+      }
+      // Send the results back as a JSON response
+      res.json(results);
+    });
+  } catch (error) {
+    res.status(500).json({ message: 'Server error', error: error.message });
+  }
+}
+
+exports.getAll = async (req, res) => {
+  try {
     // Store hashed password in MySQL
     const sql = 'Select * from car';
     connection.query(sql, (err, results, fields) => {

@@ -19,4 +19,10 @@ export class CarService {
   getAll(): Observable<any> {
     return this.api.get('/car/getAll');
   }
+
+  getCars(payload: CarModel): Observable<any> {
+    return this.api.request('POST', '/car/getAll', {
+      body: payload
+    });
+  }
 }

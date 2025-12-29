@@ -210,19 +210,19 @@
           <li class="sidebar-item" [routerLink]="['/remit-page']"  [routerLinkActiveOptions]="{exact:true}" routerLinkActive="active"> <a class="sidebar-link waves-effect waves-dark sidebar-link"   aria-expanded="false"><i class="mdi mdi-arrow-down-bold-hexagon-outline"></i><span class="hide-menu">Remits</span></a></li>
           <li class="sidebar-item" [routerLink]="['/chatpage']"  [routerLinkActiveOptions]="{exact:true}" routerLinkActive="active"> <a class="sidebar-link waves-effect waves-dark sidebar-link"  aria-expanded="false"><i class="mdi mdi-message-text-outline"></i><span class="hide-menu">Chat</span></a></li>
           <!-- Drivers Dropdown -->
-          <li class="sidebar-item" ngbDropdown #driversDrop="ngbDropdown"> <a class="sidebar-link has-arrow waves-effect waves-dark" href="javascript:void(0)" aria-expanded="false" routerLinkActive="active"  ngbDropdownToggle><i class="mdi mdi-contact-mail"></i><span class="hide-menu">Drivers </span></a>
+          <li class="sidebar-item" ngbDropdown [ngClass]="{ 'active': isRouteActive('/drivers') }" #driversDrop="ngbDropdown"> <a class="sidebar-link has-arrow waves-effect waves-dark" href="javascript:void(0)" aria-expanded="false" routerLinkActive="active"  ngbDropdownToggle><i class="mdi mdi-contact-mail"></i><span class="hide-menu">Drivers </span></a>
             <ul aria-expanded="false" class="first-level" ngbDropdownMenu>
-              <li class="sidebar-item" [routerLink]="['/drivers/dispatch']" [routerLinkActive]="['active']"  [routerLinkActiveOptions]="{exact:true}" (click)="driversDrop.close();"><a class="sidebar-link"><i class="mdi mdi-account-key"></i><span class="hide-menu"> Dispatched Drivers </span></a></li>
-              <li class="sidebar-item" [routerLink]="['/drivers/add-driver']" [routerLinkActive]="['active']"  [routerLinkActiveOptions]="{exact:true}" (click)="driversDrop.close();"><a class="sidebar-link"><i class="mdi mdi-library-plus"></i><span class="hide-menu"> Add Driver </span></a></li>
-              <li class="sidebar-item" [routerLink]="['/drivers/table']" [routerLinkActive]="['active']"  [routerLinkActiveOptions]="{exact:true}" (click)="driversDrop.close();"><a class="sidebar-link"><i class="mdi mdi-format-list-bulleted"></i><span class="hide-menu"> Drivers Table </span></a></li>
+              <li class="sidebar-item" [routerLink]="['/drivers/dispatch']" (click)="driversDrop.close();"><a class="sidebar-link"><i class="mdi mdi-account-key"></i><span class="hide-menu"> Dispatched Drivers </span></a></li>
+              <li class="sidebar-item" [routerLink]="['/drivers/add-driver']" (click)="driversDrop.close();"><a class="sidebar-link"><i class="mdi mdi-library-plus"></i><span class="hide-menu"> Add Driver </span></a></li>
+              <li class="sidebar-item" [routerLink]="['/drivers/table']" (click)="driversDrop.close();"><a class="sidebar-link"><i class="mdi mdi-format-list-bulleted"></i><span class="hide-menu"> Drivers Table </span></a></li>
             </ul>
           </li>
           <!-- end of Drivers Dropdown -->
           <!-- Cars Dropdown -->
-          <li class="sidebar-item" ngbDropdown #carsDrop="ngbDropdown"> <a class="sidebar-link has-arrow waves-effect waves-dark" href="javascript:void(0)" aria-expanded="false" routerLinkActive="active"  ngbDropdownToggle><i class="mdi mdi-car"></i><span class="hide-menu">Cars </span></a>
+          <li class="sidebar-item" ngbDropdown [ngClass]="{ 'active': isRouteActive('/cars') }" #carsDrop="ngbDropdown"> <a class="sidebar-link has-arrow waves-effect waves-dark" href="javascript:void(0)" aria-expanded="false" routerLinkActive="active" ngbDropdownToggle><i class="mdi mdi-car"></i><span class="hide-menu">Cars </span></a>
             <ul aria-expanded="false" class="first-level" ngbDropdownMenu>
-              <li class="sidebar-item " [routerLink]="['/cars/add-car']" [routerLinkActive]="['active']"  [routerLinkActiveOptions]="{exact:true}" (click)="carsDrop.close()"><a class="sidebar-link"><i class="mdi mdi-library-plus"></i><span class="hide-menu"> Add Car </span></a></li>
-              <li class="sidebar-item" [routerLink]="['/cars/table']" [routerLinkActive]="['active']"  [routerLinkActiveOptions]="{exact:true}" (click)="carsDrop.close()"><a class="sidebar-link"><i class="mdi mdi-format-list-bulleted"></i><span class="hide-menu"> Cars Table </span></a></li>
+              <li class="sidebar-item " [routerLink]="['/cars/add-car']" (click)="carsDrop.close()"><a class="sidebar-link"><i class="mdi mdi-library-plus"></i><span class="hide-menu"> Add Car </span></a></li>
+              <li class="sidebar-item" [routerLink]="['/cars/table']" (click)="carsDrop.close()"><a class="sidebar-link"><i class="mdi mdi-format-list-bulleted"></i><span class="hide-menu"> Cars Table </span></a></li>
             </ul>
           </li>
           <!-- end of Cars Dropdown -->
