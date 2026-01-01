@@ -1,10 +1,10 @@
-const { connection } = require('../config/global_sql')
+const mysql = require('mysql2/promise');
 
 exports.getuser = async (req, res) => {
     connection.query('SELECT * FROM user', (err, results) => {
-  
+
         if (err) throw err;
-    
+
         res.json(results);        // Send query results back to the client
     });
 }
@@ -30,3 +30,45 @@ exports.registerDriver = async (req, res) => {
         res.status(500).json({ message: 'Server error', error: error.message });
     }
 }
+
+exports.driverLogin = async (req, res) => {
+  try {
+    const connection = await mysql.createPool({
+      host: 'localhost',
+      user: 'root',
+      password: '',
+      database: 'lakbay'
+    });
+
+    const { email, password } = req.body;
+
+    console.log('LOGIN:', email, password);
+
+    if (!email || !password) {
+      return res.status(400).json({ message: 'Missing fields' });
+    }
+
+    const [rows] = await connection.query(
+      'SELECT id FROM driver WHERE email = ? AND password = ?',
+      [email, password]
+    );
+
+    if (rows.length === 0) {
+      return res.status(401).json({ message: 'Invalid credentials' });
+    }
+
+    const user = rows[0];
+
+    return res.json({
+      message: 'Login successful',
+      userId: user.id
+    });
+
+  } catch (error) {
+    console.error('LOGIN ERROR:', error);
+    return res.status(500).json({
+      message: 'Server error',
+      error: error.message
+    });
+  }
+};

@@ -17,5 +17,5 @@ app.post('/api/register', userController.registerDriver);
 
 app.post('/api/car/create', carController.saveCar);
 app.get('/api/car/getAll', carController.getAll);
-
+app.post('/api/driver/login', userController.driverLogin);
 module.exports = app;
