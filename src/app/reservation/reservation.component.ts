@@ -167,7 +167,7 @@ export class ReservationComponent implements OnInit {
   }
 
   openPD() {
-    let dialogRef = this.dialog.open(PrintMenuDialog, {
+    const dialogRef = this.dialog.open(PrintMenuDialog, {
       width: 'auto',
       data: { colsSel: this.displayedColumns }
     });
