@@ -35,13 +35,13 @@
                       <button class="close" data-dismiss="alert">×</button>
                       <strong>Success!</strong> Added car info
                   </div>
-                  <form [formGroup]="carForm" (ngSubmit)="onSubmit()" class="form-horizontal">
+                  <form [formGroup]="carForm" (ngSubmit)="onFBSubmit()" class="form-horizontal">
                     <div class="control-group">
                       <div class="controls">
                         <mat-form-field>
                           <mat-label>Car Plate Number</mat-label>
                           <input matInput name="car_plate_number" formControlName="carPlateNumber" placeholder="AAA-1111" mask='SSS-0000' oninput="this.value = this.value.toUpperCase()" [dropSpecialCharacters]="false" required>
-                          <mat-error *ngIf="car_pnE.invalid">{{getErrorMessage4()}}</mat-error>
+                          <mat-error *ngIf="car_pnE.invalid && !preventErrorLog">{{getErrorMessage4()}}</mat-error>
                         </mat-form-field>
                       </div>
                   </div>
@@ -60,7 +60,7 @@
                         <mat-select name="car_brand" id="car_brand" formControlName="carBrand" (selectionChange)="onSelect($event)" required>
                           <mat-option *ngFor="let brand of brands" [value]="brand.name">{{brand.name}}</mat-option>
                         </mat-select>
-                        <mat-error *ngIf="car_brandE.invalid">{{getErrorMessage3()}}</mat-error>
+                        <mat-error *ngIf="car_brandE.invalid && !preventErrorLog">{{getErrorMessage3()}}</mat-error>
                       </mat-form-field>
                     </div>
                     <!--<label class="control-label">Car model: </label>-->
@@ -71,7 +71,7 @@
                         <mat-select name="car_model" id="car_model" formControlName="carModel" required>
                           <mat-option *ngFor="let model of models" [value]="model.name">{{model.name}}</mat-option>
                         </mat-select>
-                        <mat-error *ngIf="car_brandE.invalid">{{getErrorMessage3()}}</mat-error>
+                        <mat-error *ngIf="car_brandE.invalid && !preventErrorLog">{{getErrorMessage3()}}</mat-error>
                       </mat-form-field>
                       <!--<select name="car_model" id="car_model" #name="ngModel" [(ngModel)]="carService.selectedCar.car_model" required>-->
                         <!--<option *ngFor="let model of models" [value]="model.name">{{model.name}}</option>-->
@@ -85,7 +85,7 @@
                         <mat-form-field>
                           <mat-label>Car Color</mat-label>
                           <input matInput name="car_color" formControlName="carColor" minlength="3" maxlength="20" placeholder="color" [pattern]="'[a-zA-Z ]*'" required>
-                          <mat-error *ngIf="car_colorE.invalid">{{getErrorMessage()}}</mat-error>
+                          <mat-error *ngIf="car_colorE.invalid && !preventErrorLog">{{getErrorMessage()}}</mat-error>
                         </mat-form-field>
                       </div>
                     </div>
@@ -110,7 +110,7 @@
                         <mat-form-field>
                           <mat-label>Car Capacity</mat-label>
                           <input matInput name="car_capacity" formControlName="carCapacity" readonly required>
-                          <mat-error *ngIf="car_capacity.invalid">{{getErrorMessage2()}}</mat-error>
+                          <mat-error *ngIf="car_capacity.invalid && !preventErrorLog">{{getErrorMessage2()}}</mat-error>
                         </mat-form-field>
                       </div>
                     </div>

@@ -9,7 +9,7 @@ import { Car } from '../drivers/shared/car.model';
 import { NgForm } from '@angular/forms/src/directives/ng_form';
 import { Title } from '@angular/platform-browser';
 import {MatDialog, MatDialogRef, MAT_DIALOG_DATA, MatTableDataSource, MatPaginator, MatSort} from '@angular/material';
-import {ClientDetailsDialog} from "../account/account.component";
+import {ClientDetailsDialog, Perclient} from '../account/account.component';
 import * as firebase from "firebase";
 import { Car as PerCar } from '../shared/models/car.model';
 import {CarService as CarService2} from '../shared/car.service';
@@ -48,6 +48,7 @@ export class CarslistComponent implements OnInit, AfterViewInit {
   itemList: PerCar[];
   isGreen: boolean = false;
   carSource = new MatTableDataSource<PerCar>();
+  carsFB: PerCar[] = [];
   displayedColumns = [
     'carBrand',
     'carModel',
@@ -92,12 +93,15 @@ export class CarslistComponent implements OnInit, AfterViewInit {
     public dialog: MatDialog,
     private carService2: CarService2,
   ) {
-    this.carService2.getAll().subscribe(cars => {
-      // Assign the data array to the dataSource.data property
-      this.carSource.data = cars;
-      this.carSource.paginator = this.paginator;
-      this.carSource.sort = this.sort;
-    });
+    // MySQL Logic
+    // this.carService2.getAll().subscribe(cars => {
+    //   // Assign the data array to the dataSource.data property
+    //   this.carSource.data = cars;
+    //   this.carSource.paginator = this.paginator;
+    //   this.carSource.sort = this.sort;
+    // });
+
+    // this.carService2.getAll();
    }
 
   openDialog(i: any): void {
@@ -129,16 +133,30 @@ export class CarslistComponent implements OnInit, AfterViewInit {
 
   ngOnInit() {
     this.setTitle("Lakbay | Cars List");
-    const x = this.carService.getData();
-    x.snapshotChanges().subscribe(item => {
-      this.carlist = [];
-      item.forEach(element => {
-        const y = element.payload.toJSON();
-        y["id"] = element.key;
-        this.carlist.push(y as Car);
-      });
-    });
+    // const x = this.carService.getData();
+    // x.snapshotChanges().subscribe(item => {
+    //   this.carlist = [];
+    //   item.forEach(element => {
+    //     const y = element.payload.toJSON();
+    //     y["id"] = element.key;
+    //     this.carlist.push(y as Car);
+    //   });
+    // });
 
+    this.carService2.getAll().subscribe(
+      (data: PerCar[]) => {
+        // Unpack the array from the response
+        this.carsFB = data;
+
+        // Assign the raw array to the .data property of MatTableDataSource
+        this.carSource.data = this.carsFB;
+
+        // Link paginator and sort after data is assigned
+        this.carSource.paginator = this.paginator;
+        this.carSource.sort = this.sort;
+      },
+      (error) => console.error('Error:', error)
+    );
     this.resetForm();
   }
 

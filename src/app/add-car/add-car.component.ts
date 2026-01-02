@@ -62,23 +62,24 @@ export class AddCarComponent implements OnInit {
   car_pnE = new FormControl('', [Validators.required, Validators.minLength(8)]);
   car_colorE = new FormControl('', [Validators.required]);
   car_capacityE = new FormControl('', [Validators.required, Validators.pattern('[a-zA-Z ]*')]);
+  preventErrorLog = false;
 
   getErrorMessage() {
-    return this.car_colorE.hasError('required') ? 'You must enter a value' :
+    return !this.preventErrorLog && this.car_colorE.hasError('required') ? 'You must enter a value' :
       this.car_colorE.hasError('pattern') ? 'Not a valid color' :
         '';
   }
 
   getErrorMessage2() {
-    return this.car_capacityE.hasError('required') ? 'You must select one' :
+    return !this.preventErrorLog && this.car_capacityE.hasError('required') ? 'You must select one' :
       '';
   }
   getErrorMessage3() {
-    return this.car_brandE.hasError('required') ? 'You must select one' :
+    return !this.preventErrorLog && this.car_brandE.hasError('required') ? 'You must select one' :
       '';
   }
   getErrorMessage4() {
-    return this.car_pnE.hasError('required') ? 'You must enter a value' :
+    return !this.preventErrorLog && this.car_pnE.hasError('required') ? 'You must enter a value' :
       this.car_pnE.hasError('minLength') ? 'Enter valid details' :
       '';
   }
@@ -234,6 +235,27 @@ export class AddCarComponent implements OnInit {
       next: res => {
         console.log('Car created', res);
         this.carForm.reset();
+      },
+      error: err => {
+        console.error(err);
+      }
+    });
+  }
+
+  onFBSubmit(): void {
+    const payload = this.carForm.getRawValue();
+
+    this.carService2.createCarFB(payload).subscribe({
+      next: res => {
+        console.log('Car created', res);
+        this.preventErrorLog = true;
+        this.carForm.reset();
+        Object.keys(this.carForm.controls).forEach(key => {
+          const control = this.carForm.get(key);
+          control.setErrors(null);
+          control.markAsPristine();
+          control.markAsUntouched();
+        });
       },
       error: err => {
         console.error(err);

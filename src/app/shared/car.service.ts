@@ -16,12 +16,18 @@ export class CarService {
     });
   }
 
-  getAll(): Observable<any> {
+  getAll(): Observable<CarModel[]> {
     return this.api.get('/car/getAll');
   }
 
   getCars(payload: CarModel): Observable<any> {
     return this.api.request('POST', '/car/getAll', {
+      body: payload
+    });
+  }
+
+  createCarFB(payload: CarModel) {
+    return this.api.request('POST', '/car/create', {
       body: payload
     });
   }

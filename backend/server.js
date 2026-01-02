@@ -4,6 +4,7 @@ const { initializeApp } = require("firebase/app");
 const config = require("./config/firebase");
 const authController = require("./controllers/driver.controller");
 const adminController = require("./controllers/admin.controller");
+const carController = require("./controllers/car.controller");
 
 const app = express();
 
@@ -36,6 +37,10 @@ app.post('/api/logout', adminController.logout);
 
 // API route for user registration
 app.post('/api/drivernew', authController.registerDriver);
+
+app.post('/api/car/create', carController.saveCar);
+
+app.get('/api/car/getAll', carController.getAll);
 
 // API route for user login
 app.post('/api/driverlogin', authController.login);

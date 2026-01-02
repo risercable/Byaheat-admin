@@ -74,7 +74,7 @@
                               The actual rendered columns are set as a property on the row definition" -->
                         <ng-container matColumnDef="in1">
                           <mat-header-cell *matHeaderCellDef mat-sort-header>*NO*</mat-header-cell>
-                          <mat-cell *matCellDef="let element; let i = index;"> {{element.id}} </mat-cell>
+                          <mat-cell *matCellDef="let element; let i = index;"> {{element.$key}} </mat-cell>
                         </ng-container>
 
                         <ng-container matColumnDef="carBrand">

@@ -32,6 +32,6 @@ if (!firebase.apps.length) {
 
 // 🔹 Export Both SDKs
 module.exports = {
-  firebase, // Client-side Firebase
+  // firebase, // Client-side Firebase
   admin, // Admin SDK for server-side operations
 };
