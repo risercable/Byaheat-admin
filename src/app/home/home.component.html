@@ -1,13 +1,4 @@
 <div id="content">
-  <div id="content-header">
-      <div id="breadcrumb"> <a href="index.html" title="Go to Home" class="tip-bottom"><i class="icon-home"></i> Home</a></div>
-    </div>
-    <div class="container-fluid">
-        <div class="quick-actions_homepage">
-            <ul class="quick-actions">
-              <li class="bg_lb span3"> <a routerLink="users/table"> <i class="fas fa-user" style="font-size: 2em;"></i><br>{{ this.length }} Total Users</a> </li>
-              <li class="bg_lg span3">  <a routerLink="cars/table"><i class="fas fa-car" style="font-size: 2em;"></i><br>{{ this.lcars }} Total Cars</a> </li>
-              <li class="bg_lo span3"> <a routerLink="drivers/table"><i class="fas fa-id-card" style="font-size: 2em;"></i><br>{{ this.ldrivers }} Total Drivers</a>  </li>
 <!--<div id="content">-->
   <!--<div id="content-header">-->
       <!--<div id="breadcrumb"> <a href="index.html" title="Go to Home" class="tip-bottom"><i class="icon-home"></i> Home</a></div>-->
@@ -79,7 +70,7 @@
       <div class="col-md-6 col-lg-3">
         <div class="card card-hover">
           <div class="box bg-cyan text-center">
-            <a routerLink="../users/table" class="font-weight-bold text-white"> <i class="fas fa-user" style="font-size: 2em;"></i><br><span style="font-size: 3em;">{{ this.length }}</span><h6 class="font-light text-white">Total Clients Served</h6></a>
+            <a routerLink="../users/table" class="font-weight-bold text-white"> <i class="fas fa-user" style="font-size: 2em;"></i><br><span style="font-size: 3em;">{{ this.length ? this.length : '-' }}</span><h6 class="font-light text-white">Total Clients Served</h6></a>
           </div>
         </div>
       </div>
@@ -87,7 +78,7 @@
       <div class="col-md-6 col-lg-3">
         <div class="card card-hover">
           <div class="box bg-success text-center">
-            <a routerLink="../cars/table" class="font-weight-bold font-light text-white"><i class="fas fa-car" style="font-size: 2em;"></i><br><span style="font-size: 3em;">{{ this.lcars }}</span><h6 class="font-light text-white"> Total Cars</h6></a>
+            <a routerLink="../cars/table" class="font-weight-bold font-light text-white"><i class="fas fa-car" style="font-size: 2em;"></i><br><span style="font-size: 3em;">{{ this.lcars ? this.lcars : '-' }}</span><h6 class="font-light text-white"> Total Cars</h6></a>
           </div>
         </div>
       </div>
@@ -95,7 +86,7 @@
       <div class="col-md-6 col-lg-3">
         <div class="card card-hover">
           <div class="box bg-warning text-center">
-            <a routerLink="../drivers/table" class="font-weight-bold font-light text-white"><i class="fas fa-id-card" style="font-size: 2em;"></i><br><span style="font-size: 3em;">{{ this.ldrivers }}</span><h6 class="font-light text-white"> Total Drivers</h6></a>
+            <a routerLink="../drivers/table" class="font-weight-bold font-light text-white"><i class="fas fa-id-card" style="font-size: 2em;"></i><br><span style="font-size: 3em;">{{ this.ldrivers ? this.ldrivers : '-' }}</span><h6 class="font-light text-white"> Total Drivers</h6></a>
           </div>
         </div>
       </div>
@@ -103,7 +94,7 @@
       <div class="col-md-6 col-lg-3">
         <div class="card card-hover">
           <div class="box bg-danger text-center">
-            <a class="font-weight-bold font-light text-white"><i class="fas fa-location-arrow" style="font-size: 2em;"></i><br><span class="text-white" style="font-size: 3em;">{{ lworkings }}</span><h6 class="text-white">Total Drivers on Trip</h6></a>
+            <a class="font-weight-bold font-light text-white"><i class="fas fa-location-arrow" style="font-size: 2em;"></i><br><span class="text-white" style="font-size: 3em;">{{ lworkings ? lworkings : '-' }}</span><h6 class="text-white">Total Drivers on Trip</h6></a>
           </div>
         </div>
       </div>
@@ -217,8 +208,10 @@
         <div class="card">
           <div class="card-body">
             <div class="d-md-flex align-items-center">
-              <h4 class="card-title">Sales (Bar char)</h4>
-
+              <div>
+                <h4 class="card-title">Sales (Bar char)</h4>
+                <h5 class="card-subtitle white-mute"> Latest 5 rides made with <3 by clients</h5>
+              </div>
             </div>
             <!-- column -->
           </div>
@@ -226,7 +219,7 @@
       </div>
 <!-- ============================================================== -->
 <!-- End Page wrapper  -->
-      </div>
+
       <div class="col-lg-6">
         <div class="card">
           <div class="card-body">
@@ -261,5 +254,7 @@
         </div>
       </div>
     </div>
+    </div>
   </div>
+</div>
 </div>

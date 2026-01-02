@@ -11,6 +11,8 @@ import { Observable } from 'rxjs';
 import { AssignDriverComponent } from '../assign-driver/assign-driver.component';
 import { StorageService } from '../storage.service';
 import * as firebase from 'firebase';
+import { GlobalDataService } from '../global-data.service';
+import {CarService} from '../shared/car.service';
 
 @Component({
   selector: 'app-home',
@@ -48,7 +50,17 @@ export class HomeComponent implements OnInit {
     layout: {width: 600, height: 420, title: 'A Fancy Plot'}
   };
 
-  constructor(private route: ActivatedRoute, location: Location, public authService: AuthService, private titleService: Title, private db: AngularFireDatabase, public storage: StorageService,  public router: Router) {
+  constructor(
+    private route: ActivatedRoute,
+    location: Location,
+    public authService: AuthService,
+    private titleService: Title,
+    private db: AngularFireDatabase,
+    public storage: StorageService,
+    public router: Router,
+    private globalDataService: GlobalDataService,
+    private carService: CarService,
+  ) {
     var user = firebase.auth().currentUser;
     if(user!=null) {
       this.ediUser = user.displayName;
@@ -74,7 +86,7 @@ export class HomeComponent implements OnInit {
     this.workings.snapshotChanges().pipe(map(list => list.length)).subscribe(length => this.lworkings = length);
 
     this.usersList.snapshotChanges().pipe(map(list => list.length)).subscribe(length => this.length = length);
-    this.carsList.snapshotChanges().pipe(map(list => list.length)).subscribe(length => this.lcars = length);
+    this.carService.getAll().subscribe(cars => this.lcars = cars.length);
     this.driversList.snapshotChanges().pipe(map(list => list.length)).subscribe(length => this.ldrivers = length);
     this.forApproval.snapshotChanges().pipe(map(list => list.length)).subscribe(length => this.lpending = length);
 
@@ -129,6 +141,10 @@ export class HomeComponent implements OnInit {
     //     this.router.navigate(['/not-connected']);
     //   }
     // });
+
+    const appigo = this.globalDataService.getUser();
+
+    console.log(appigo);
   }
 
   redirectNC() {

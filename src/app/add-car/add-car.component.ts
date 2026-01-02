@@ -8,11 +8,12 @@ import { Title } from '@angular/platform-browser';
 import { AngularFireList, AngularFireDatabase } from 'angularfire2/database';
 import * as firebase from 'firebase';
 import {MatRadioModule} from '@angular/material/radio';
-import {FormControl, Validators} from "@angular/forms";
+import {FormControl, FormGroup, Validators} from '@angular/forms';
 import {MAT_DIALOG_DATA, MatDialog, MatDialogRef, MatSnackBar} from '@angular/material';
 import { MatRadioChange } from '@angular/material';
 import {MatButtonModule} from '@angular/material/button';
 import {Observable} from "rxjs";
+import {CarService as CarService2} from '../shared/car.service';
 
 @Component({
   selector: 'app-add-car',
@@ -20,6 +21,14 @@ import {Observable} from "rxjs";
   styleUrls: ['./add-car.component.scss']
 })
 export class AddCarComponent implements OnInit {
+  carForm = new FormGroup({
+    carBrand: new FormControl('', Validators.required),
+    carCapacity: new FormControl('', Validators.required),
+    carType: new FormControl('', Validators.required),
+    carColor: new FormControl('', Validators.required),
+    carModel: new FormControl('', Validators.required),
+    carPlateNumber: new FormControl('', Validators.required),
+  });
   carList: AngularFireList<any>;
   toyotaCount: AngularFireList<any>;
   tcount: Observable<any>;
@@ -79,7 +88,15 @@ export class AddCarComponent implements OnInit {
     });
   }
 
-  constructor(public carService : CarService, private titleService: Title, private db: AngularFireDatabase, public snackBar: MatSnackBar, private changeDetector: ChangeDetectorRef, public dialog: MatDialog) {
+  constructor(
+    public carService: CarService,
+    private titleService: Title,
+    private db: AngularFireDatabase,
+    public snackBar: MatSnackBar,
+    private changeDetector: ChangeDetectorRef,
+    public dialog: MatDialog,
+    private carService2: CarService2
+  ) {
 
     // this.getCarID = db.list('cars_list', ref => ref.orderByChild('car'))
     this.carList = db.list('all_cars');
@@ -91,8 +108,33 @@ export class AddCarComponent implements OnInit {
     this.toyotaCount = db.list('/all_cars', ref => ref.orderByChild('car_brand').equalTo('Toyota'));
 
     this.tcount = this.toyotaCount.snapshotChanges().pipe(map(changes => {
-        return changes.map(c => ({ key: c.payload.key, ...c.payload.val() }));
-      }));
+      return changes.map(c => ({key: c.payload.key, ...c.payload.val()}));
+    }));
+
+    const carTypeControl = this.carForm.get('carType');
+
+    if (carTypeControl) {
+      carTypeControl.valueChanges.subscribe(type => {
+        let capacity = 0;
+
+        switch (type) {
+          case 'single':
+            capacity = 1;
+            break;
+          case 'family':
+            capacity = 4;
+            break;
+          case 'barkada':
+            capacity = 6;
+            break;
+          case 'premium':
+            capacity = 2;
+            break;
+        }
+
+        this.carForm.get('carCapacity').setValue(capacity);
+      });
+    }
   }
 
   openDialog(): void {
@@ -180,27 +222,25 @@ export class AddCarComponent implements OnInit {
     this.car_capacity = '0';
   }
 
-  onSubmit(form: NgForm) {
-    const dbRef = this.db.database.ref();
-    dbRef.child('all_cars').orderByChild('car_plate_number').equalTo(this.car_plate_number).once('value', snapshot => {
-      if (snapshot.exists()) {
-        this.openDialog();
-      } else {
-        this.carList.push({
-          car_brand: this.car_brand,
-          car_capacity: this.car_capacity,
-          car_type: this.car_type,
-          car_color: this.car_color,
-          car_driver: "none",
-          car_model: this.car_model,
-          car_plate_number: this.car_plate_number
-        });
+  onSubmit(): void {
+    if (this.carForm.invalid) {
+      // this.carForm.markAllAsTouched();
+      return;
+    }
 
-        this.resetForm(form);
-        this.openSnackBar();
+    const payload = this.carForm.getRawValue(); // use if some controls are disabled
+
+    this.carService2.createCar(payload).subscribe({
+      next: res => {
+        console.log('Car created', res);
+        this.carForm.reset();
+      },
+      error: err => {
+        console.error(err);
       }
     });
   }
+
   resetForm(form?: NgForm) {
     this.car_plate_number = '';
     this.car_brand = '';

@@ -39,67 +39,59 @@ import { DriverExistComponent } from './driver-exist/driver-exist.component';
 const routes: Routes = [
   {
     path: '',
-    redirectTo: 'driver-register', // Default route
+    redirectTo: 'driver-register',
     pathMatch: 'full',
   },
   {
     path: 'login',
+    component: DriverExistComponent,
     pathMatch: 'full',
-    component: DriverExistComponent
   },
   {
     path: 'driver-register',
-    component: DriverNewComponent, // Driver registration page
+    component: DriverNewComponent,
+    pathMatch: 'full',
   },
   {
-    path: 'admin',
-    component: LoginLayoutComponent, // Admin layout if you have one
-    canActivate: [AuthGuard], // Protect admin routes
-    children: [
-      {
-        path: '',
-        redirectTo: 'home',
-        pathMatch: 'full',
-      },
-      { path: 'home', component: HomeComponent },
-      { path: 'clients/table', component: AccountComponent },
-      { path: 'clients/table/history/:key/:fullname', component: ClientHistoryComponent },
-      { path: 'payments/table', component: ClientComponent },
-      { path: 'payments/table/client/:key', component: TableComponent },
-      { path: 'cars/table', component: CarslistComponent },
-      { path: 'chatpage', component: ChatPageComponent },
-      { path: 'reservations', component: ReservationComponent },
-      { path: 'cars/add-car', component: AddCarComponent },
-      { path: 'packages', component: PackagesComponent },
-      { path: 'drivers/add-driver', component: DriversComponent },
-      { path: 'assign', component: AssignDriverComponent },
-      { path: 'drivers/dispatch', component: DispatchingComponent },
-      { path: 'drivers/table', component: DriversTableComponent },
-      { path: 'drivers/table/location/:key/:firstname', component: DriversMapComponent },
-      { path: 'drivers/map', component: DriversMapComponent },
-      { path: 'drivers/ratings', component: RatespageComponent },
-      { path: 'remit-page', component: RemitsComponent },
-      { path: 'remit-page/cash/by/:key/:fullname', component: RemitsHistoryComponent },
-      { path: 'sendemail', component: SendEmailComponent },
-      { path: 'this', component: ThisdriverComponent },
-      { path: 'not-found', component: NotFoundComponent },
-    ],
-  },
-  {
-    path: 'login',
-    component: LoginComponent,
-  },
+      path: 'admin-login',
+      component: LoginComponent,
+      pathMatch: 'full',
+    },
+    { path: 'home', component: HomeComponent, pathMatch: 'full', },
+    { path: 'clients/table', component: AccountComponent, pathMatch: 'full', },
+    { path: 'clients/table/history/:key/:fullname', component: ClientHistoryComponent, pathMatch: 'full', },
+    { path: 'payments/table', component: ClientComponent, pathMatch: 'full', },
+    { path: 'payments/table/client/:key', component: TableComponent, pathMatch: 'full', },
+    { path: 'cars/table', component: CarslistComponent, pathMatch: 'full', },
+    { path: 'chatpage', component: ChatPageComponent, pathMatch: 'full', },
+    { path: 'reservations', component: ReservationComponent, pathMatch: 'full', },
+    { path: 'cars/add-car', component: AddCarComponent, pathMatch: 'full', },
+    { path: 'packages', component: PackagesComponent, pathMatch: 'full', },
+    { path: 'drivers/add-driver', component: DriversComponent, pathMatch: 'full', },
+    { path: 'assign', component: AssignDriverComponent, pathMatch: 'full', },
+    { path: 'drivers/dispatch', component: DispatchingComponent, pathMatch: 'full', },
+    { path: 'drivers/table', component: DriversTableComponent, pathMatch: 'full', },
+    { path: 'drivers/table/location/:key/:firstname', component: DriversMapComponent, pathMatch: 'full', },
+    { path: 'drivers/map', component: DriversMapComponent, pathMatch: 'full', },
+    { path: 'drivers/ratings', component: RatespageComponent, pathMatch: 'full', },
+    { path: 'remit-page', component: RemitsComponent, pathMatch: 'full', },
+    { path: 'remit-page/cash/by/:key/:fullname', component: RemitsHistoryComponent, pathMatch: 'full', },
+    { path: 'sendemail', component: SendEmailComponent, pathMatch: 'full', },
+    { path: 'this', component: ThisdriverComponent, pathMatch: 'full', },
+    { path: 'not-found', component: NotFoundComponent, pathMatch: 'full', },
   {
     path: 'signup',
     component: SignupComponent,
+    pathMatch: 'full',
   },
   {
     path: 'not-connected',
     component: NotcComponent,
+    pathMatch: 'full',
   },
   {
     path: '**',
-    component: NotFoundComponent, // Catch-all for unknown routes
+    component: NotFoundComponent,
   },
 ];
 

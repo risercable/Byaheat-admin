@@ -12,6 +12,8 @@ import {MAT_DIALOG_DATA, MatDialog, MatDialogRef, MatPaginator, MatSort, MatTabl
 import * as firebase from "firebase";
 import { UtilService } from '../util.service';
 
+import { ChangeDetectorRef } from '@angular/core';
+
 declare var jsPDF: any; // Important
 
 @Component({
@@ -31,10 +33,10 @@ export class AccountComponent implements OnInit {
   order: string = 'cfull_name';
   reverse: boolean = false;
   // clientColumns = ['in1', 'user_firstname', 'user_lastname', 'user_birthdate', 'user_mobile', 'actions'];
-  clientColumns = ['user_firstname', 'user_lastname', 'user_birthdate', 'user_mobile', 'actions'];
+  clientColumns = ['in1', 'user_firstname', 'user_lastname', 'user_birthdate', 'user_mobile', 'actions'];
   itemPrint = [];
   itemList: Perclient[];
-  clientSource = new MatTableDataSource(this.itemList);
+  clientSource = new MatTableDataSource([]);
   noRecords: boolean;
   hideTableX: boolean = false;
   hideET: boolean = true;
@@ -64,7 +66,7 @@ export class AccountComponent implements OnInit {
     filterValue = filterValue.trim().toLowerCase();
     if (!filterValue) {
       this.clientSource.filter = '';
-      this.clientSource.data = [...this.itemList]; // Reset data source to all data
+      this.clientSource.data = this.itemList; // Reset data source to all data
     } else {
       this.clientSource.filter = filterValue;
 
@@ -84,15 +86,10 @@ export class AccountComponent implements OnInit {
     private titleService: Title,
     public dialog: MatDialog,
     private router: Router,
-    private utilities: UtilService
+    private utilities: UtilService,
+    private cdr: ChangeDetectorRef
 ) {
-    // this.clientList = db.list('clients');
-    // this.clients = this.clientList.snapshotChanges().map(changes => {
-    //   return changes.map(c => ({ key: c.payload.key, ...c.payload.val() }));
-    // });
-
     let data = db.list('clients');
-    this.itemList = [];
 
     data.snapshotChanges().subscribe(item => {
       const tempItemList = [];
@@ -100,7 +97,7 @@ export class AccountComponent implements OnInit {
       let i = 1;
 
       item.forEach(element => {
-        const json = element.payload.val(); // Updated to use val() for Firebase updates.
+        const json = element.payload.val();
         json["$key"] = element.key;
         json['in1'] = i;
 
@@ -110,16 +107,16 @@ export class AccountComponent implements OnInit {
         i++;
       });
 
-      // Assign data after the loop is complete.
       this.itemList = tempItemList;
-      // this.itemPrint = tempItemPrint;
 
-      // Update the data source after the list is ready.
-      this.clientSource = new MatTableDataSource(this.itemList.reverse());
+      this.clientSource = new MatTableDataSource(this.itemList);
       this.clientSource.sort = this.sort;
       this.clientSource.paginator = this.paginator;
 
-      console.log(this.itemList); // Now logs the populated list.
+      // 🔹 Trigger Angular Change Detection to update UI
+      this.cdr.detectChanges();
+
+      console.log(this.itemList);
     });
    }
 
@@ -166,9 +163,9 @@ export class AccountComponent implements OnInit {
     });
     this.ipp = 10;
 
-    const showtblbtn = localStorage.getItem("showTableBtn");
+    const showtblbtn = localStorage.getItem("showTableBtn"); // TODO: This is Buggy 
 
-    this.hideTableX = showtblbtn !== 'true';
+    this.hideTableX = false;
 
     this.bbt = this.hideTableX;
   }

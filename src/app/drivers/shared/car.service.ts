@@ -42,33 +42,33 @@ export class CarService implements OnInit{
 
   insertCar(car: Car) {
     this.carList.push({
-      car_brand: car.car_brand,
-      car_capacity: car.car_capacity,
-      car_type: car.car_type,
-      car_color: car.car_color,
+      carBrand: car.carBrand,
+      carCapacity: car.carCapacity,
+      carType: car.carType,
+      carColor: car.carColor,
       car_driver: "none",
-      car_model: car.car_model,
-      car_plate_number: car.car_plate_number
+      carModel: car.carModel,
+      carPlateNumber: car.carPlateNumber
     });
 
     this.incar = true;
   }
 
   updateCar(carx : Car){
-    this.carList.update(carx.$key,{
-      car_brand: carx.car_brand,
-      car_capacity: carx.car_capacity,
-      car_type: carx.car_type,
-      car_color: carx.car_color,
-      car_model: carx.car_model,
-      car_plate_number: carx.car_plate_number
-    })
+    // this.carList.update(carx.id,{
+    //   carBrand: carx.carBrand,
+    //   carCapacity: carx.carCapacity,
+    //   carType: carx.carType,
+    //   carColor: carx.carColor,
+    //   carModel: carx.carModel,
+    //   carPlateNumber: carx.carPlateNumber
+    // })
 
     this.upcar = true;
  }
 
  deleteDriver(key : string){
-  this.carList.remove(key);
+  // this.carList.remove(key);
 
   this.delcar = true;
 }

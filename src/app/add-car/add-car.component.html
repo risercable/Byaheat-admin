@@ -35,13 +35,12 @@
                       <button class="close" data-dismiss="alert">×</button>
                       <strong>Success!</strong> Added car info
                   </div>
-                  <form #carForm="ngForm" (ngSubmit)="onSubmit(carForm);" class="form-horizontal">
-                    <input type="hidden" name="$key" #$key="ngModel" [(ngModel)]="carService.selectedCar.$key" />
+                  <form [formGroup]="carForm" (ngSubmit)="onSubmit()" class="form-horizontal">
                     <div class="control-group">
                       <div class="controls">
                         <mat-form-field>
                           <mat-label>Car Plate Number</mat-label>
-                          <input matInput name="car_plate_number" [(ngModel)]="car_plate_number" [formControl]="car_pnE" placeholder="AAA-1111" mask='SSS-0000' oninput="this.value = this.value.toUpperCase()" [dropSpecialCharacters]="false" required>
+                          <input matInput name="car_plate_number" formControlName="carPlateNumber" placeholder="AAA-1111" mask='SSS-0000' oninput="this.value = this.value.toUpperCase()" [dropSpecialCharacters]="false" required>
                           <mat-error *ngIf="car_pnE.invalid">{{getErrorMessage4()}}</mat-error>
                         </mat-form-field>
                       </div>
@@ -58,7 +57,7 @@
                       <!--</select>-->
                       <mat-form-field>
                         <mat-label>Car brand</mat-label>
-                        <mat-select name="car_brand" id="car_brand" [(ngModel)]="car_brand" (selectionChange)="onSelect($event)" required>
+                        <mat-select name="car_brand" id="car_brand" formControlName="carBrand" (selectionChange)="onSelect($event)" required>
                           <mat-option *ngFor="let brand of brands" [value]="brand.name">{{brand.name}}</mat-option>
                         </mat-select>
                         <mat-error *ngIf="car_brandE.invalid">{{getErrorMessage3()}}</mat-error>
@@ -69,7 +68,7 @@
                     <div class="controls">
                       <mat-form-field>
                         <mat-label>Car model</mat-label>
-                        <mat-select name="car_model" id="car_model" [(ngModel)]="car_model" required>
+                        <mat-select name="car_model" id="car_model" formControlName="carModel" required>
                           <mat-option *ngFor="let model of models" [value]="model.name">{{model.name}}</mat-option>
                         </mat-select>
                         <mat-error *ngIf="car_brandE.invalid">{{getErrorMessage3()}}</mat-error>
@@ -85,7 +84,7 @@
                         <!--<input type="text" class="form-control" name="car_color" #name="ngModel" [(ngModel)]="carService.selectedCar.car_color" minlength="4" placeholder="color" />-->
                         <mat-form-field>
                           <mat-label>Car Color</mat-label>
-                          <input matInput name="car_color" [(ngModel)]="car_color" minlength="3" maxlength="20" placeholder="color" [pattern]="'[a-zA-Z ]*'" required>
+                          <input matInput name="car_color" formControlName="carColor" minlength="3" maxlength="20" placeholder="color" [pattern]="'[a-zA-Z ]*'" required>
                           <mat-error *ngIf="car_colorE.invalid">{{getErrorMessage()}}</mat-error>
                         </mat-form-field>
                       </div>
@@ -96,13 +95,13 @@
                         <!--<input type="radio" value="Single" class="form-control" name="car_type" [(ngModel)]="carService.selectedCar.car_type" (click)="onRadioClick(0)"/>Single<br>-->
                         <!--<input type="radio" value="Family" class="form-control" name="car_type" [(ngModel)]="carService.selectedCar.car_type" (click)="onRadioClick(1)"/>Family<br>-->
                         <!--<input type="radio" value="Barkada" class="form-control" name="car_type" [(ngModel)]="carService.selectedCar.car_type" (click)="onRadioClick(2)"/>Barkada-->
-                          <mat-radio-group name="car_type" [(ngModel)]="car_type" (change)="onRadioClick($event)" required>
+                          <mat-radio-group name="car_type" formControlName="carType" required>
                             <mat-radio-button value="single">Single</mat-radio-button>
                             <mat-radio-button value="family">Family</mat-radio-button>
                             <mat-radio-button value="barkada">Barkada </mat-radio-button>
                             <mat-radio-button value="premium">PREMIUM </mat-radio-button>
                           </mat-radio-group>
-                        <mat-error *ngIf="car_capacityE.invalid">{{getErrorMessage2()}}</mat-error>
+<!--                        <mat-error *ngIf="car_capacityE.invalid">{{getErrorMessage2()}}</mat-error>-->
                       </div>
                     </div>
                     <div class="control-group">
@@ -110,8 +109,8 @@
                       <div class="controls">
                         <mat-form-field>
                           <mat-label>Car Capacity</mat-label>
-                          <input matInput name="car_capacity" [formControl]="car_capacityE" [(ngModel)]="car_capacity" readonly required>
-                          <mat-error *ngIf="car_capacityE.invalid">{{getErrorMessage2()}}</mat-error>
+                          <input matInput name="car_capacity" formControlName="carCapacity" readonly required>
+                          <mat-error *ngIf="car_capacity.invalid">{{getErrorMessage2()}}</mat-error>
                         </mat-form-field>
                       </div>
                     </div>
