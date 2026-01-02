@@ -11,7 +11,7 @@ app.use(express.json());
 app.use(cors());
 
 // Define a route to retrieve data from the database
-app.get('/user/getAll', userController.getuser);
+app.get('/user/getById', userController.getById);
 
 app.post('/api/register', userController.registerDriver);
 

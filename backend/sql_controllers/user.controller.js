@@ -1,13 +1,28 @@
 const mysql = require('mysql2/promise');
 
-exports.getuser = async (req, res) => {
-    connection.query('SELECT * FROM user', (err, results) => {
+exports.getById = async (req, res) => {
+  const connection = await mysql.createPool({
+    host: 'localhost',
+    user: 'root',
+    password: '',
+    database: 'lakbay'
+  });
 
-        if (err) throw err;
+  const { id } = req.body;
 
-        res.json(results);        // Send query results back to the client
-    });
-}
+  const [rows] = await connection.query('SELECT * FROM user where id = ? ', [id]);
+
+  if (rows.length === 0) {
+    return res.status(401).json({ message: 'Invalid credentials' });
+  }
+
+  const user = rows[0];
+
+  return res.json({
+    message: 'Login successful',
+    user
+  });
+};
 
 exports.registerDriver = async (req, res) => {
     try {
