@@ -5,11 +5,12 @@ const config = require("./config/firebase");
 const authController = require("./controllers/driver.controller");
 const adminController = require("./controllers/admin.controller");
 const carController = require("./controllers/car.controller");
+const clientController = require("./controllers/client.controller");
 
 const app = express();
 
 app.use(cors({
-  origin: 'http://localhost:4200'
+  origin: ['http://localhost:4200', 'http://localhost:4300'],
 }));
 
 app.use(express.json());
@@ -32,6 +33,7 @@ app.get("/", (req, res) => {
 });
 
 app.post('/api/login', adminController.login);
+app.post('/api/book', clientController.registerBooking);
 
 app.post('/api/logout', adminController.logout);
 
