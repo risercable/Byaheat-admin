@@ -18,6 +18,11 @@
         </div>
       </div>
     </div>
+  </div>
+
+  <!-- Container fluid  -->
+  <!-- ============================================================== -->
+  <div class="container-fluid">
                 <!--<div class="alert alert-success" *ngIf="driverService.emailadded == true">-->
                     <!--<button class="close" data-dismiss="alert" (click)="resetAlert()">×</button>-->
                     <!--<strong>Success!</strong> Added email address to the driver</div>-->
@@ -58,7 +63,7 @@
                                   <!-- Weight Column -->
                                   <ng-container matColumnDef="email">
                                     <mat-header-cell *matHeaderCellDef mat-sort-header>Email </mat-header-cell>
-                                    <mat-cell *matCellDef="let element"> {{ (element.email | limitTo: 18) + (element.email.length > 18 ? '...' : '') }} </mat-cell>
+                                    <mat-cell *matCellDef="let element"> {{ (element.email | limitTo: "18") + (element.email.length > 18 ? '...' : '') }} </mat-cell>
                                   </ng-container>
 
 <!--                                  &lt;!&ndash; Weight Column &ndash;&gt;-->
@@ -101,8 +106,8 @@
                                 </mat-paginator>
                               </div>
                           </div>
+  </div>
           </div>
-        </div>
 
 <!-- Driver Dispatch Modal -->
 <!--<div id="dispatchModal" class="modal fade" role="dialog">-->
