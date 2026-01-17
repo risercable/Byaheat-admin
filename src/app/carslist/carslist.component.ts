@@ -53,6 +53,7 @@ export class CarslistComponent implements OnInit, AfterViewInit {
     'carBrand',
     'carModel',
     'carType',
+    'timestamp',
   ];
   noRecords: boolean;
   // const
@@ -154,6 +155,14 @@ export class CarslistComponent implements OnInit, AfterViewInit {
         // Link paginator and sort after data is assigned
         this.carSource.paginator = this.paginator;
         this.carSource.sort = this.sort;
+
+        // 2. Customize the sorting accessor
+        this.carSource.sortingDataAccessor = (item, property) => {
+          if (property === 'timestamp') { // Match the column ID
+            return new Date(item.timestamp).getTime(); // Convert to timestamp for comparison
+          }
+          return item[property as keyof PerCar]; // Use default accessor for other properties
+        };
       },
       (error) => console.error('Error:', error)
     );

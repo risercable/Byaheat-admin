@@ -7,4 +7,5 @@ export class Car {
   carModel: string;
   carPlateNumber: string;
   carDriver: string;
+  timestamp: number;
 }
