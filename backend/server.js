@@ -56,6 +56,8 @@ app.get('/api/getAllDrivers', async (req, res) => {
   }
 });
 
+app.get('/api/client/all', clientController.getAllClients)
+
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);

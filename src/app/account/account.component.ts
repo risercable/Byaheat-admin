@@ -6,6 +6,7 @@ import { AngularFireDatabase } from 'angularfire2/database';
 import { AngularFireList } from 'angularfire2/database';
 import { Observable } from 'rxjs';
 import { ClientService } from '../drivers/shared/client.service';
+import { ClientService as ClientSvc } from '../shared/client.service';
 import { Client } from '../drivers/shared/client.model';
 import { NgForm } from '@angular/forms/src/directives/ng_form';
 import {MAT_DIALOG_DATA, MatDialog, MatDialogRef, MatPaginator, MatSort, MatTableDataSource} from "@angular/material";
@@ -87,35 +88,20 @@ export class AccountComponent implements OnInit {
     public dialog: MatDialog,
     private router: Router,
     private utilities: UtilService,
-    private cdr: ChangeDetectorRef
+    private cdr: ChangeDetectorRef,
+    private apiClientService: ClientSvc
 ) {
-    let data = db.list('clients');
 
-    data.snapshotChanges().subscribe(item => {
-      const tempItemList: Perclient[] | undefined = [];
-      const tempItemPrint = [];
-      let i = 1;
-
-      item.forEach(element => {
-        const json = element.payload.val() as any;
-        json["$key"] = element.key;
-        json['in1'] = i;
-
-        tempItemList.push(json as Perclient);
-        tempItemPrint.push(json);
-
-        i++;
-      });
-
-      this.itemList = tempItemList;
-
-      this.clientSource = new MatTableDataSource(this.itemList);
-      this.clientSource.sort = this.sort;
-      this.clientSource.paginator = this.paginator;
-
-      // 🔹 Trigger Angular Change Detection to update UI
-      this.cdr.detectChanges();
+    this.apiClientService.getAll().subscribe(data => {
+      this.itemList = data;
     });
+
+    this.clientSource = new MatTableDataSource(this.itemList);
+    this.clientSource.sort = this.sort;
+    this.clientSource.paginator = this.paginator;
+
+    // 🔹 Trigger Angular Change Detection to update UI
+    this.cdr.detectChanges();
    }
 
    store1(value: boolean) {
