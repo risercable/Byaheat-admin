@@ -64,9 +64,9 @@ export class AccountComponent implements OnInit {
 
   applyFilter(filterValue: string) {
     filterValue = filterValue.trim().toLowerCase();
-    if (!filterValue) {
+    if (!filterValue && this.itemList) {
       this.clientSource.filter = '';
-      this.clientSource.data = this.itemList ?? []; // Reset data source to all data
+      this.clientSource.data = this.itemList; // Reset data source to all data
     } else {
       this.clientSource.filter = filterValue;
 
