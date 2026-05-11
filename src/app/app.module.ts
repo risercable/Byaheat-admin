@@ -1,5 +1,5 @@
-import { NgModule }       from '@angular/core';
-import { BrowserModule }  from '@angular/platform-browser';
+import { NgModule } from '@angular/core';
+import { BrowserModule } from '@angular/platform-browser';
 import * as firebase from 'firebase/app';
 import { DataTablesModule } from 'angular-datatables';
 
@@ -20,11 +20,11 @@ import { MatRadioModule } from '@angular/material';
 import {MatSnackBarModule} from '@angular/material/snack-bar';
 import {MatTableModule} from '@angular/material/table';
 import {MatPaginatorModule} from '@angular/material';
-import {MatSortModule} from "@angular/material";
-import {ClientDetailsDialog, PrintOptsDialog} from "./account/account.component";
-import {AssignCarDialog, CarDetailsDialog} from "./carslist/carslist.component";
+import {MatSortModule} from '@angular/material';
+import {ClientDetailsDialog, PrintOptsDialog} from './account/account.component';
+import {AssignCarDialog, CarDetailsDialog} from './carslist/carslist.component';
 
-import { AppComponent }     from './app.component';
+import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
 import { RouterModule, Routes } from '@angular/router';
 import {NgxPaginationModule} from 'ngx-pagination';
@@ -36,9 +36,8 @@ import {MatDatepickerModule} from '@angular/material/datepicker';
 import {MatTooltipModule} from '@angular/material/tooltip';
 
 import { AngularFireDatabaseModule } from 'angularfire2/database';
-import { HttpModule } from '@angular/http';
 
-import { CrisisListComponent }   from './crisis-list.component';
+import { CrisisListComponent } from './crisis-list.component';
 import { PageNotFoundComponent } from './not-found.component';
 import { NavbarComponent } from './navbar/navbar.component';
 import { HomeComponent } from './home/home.component';
@@ -67,7 +66,7 @@ import { AssignDriverComponent } from './assign-driver/assign-driver.component';
 import { ThisdriverComponent } from './thisdriver/thisdriver.component';
 import { CarslistComponent } from './carslist/carslist.component';
 import { AddCarComponent } from './add-car/add-car.component';
-import { TruncatePipe } from "./limit.pipe";
+import { TruncatePipe } from './limit.pipe';
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 
 import { StorageService } from './storage.service';
@@ -80,8 +79,8 @@ import { ClientHistoryComponent } from './client-history/client-history.componen
 import { SidebarModule } from 'ng-sidebar';
 import {NgxMaskModule} from 'ngx-mask';
 
-import {DriversMapComponent} from "./drivers-map/drivers-map.component";
-import {HttpClient, HttpClientModule} from "@angular/common/http";
+import {DriversMapComponent} from './drivers-map/drivers-map.component';
+import {HttpClient, HttpClientModule} from '@angular/common/http';
 import { PlotlyModule } from 'angular-plotly.js';
 import {ClientComponent} from './payments/client/client.component';
 import {TableComponent} from './payments/table/table.component';
@@ -205,7 +204,17 @@ import { DriverExistComponent } from './driver-exist/driver-exist.component';
     NotFoundLayoutComponent,
     NotcComponent
   ],
-  providers: [AuthService, AuthGuard, AngularFireDatabase, LoginGuard, DriverService, CarService, ClientService, StorageService, MatDatepickerModule],
+  providers: [
+    AuthService,
+    AuthGuard,
+    AngularFireDatabase,
+    LoginGuard,
+    DriverService,
+    CarService,
+    ClientService,
+    StorageService,
+    MatDatepickerModule
+  ],
   bootstrap: [ AppComponent ]
 })
 export class AppModule { }
