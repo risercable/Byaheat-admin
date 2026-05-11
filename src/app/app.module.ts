@@ -31,7 +31,7 @@ import {NgxPaginationModule} from 'ngx-pagination';
 import { FilterPipe} from './filter.pipe';
 import { FilterPipeModule } from 'ngx-filter-pipe';
 import { Ng2SearchPipeModule } from 'ng2-search-filter';
-import {MatButtonModule, MatCheckboxModule, MatNativeDateModule, MatCardModule} from '@angular/material';
+import {MatCheckboxModule, MatNativeDateModule, MatCardModule} from '@angular/material';
 import {MatDatepickerModule} from '@angular/material/datepicker';
 import {MatTooltipModule} from '@angular/material/tooltip';
 
@@ -96,6 +96,7 @@ import {NotcComponent} from './notc/notc.component';
 import {HomeLayoutComponent} from './layouts/home-layout/home-layout.component';
 import { DriverNewComponent } from './driver-new/driver-new.component';
 import { DriverExistComponent } from './driver-exist/driver-exist.component';
+import {MatButtonModule} from '@angular/material/button';
 
 @NgModule({
   imports: [

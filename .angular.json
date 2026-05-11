@@ -66,6 +66,41 @@
           }
         }
       }
+    },
+    "angular-csv-export": {
+      "root": "projects/angular-csv-export",
+      "sourceRoot": "projects/angular-csv-export/src",
+      "projectType": "library",
+      "prefix": "lib",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-ng-packagr:build",
+          "options": {
+            "tsConfig": "projects/angular-csv-export/tsconfig.lib.json",
+            "project": "projects/angular-csv-export/ng-package.json"
+          }
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "main": "projects/angular-csv-export/src/test.ts",
+            "tsConfig": "projects/angular-csv-export/tsconfig.spec.json",
+            "karmaConfig": "projects/angular-csv-export/karma.conf.js"
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "projects/angular-csv-export/tsconfig.lib.json",
+              "projects/angular-csv-export/tsconfig.spec.json"
+            ],
+            "exclude": [
+              "**/node_modules/**"
+            ]
+          }
+        }
+      }
     }
   },
   "defaultProject": "lakbay-web"

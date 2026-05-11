@@ -12,6 +12,7 @@ import { NgForm } from '@angular/forms/src/directives/ng_form';
 import {MAT_DIALOG_DATA, MatDialog, MatDialogRef, MatPaginator, MatSort, MatTableDataSource} from "@angular/material";
 import * as firebase from "firebase";
 import { UtilService } from '../util.service';
+import { AngularCsv } from 'angular-csv-ext';
 
 import { ChangeDetectorRef } from '@angular/core';
 
@@ -227,6 +228,11 @@ export class AccountComponent implements OnInit {
     return item1 === item2;
   }
 
+  onExport(data: Client[]) {
+
+    return new AngularCsv(data, 'My Report');
+
+  }
 }
 
 export interface Perclient {

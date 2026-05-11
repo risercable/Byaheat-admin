@@ -33,6 +33,7 @@
     "@angular/router": "^7.2.16",
     "@ng-bootstrap/ng-bootstrap": "^4.2.2",
     "@sendgrid/mail": "^6.3.1",
+    "angular-csv-ext": "file:vendor/angular-csv-ext-1.0.3.tgz",
     "angular-datatables": "^7.0.0",
     "angular-load": "^0.5.0",
     "angular-plotly.js": "^0.1.15",
@@ -83,6 +84,7 @@
   },
   "devDependencies": {
     "@angular-devkit/build-angular": "~0.13.0",
+    "@angular-devkit/build-ng-packagr": "~0.13.0",
     "@angular/compiler-cli": "^7.x",
     "@angular/language-service": "^7.x",
     "@types/datatables.net": "~1.10.21",
@@ -99,10 +101,13 @@
     "karma-coverage-istanbul-reporter": "^1.4.3",
     "karma-jasmine": "^1.1.2",
     "karma-jasmine-html-reporter": "^0.2.2",
+    "ng-packagr": "^4.2.0",
     "node-sass": "4.12.x",
     "protractor": "~5.1.2",
     "sass": "^1.90.0",
     "ts-node": "~3.2.0",
+    "tsickle": ">=0.34.0",
+    "tslib": "^1.9.0",
     "tslint": "~5.7.0",
     "typescript": "^3.1.1"
   }
