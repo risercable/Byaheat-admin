@@ -24,9 +24,9 @@ declare var jsPDF: any; // Important
 export class AccountComponent implements OnInit {
   userFilter: any = { name: '' };
   p: number = 1;
-  clientList: AngularFireList<any>;
-  clients: Observable<any>;
-  clientlist: Client[];
+  clientList: AngularFireList<any> | undefined;
+  clients: Observable<any> | undefined;
+  clientlist: Client[] | undefined;
   selectedClient: Client = new Client();
   ipp: any;
   optionSelected: any;
@@ -35,16 +35,16 @@ export class AccountComponent implements OnInit {
   // clientColumns = ['in1', 'user_firstname', 'user_lastname', 'user_birthdate', 'user_mobile', 'actions'];
   clientColumns = ['in1', 'user_firstname', 'user_lastname', 'user_birthdate', 'user_mobile', 'actions'];
   itemPrint = [];
-  itemList: Perclient[];
-  clientSource = new MatTableDataSource([]);
-  noRecords: boolean;
+  itemList: Perclient[] | undefined;
+  clientSource = new MatTableDataSource<Perclient>([]);
+  noRecords: boolean | undefined;
   hideTableX: boolean = false;
   hideET: boolean = true;
   bbt: boolean = true;
   searchX: string = '';
 
-  private paginator: MatPaginator;
-  private sort: MatSort;
+  private paginator!: MatPaginator | null;
+  private sort!: MatSort | null;
 
 
   @ViewChild(MatSort) set matSort(ms: MatSort) {
@@ -66,7 +66,7 @@ export class AccountComponent implements OnInit {
     filterValue = filterValue.trim().toLowerCase();
     if (!filterValue) {
       this.clientSource.filter = '';
-      this.clientSource.data = this.itemList; // Reset data source to all data
+      this.clientSource.data = this.itemList ?? []; // Reset data source to all data
     } else {
       this.clientSource.filter = filterValue;
 
@@ -92,12 +92,12 @@ export class AccountComponent implements OnInit {
     let data = db.list('clients');
 
     data.snapshotChanges().subscribe(item => {
-      const tempItemList = [];
+      const tempItemList: Perclient[] | undefined = [];
       const tempItemPrint = [];
       let i = 1;
 
       item.forEach(element => {
-        const json = element.payload.val();
+        const json = element.payload.val() as any;
         json["$key"] = element.key;
         json['in1'] = i;
 
@@ -115,8 +115,6 @@ export class AccountComponent implements OnInit {
 
       // 🔹 Trigger Angular Change Detection to update UI
       this.cdr.detectChanges();
-
-      console.log(this.itemList);
     });
    }
 
@@ -140,13 +138,12 @@ export class AccountComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      console.log('The dialog was closed');
     });
 
     // this.utilities.seedData();
   }
 
-  onSelect(element) {
+  onSelect(element: { $key: any; user_firstname: string; user_lastname: string; }) {
     this.router.navigate(['/clients/table/history', element.$key, element.user_firstname + " " + element.user_lastname]);
   }
 
@@ -156,8 +153,9 @@ export class AccountComponent implements OnInit {
     x.snapshotChanges().subscribe(item => {
       this.clientlist = [];
       item.forEach(element => {
-        const y = element.payload.toJSON();
+        const y = element.payload.toJSON() as any;
         y["$key"] = element.key;
+
         this.clientlist.push(y as Client);
       });
     });
@@ -204,7 +202,6 @@ export class AccountComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      console.log('The dialog was closed');
     });
   }
 
@@ -235,8 +232,7 @@ export class AccountComponent implements OnInit {
     this.ipp = 9999;
   }
 
-  onOptionSelected(event){
-    console.log(event); //option value will be sent as event
+  onOptionSelected(event: any){
     this.ipp = event;
    }
    byId(item1: 10, item2: 10) {
@@ -259,6 +255,7 @@ export interface Perclient {
 @Component({
   selector: 'client-details-dialog',
   templateUrl: 'client-details-dialog.html',
+
   styleUrls: ['client-details-style.scss'],
   encapsulation: ViewEncapsulation.None,
 })
@@ -281,16 +278,16 @@ export class ClientDetailsDialog {
 })
 
 export class PrintOptsDialog {
-  cols = [];
-  sortedArray = [];
+  cols = [] as any;
+  sortedArray = [] as any;
   sortD = '';
 
   constructor(
     public dialogRef: MatDialogRef<PrintOptsDialog>,
     @Inject(MAT_DIALOG_DATA) public data: any) {
-    data.colsSel.forEach(item => {
+    data.colsSel.forEach((item: any) => {
 
-      let val = {};
+      let val = {} as any;
       val['value'] = item;
       this.cols.push(val);
     });
@@ -299,18 +296,18 @@ export class PrintOptsDialog {
 
     this.cols.splice(ind, 1);
 
-    console.log(this.cols);
-
   }
 
   onGo() {
-    console.log(this.sortD);
     firebase.database().ref('clients').orderByChild(this.sortD).on('value', (snapshot) => {
-      snapshot.forEach((stepSnap) => {
-        this.sortedArray.push(stepSnap.val());
-      })
+      if (snapshot) {
+        snapshot.forEach((stepSnap: any) => {
+          if (stepSnap) {
+            this.sortedArray.push(stepSnap.val());
+          }
+        })
+      }
     });
-    console.log('sorted array: ',this.sortedArray);
 
     var doc = new jsPDF('p', 'pt');
     doc.text("Clients served list ordered by: " + this.sortD, 40, 50);
