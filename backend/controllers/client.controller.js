@@ -80,7 +80,7 @@ exports.getAllClients = async (req, res) => {
       ...data[key]   // Spread the car details
     }));
 
-    res.status(200).json(carArray);
+    return res.status(200).json(carArray);
   } catch (error) {
     console.error("DEBUG ERROR:", error); // Look for 'auth/network-error' or 'timeout'
     res.status(500).json({ 

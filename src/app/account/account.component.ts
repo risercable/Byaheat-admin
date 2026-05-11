@@ -94,14 +94,14 @@ export class AccountComponent implements OnInit {
 
     this.apiClientService.getAll().subscribe(data => {
       this.itemList = data;
+
+      this.clientSource = new MatTableDataSource(this.itemList);
+      this.clientSource.sort = this.sort;
+      this.clientSource.paginator = this.paginator;
+
+      // 🔹 Trigger Angular Change Detection to update UI
+      this.cdr.detectChanges();
     });
-
-    this.clientSource = new MatTableDataSource(this.itemList);
-    this.clientSource.sort = this.sort;
-    this.clientSource.paginator = this.paginator;
-
-    // 🔹 Trigger Angular Change Detection to update UI
-    this.cdr.detectChanges();
    }
 
    store1(value: boolean) {
@@ -117,14 +117,16 @@ export class AccountComponent implements OnInit {
   }
 
   openDialog(i: any): void {
-    i.$key = this.utilities.hideCharacters(i.$key);
-    const dialogRef = this.dialog.open(ClientDetailsDialog, {
-      width: 'auto',
-      data: { clientarray: i }
-    });
+    if (i.id) {
+      i.$key = this.utilities.hideCharacters(i.id);
+      const dialogRef = this.dialog.open(ClientDetailsDialog, {
+        width: 'auto',
+        data: { clientarray: i }
+      });
 
-    dialogRef.afterClosed().subscribe(result => {
-    });
+      dialogRef.afterClosed().subscribe(result => {
+      });
+    }
 
     // this.utilities.seedData();
   }
