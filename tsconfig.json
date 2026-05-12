@@ -1,6 +1,7 @@
 {
   "compileOnSave": false,
   "compilerOptions": {
+    "baseUrl": "./",
     "importHelpers": true,
     "outDir": "./dist/out-tsc",
     "sourceMap": true,
@@ -15,14 +16,6 @@
     "lib": [
       "es2017",
       "dom"
-    ],
-    "paths": {
-      "angular-csv-export": [
-        "dist/angular-csv-export"
-      ],
-      "angular-csv-export/*": [
-        "dist/angular-csv-export/*"
-      ]
-    }
+    ]
   }
 }
