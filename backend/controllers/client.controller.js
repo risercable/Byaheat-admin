@@ -1,29 +1,29 @@
 const { admin } = require('../config/firebase')
 
-// exports.login = async (req, res) => {
-//   try {
-//     const { email, password } = req.body;
-//
-//     await firebase.auth().signInWithEmailAndPassword(email,password).then((userCredential) => {
-//       console.log(userCredential);
-//       // ...
-//       res.status(201).json({
-//         result: true,
-//         message: 'success'
-//       });
-//     })
-//     .catch((error) => {
-//       const errorCode = error.code;
-//       const errorMessage = error.message;
-//       // ...
-//     });
-//   } catch (error) {
-//     res.status(500).json({
-//       message: 'Error registering driver',
-//       error: error.message,
-//     });
-//   }
-// }
+exports.login = async (req, res) => {
+  try {
+    const { email, password } = req.body;
+
+    await firebase.auth().signInWithEmailAndPassword(email,password).then((userCredential) => {
+      console.log(userCredential);
+      // ...
+      res.status(201).json({
+        result: true,
+        message: 'success'
+      });
+    })
+    .catch((error) => {
+      const errorCode = error.code;
+      const errorMessage = error.message;
+      // ...
+    });
+  } catch (error) {
+    res.status(500).json({
+      message: 'Error registering driver',
+      error: error.message,
+    });
+  }
+}
 
 exports.registerBooking = async (req, res) => {
   try {

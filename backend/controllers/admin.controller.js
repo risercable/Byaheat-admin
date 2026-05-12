@@ -1,4 +1,4 @@
-const { firebase, admin  } = require('../config/firebase')
+const { admin } = require('../config/firebase')
 
 exports.login = async (req, res) => {
   try {
@@ -9,13 +9,13 @@ exports.login = async (req, res) => {
     }
 
     // Authenticate user with email and password
-    await firebase.auth().signInWithEmailAndPassword(email, password)
+    await admin.auth().signInWithEmailAndPassword(email, password)
       .then(async (userCredential) => {
         const user = userCredential.user; // Logged-in user data (basic info)
         const uid = user.uid; // Get the user's UID
 
         // Retrieve additional user data from Firebase Realtime Database
-        const db = firebase.database();
+        const db = admin.database();
         const usersRef = db.ref('users'); // Adjust your database structure
         const snapshot = await usersRef.child(uid).once('value');
 
