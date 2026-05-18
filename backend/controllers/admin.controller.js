@@ -1,4 +1,4 @@
-const { admin } = require('../config/firebase')
+const { admin, firebase } = require('../config/firebase')
 
 exports.login = async (req, res) => {
   try {
@@ -9,49 +9,41 @@ exports.login = async (req, res) => {
     }
 
     // Authenticate user with email and password
-    await admin.auth().signInWithEmailAndPassword(email, password)
-      .then(async (userCredential) => {
-        const user = userCredential.user; // Logged-in user data (basic info)
-        const uid = user.uid; // Get the user's UID
+    const userCredential = await firebase.auth().signInWithEmailAndPassword(email, password);
+    const user = userCredential.user; // Logged-in user data (basic info)
+    const uid = user.uid; // Get the user's UID
 
-        // Retrieve additional user data from Firebase Realtime Database
-        const db = admin.database();
-        const usersRef = db.ref('users'); // Adjust your database structure
-        const snapshot = await usersRef.child(uid).once('value');
+    // Retrieve additional user data from Firebase Realtime Database
+    const db = admin.database();
+    const usersRef = db.ref('users'); // Adjust your database structure
+    const snapshot = await usersRef.child(uid).once('value');
 
-        if (!snapshot.exists()) {
-          return res.status(404).json({
-            message: 'Driver data not found in the database.',
-          });
-        }
-
-        const driverData = snapshot.val(); // Additional driver info from DB
-
-        res.status(200).json({
-          message: 'Login successful',
-          user: {
-            uid,
-            email: user.email,
-            displayName: user.displayName,
-            emailVerified: user.emailVerified,
-            photoURL: user.photoURL,
-          },
-          driverData, // Include additional data from DB
-        });
-      })
-      .catch((error) => {
-        console.error('Error during login:', error.message);
-
-        return res.status(401).json({
-          message: 'Invalid email or password',
-          error: error.message,
-        });
+    if (!snapshot.exists()) {
+      return res.status(404).json({
+        message: 'Driver data not found in the database.',
       });
-  } catch (error) {
-    console.error('Unexpected error:', error.message);
+    }
 
-    res.status(500).json({
-      message: 'An unexpected error occurred',
+    const driverData = snapshot.val(); // Additional driver info from DB
+
+    res.status(200).json({
+      message: 'Login successful',
+      user: {
+        uid,
+        email: user.email,
+        displayName: user.displayName,
+        emailVerified: user.emailVerified,
+        photoURL: user.photoURL,
+      },
+      driverData, // Include additional data from DB
+    });
+  } catch (error) {
+    console.error('Error during login:', error.message);
+
+    const isAuthError = error.code && error.code.indexOf('auth/') === 0;
+
+    res.status(isAuthError ? 401 : 500).json({
+      message: isAuthError ? 'Invalid email or password' : 'An unexpected error occurred',
       error: error.message,
     });
   }

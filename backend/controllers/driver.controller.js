@@ -1,4 +1,4 @@
-const { firebase } = require('../config/firebase')
+const { admin, firebase } = require('../config/firebase')
 
 exports.login = async (req, res) => {
   try {
@@ -34,14 +34,14 @@ exports.registerDriver = async (req, res) => {
     }
 
     // Create a user in Firebase Authentication using Admin SDK
-    const userRecord = await firebase.auth().createUser({
+    const userRecord = await admin.auth().createUser({
       email,
       password,
       displayName: `${firstName} ${lastName}`,
     });
 
     // Add additional information in Firebase Realtime Database
-    const db = app.database();
+    const db = admin.database();
     const driversRef = db.ref('drivers'); // Adjust your database structure
     await driversRef.child(userRecord.uid).set({
       firstName,
@@ -64,7 +64,7 @@ exports.registerDriver = async (req, res) => {
 
 exports.getDrivers = async () => {
   try {
-    const db = firebase.database();
+    const db = admin.database();
     const driversRef = db.ref('drivers'); // Reference to the drivers node
     const snapshot = await driversRef.orderByChild('lastName').once('value'); // Query by 'firstName'
 
