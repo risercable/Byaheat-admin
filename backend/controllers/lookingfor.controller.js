@@ -4,7 +4,7 @@ const allowedRideTypes = ['single', 'family', 'barkada', 'premium'];
 
 exports.create = async (req, res) => {
   try {
-    const { uid, rideType, location } = req.body;
+    const { uid, rideType, location, pickupAddress } = req.body;
 
     if (!uid) {
       return res.status(400).json({ message: 'User ID is required.' });
@@ -20,6 +20,7 @@ exports.create = async (req, res) => {
       rideType,
       status: 'searching',
       location: location || null,
+      pickupAddress: pickupAddress || null,
       updatedAt: admin.database.ServerValue.TIMESTAMP,
       createdAt: admin.database.ServerValue.TIMESTAMP,
     };
@@ -28,9 +29,7 @@ exports.create = async (req, res) => {
 
     return res.status(201).json({
       message: 'Ride search queued',
-      requestId: uid,
-      rideType,
-      status: 'searching',
+      requestId: uid
     });
   } catch (error) {
     console.error('Error queueing ride search:', error.message);
@@ -64,4 +63,35 @@ exports.cancel = async (req, res) => {
       error: error.message,
     });
   }
+  
 };
+
+exports.get = async (req, res) => {
+  try {
+    const { uid } = req.params;
+
+    if (!uid) {
+      return res.status(400).json({ message: 'User ID is required.' });
+    }
+
+    const lookingForSnapshot = await admin.database().ref('lookingfor').child(uid).once('value');
+    const lookingForData = lookingForSnapshot.val();
+
+    if (!lookingForData) {
+      return res.status(404).json({ message: 'Ride search not found.' });
+    }
+
+    return res.status(200).json({
+      message: 'Ride search found',
+      requestId: uid,
+      ...lookingForData
+    });
+  } catch (error) {
+    console.error('Error fetching ride search:', error.message);
+
+    return res.status(500).json({
+      message: 'Error fetching ride search',
+      error: error.message,
+    });
+  }
+}

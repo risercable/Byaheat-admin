@@ -203,7 +203,8 @@ import {MatButtonModule} from '@angular/material/button';
     SendEmailComponent,
     LoginLayoutComponent,
     NotFoundLayoutComponent,
-    NotcComponent
+    NotcComponent,
+    DispatchDialog,
   ],
   providers: [
     AuthService,

@@ -4,6 +4,7 @@ const config = require("./config/firebase");
 const authRoutes = require("./routes/auth.routes");
 const carRoutes = require("./routes/car.routes");
 const clientRoutes = require("./routes/client.routes");
+const driverRoutes = require("./routes/driver.routes");
 const express = require("express");
 
 const app = express();
@@ -29,6 +30,7 @@ app.get('/', (req, res) => res.send('Node.js Backend with Firebase!'));
 app.use('/api', authRoutes);
 app.use('/api/car', carRoutes);
 app.use('/api/client', clientRoutes);
+app.use('/api/driver', driverRoutes);
 
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, '0.0.0.0', () => console.log(`Server is running on port ${PORT}`));

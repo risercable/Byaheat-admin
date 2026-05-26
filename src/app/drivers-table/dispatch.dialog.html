@@ -1,7 +1,7 @@
 <h1 mat-dialog-title>Confirm Dispatch</h1>
 <div mat-dialog-content>
   <div class="example-container">
-    <p>Driver Full Name: {{data.thed1.user_firstname + " " + data.thed1.user_lastname}}</p>
+    <p>Driver Full Name: {{data.thed1.firstName + " " + data.thed1.lastName}}</p>
     <p>Car Plate Number: {{data.thed1.assigned_car.car_plate_number}}</p>
     <p>Time In: {{tNow}}</p>
     <p>Time To Park Car: {{tOut}}</p>
@@ -14,7 +14,7 @@
   <div class="col-12">
     <div class="row">
       <button class="btn btn-success col-5" (click)="onYes(true, carCondition.value)">YES</button>
-      <button class="btn btn-outline-info col-5 offset-2" (click)="onNoClick(false)">Cancel</button>
+      <button class="btn btn-outline-info col-5 offset-2" (click)="onNoClick()">Cancel</button>
     </div>
   </div>
 <!-- <button mat-button (click)="onSubmit(driverForm)" cdkFocusInitial>Ok</button> -->

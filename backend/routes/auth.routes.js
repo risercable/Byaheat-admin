@@ -7,6 +7,7 @@ const lookingForController = require("../controllers/lookingfor.controller");
 router.post('/login', adminController.login);
 router.post('/logout', adminController.logout);
 router.post('/lookingfor', lookingForController.create);
+router.get('/lookingfor/:uid', lookingForController.get);
 router.delete('/lookingfor/:uid', lookingForController.cancel);
 router.post('/driver/register', authController.registerDriver);
 router.post('/driver/login', authController.login);

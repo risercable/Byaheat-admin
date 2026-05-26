@@ -90,19 +90,7 @@ export class AccountComponent implements OnInit {
     private utilities: UtilService,
     private cdr: ChangeDetectorRef,
     private apiClientService: ClientSvc
-) {
-
-    this.apiClientService.getAll().subscribe(data => {
-      this.itemList = data;
-
-      this.clientSource = new MatTableDataSource(this.itemList);
-      this.clientSource.sort = this.sort;
-      this.clientSource.paginator = this.paginator;
-
-      // 🔹 Trigger Angular Change Detection to update UI
-      this.cdr.detectChanges();
-    });
-   }
+) { }
 
    store1(value: boolean) {
     localStorage.setItem("showTableBtn", value.toString());
@@ -154,6 +142,22 @@ export class AccountComponent implements OnInit {
     this.hideTableX = false;
 
     this.bbt = this.hideTableX;
+
+    // Get All Clients
+    this.getAll();
+  }
+
+  private getAll() {
+    this.apiClientService.getAll().subscribe(data => {
+      this.itemList = data;
+
+      this.clientSource = new MatTableDataSource(this.itemList);
+      this.clientSource.sort = this.sort;
+      this.clientSource.paginator = this.paginator;
+
+      // 🔹 Trigger Angular Change Detection to update UI
+      this.cdr.detectChanges();
+    });
   }
 
   logout() {
@@ -227,11 +231,22 @@ export class AccountComponent implements OnInit {
     return item1 === item2;
   }
 
-  // onExport(data: Client[]) {
-
-  //   return new AngularCsv(data, 'My Report');
-
-  // }
+  onExport(data: Client[]) {
+    // // Initialize AngularCsv with the data and desired filename
+    // const options = {
+    //   fieldSeparator: ',',
+    //   quoteStrings: '"',
+    //   decimalSeparator: '.',
+    //   showLabels: true,
+    //   showTitle: true,
+    //   title: 'Client Export',
+    //   useTextFile: false,
+    //   useBom: true,
+    //   useKeysAsHeaders: true
+    // };
+    // new AngularCsv(data, 'Clients', options);
+    console.log(data);
+  }
 }
 
 export interface Perclient {

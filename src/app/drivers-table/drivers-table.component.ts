@@ -1,7 +1,7 @@
 
 import {map} from 'rxjs/operators';
-import {Component, OnInit, Inject, ViewChild} from '@angular/core';
-import { DriverService } from '../drivers/shared/driver.service';
+import {Component, OnInit, Inject, ViewChild, ChangeDetectorRef, ViewEncapsulation} from '@angular/core';
+import { DriverService } from '../shared/driver.service';
 import { AngularFireList, AngularFireDatabase } from 'angularfire2/database';
 import { Driver } from '../drivers/shared/driver.model';
 import { NgForm } from '@angular/forms/src/directives/ng_form';
@@ -50,7 +50,7 @@ export class DriversTableComponent implements OnInit {
   itemList: Item[] = [];
   itemRating: any[];
   dataSource = new MatTableDataSource(this.itemList);
-  displayedColumns = ['in1', 'firstName', 'lastName', 'email', 'actions',];
+  displayedColumns = ['in1', 'firstName', 'lastName', 'email', 'dispatched', 'actions'];
   noRecords: boolean;
   order: string;
   reverse: boolean = false;
@@ -86,28 +86,12 @@ export class DriversTableComponent implements OnInit {
     public dialog: MatDialog,
     fb: FormBuilder,
     public router: Router,
-    private drvrService: DriverService
+    private drvrService: DriverService,
+    private cdr: ChangeDetectorRef
   ) {
     this.options = fb.group({
       'color': 'primary',
       'fontSize': [16, Validators.min(10)],
-    });
-
-    this.driverService.getDrivers().subscribe((data) => {
-
-      if (data && data.length) {
-        // Push the received data into itemList
-        data.forEach((element) => {
-          this.itemList.push(element as Item);
-        });
-
-        // Initialize MatTableDataSource with populated itemList
-        this.dataSource = new MatTableDataSource(this.itemList);
-
-        // Ensure the table is updated correctly
-        this.dataSource.sort = this.sort;
-        this.dataSource.paginator = this.paginator;
-      }
     });
   }
 
@@ -117,6 +101,24 @@ export class DriversTableComponent implements OnInit {
 
     this.titleService.setTitle("Lakbay | Drivers List");
     this.itemRating = [];
+
+    // Get Drivers List
+    this.getAll();
+  }
+
+  private getAll() {
+    this.driverService.getAll().subscribe(data => {
+      this.itemList = data;
+
+      // Initialize MatTableDataSource with populated itemList
+      this.dataSource = new MatTableDataSource(this.itemList);
+
+      // Ensure the table is updated correctly
+      this.dataSource.sort = this.sort;
+      this.dataSource.paginator = this.paginator;
+    });
+
+    this.cdr.detectChanges();
   }
 
   public setTitle( newTitle: string) {
@@ -332,66 +334,68 @@ export class DpDetailsDialog {
   }
 }
 
-  @Component({
-    selector: 'dispatch.dialog',
-    templateUrl: 'dispatch.dialog.html',
-  })
+@Component({
+  selector: 'dispatch.dialog',
+  templateUrl: 'dispatch.dialog.html',
+  encapsulation: ViewEncapsulation.None,
+})
 export class DispatchDialog {
   tNow: any;
   tOut: any;
 
-    constructor(
-      public dialogRef: MatDialogRef<DispatchDialog>,
-      @Inject(MAT_DIALOG_DATA) public data: any, public driverService : DriverService, public db2: AngularFireDatabase, public snackBar: MatSnackBar) {
+  constructor(
+    public dialogRef: MatDialogRef<DispatchDialog>,
+    @Inject(MAT_DIALOG_DATA) public data: any, public driverService : DriverService, public db2: AngularFireDatabase, public snackBar: MatSnackBar) {
 
-      let timestamp = +new Date();
+    // let timestamp = +new Date();
 
-      this.tNow = new Date(timestamp).toLocaleString();
-      this.tNow = this.tNow.split(' ').slice(0, 6).join(' ');
+    // this.tNow = new Date(timestamp).toLocaleString();
+    // this.tNow = this.tNow.split(' ').slice(0, 6).join(' ');
 
-      let cpDate  = new Date(timestamp);
+    // let cpDate  = new Date(timestamp);
 
-      cpDate.setHours(cpDate.getHours()+8);
+    // cpDate.setHours(cpDate.getHours()+8);
 
-      this.tOut = new Date(cpDate).toLocaleString();
-      this.tOut = this.tOut.split(' ').slice(0, 6).join(' ');
+    // this.tOut = new Date(cpDate).toLocaleString();
+    // this.tOut = this.tOut.split(' ').slice(0, 6).join(' ');
 
-      console.log(this.tNow);
-    }
+    // console.log(this.tNow);
+  }
 
-    openSnackBar(message: string) {
-      this.snackBar.open("Success dispatch: " + message, "Ok", {
-        duration: 2000,
-      });
-    }
+  openSnackBar(message: string) {
+    this.snackBar.open("Success dispatch: " + message, "Ok", {
+      duration: 2000,
+    });
+  }
 
-    onNoClick(x: boolean): void {
-      firebase.database().ref('drivers/' + this.data.thed1.$key).update({
-        dispatched: x
-      })
-      this.dialogRef.close();
-    }
+  onNoClick() {
+    // firebase.database().ref('drivers/' + this.data.thed1.$key).update({
+    //   dispatched: x
+    // })
+    this.dialogRef.close();
+  }
 
-    onYes(x: boolean, cCon: string): void {
-      firebase.database().ref('drivers/' + this.data.thed1.$key).update({
-        dispatched: x
-      })
-      firebase.database().ref('dispatches/' + this.data.thed1.$key).update({
-        driver_fullname: this.data.thed1.user_firstname + " " + this.data.thed1.user_lastname,
-        car_plate_number: this.data.thed1.assigned_car.car_plate_number,
-        car_condition: cCon,
-        time_in: this.tNow,
-        time_out: this.tOut
-      })
-      this.dialogRef.close();
+  onYes(x: boolean, cCon: string): void {
+    firebase.database().ref('drivers/' + this.data.thed1.$key).update({
+      dispatched: x
+    })
+    firebase.database().ref('dispatches/' + this.data.thed1.$key).update({
+      driver_fullname: this.data.thed1.user_firstname + " " + this.data.thed1.user_lastname,
+      car_plate_number: this.data.thed1.assigned_car.car_plate_number,
+      car_condition: cCon,
+      time_in: this.tNow,
+      time_out: this.tOut
+    })
+    this.dialogRef.close();
 
-      this.openSnackBar(this.data.thed1.user_firstname);
-    }
+    this.openSnackBar(this.data.thed1.user_firstname);
+  }
 }
 
 @Component({
   selector: 'dialog-overview-example-dialog',
   templateUrl: 'dialog-overview-example-dialog.html',
+  encapsulation: ViewEncapsulation.None,
 })
 export class DialogOverviewExampleDialog {
   minDate = new Date(2000, 0, 1);
@@ -403,22 +407,11 @@ export class DialogOverviewExampleDialog {
 
   constructor(
     public dialogRef: MatDialogRef<DialogOverviewExampleDialog>,
-    @Inject(MAT_DIALOG_DATA) public data: any, public driverService : DriverService, public db2: AngularFireDatabase) {
+    @Inject(MAT_DIALOG_DATA) public data: any) { }
 
-    let dataF = firebase.database().ref('drivers');
-    let cRef = dataF.child(data.theKey.$key);
-
-    this.allData = [];
-    cRef.once('value', (snapshot) => {
-      console.log('snapshot: ', snapshot.val());
-
-      this.allData = snapshot.val();
-    })
-  }
-
-  onNoClick(): void {
-    this.dialogRef.close();
-  }
+    onNoClick(): void {
+      this.dialogRef.close();
+    }
 
   onSubmit(form: NgForm) {
     if (form.value.$key == null) {
@@ -429,6 +422,10 @@ export class DialogOverviewExampleDialog {
       this.driverService.updateDriver(form.value);
       this.dialogRef.close();
     }
+  }
+
+  onCancel(form: NgForm) {
+    this.dialogRef.close();
   }
 }
 

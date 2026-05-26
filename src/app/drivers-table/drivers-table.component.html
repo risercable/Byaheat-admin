@@ -63,7 +63,20 @@
                                   <!-- Weight Column -->
                                   <ng-container matColumnDef="email">
                                     <mat-header-cell *matHeaderCellDef mat-sort-header>Email </mat-header-cell>
-                                    <mat-cell *matCellDef="let element"> {{ (element.email | limitTo: "18") + (element.email.length > 18 ? '...' : '') }} </mat-cell>
+                                    <mat-cell *matCellDef="let emailDetails">
+                                      <!-- Grab the raw value into a local variable -->
+                                      <ng-container *ngIf="emailDetails.email as email">
+                                        <!-- Truncate only if length > 18 -->
+                                        <ng-container *ngIf="email.length > 18">
+                                          ({{ email.substring(0, 17) }}...)
+                                        </ng-container>
+                                      </ng-container>
+
+                                      <!-- Fallback if email is undefined/null -->
+                                      <ng-container *ngIf="!emailDetails.email">
+                                        <span class="text-muted">—</span>
+                                      </ng-container>
+                                    </mat-cell>
                                   </ng-container>
 
 <!--                                  &lt;!&ndash; Weight Column &ndash;&gt;-->
@@ -72,10 +85,10 @@
 <!--                                    <mat-cell *matCellDef="let element"> {{element.total_rating}} </mat-cell>-->
 <!--                                  </ng-container>-->
 
-<!--                                  <ng-container matColumnDef="dispatched">-->
-<!--                                    <mat-header-cell *matHeaderCellDef mat-sort-header>Dispatched</mat-header-cell>-->
-<!--                                    <mat-cell *matCellDef="let element; let i = index;"> <button *ngIf="element.dispatched === false" class="btn btn-success" mat-button style="padding: 10px; background-color: #28b779;" (click)="openDispatch(element)">DISPATCH</button><button *ngIf="element.dispatched !== false" mat-button style="padding: 10px; background-color: #1b4584" (click)="dispatchDetails(element.$key)">DETAILS</button></mat-cell>-->
-<!--                                  </ng-container>-->
+                                  <ng-container matColumnDef="dispatched">
+                                    <mat-header-cell *matHeaderCellDef mat-sort-header>Dispatched</mat-header-cell>
+                                    <mat-cell *matCellDef="let element; let i = index;"> <button *ngIf="element.dispatched === false" class="btn btn-success" mat-button style="padding: 10px; background-color: #28b779;" (click)="openDispatch(element)">DISPATCH</button><button *ngIf="element.dispatched !== false" mat-button style="padding: 10px; background-color: #1b4584" (click)="dispatchDetails(element.$key)">DETAILS</button></mat-cell>-->
+                                  </ng-container>
 
                                   <ng-container matColumnDef="actions" class="hideX">
                                     <mat-header-cell *matHeaderCellDef> Action </mat-header-cell>

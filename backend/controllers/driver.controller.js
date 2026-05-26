@@ -62,22 +62,26 @@ exports.registerDriver = async (req, res) => {
   }
 };
 
-exports.getDrivers = async () => {
+exports.getDrivers = async (req, res) => {
   try {
     const db = admin.database();
-    const driversRef = db.ref('drivers'); // Reference to the drivers node
-    const snapshot = await driversRef.orderByChild('lastName').once('value'); // Query by 'firstName'
+    const snapshot = await db.ref("drivers").once("value");
+    const data = snapshot.val();
 
-    if (snapshot.exists()) {
-      const drivers = snapshot.val(); // Get data
-      return Object.keys(drivers).map(key => {
-        return { $key: key, ...drivers[key] }; // Add key to each driver
-      });
-    } else {
-      // res.status(404).send('No drivers found.');
-    }
+    if (!data) return res.status(200).json([]);
+
+    // Convert Object of Objects to Array of Objects
+    const driverArray = Object.keys(data).map(key => ({
+      id: key,       // Keep the Firebase ID if needed
+      ...data[key]   // Spread the car details
+    }));
+
+    return res.status(200).json(driverArray);
   } catch (error) {
-    console.error('Error getting drivers:', error);
-    // res.status(500).send('Failed to retrieve drivers');
+    console.error("DEBUG ERROR:", error); // Look for 'auth/network-error' or 'timeout'
+    res.status(500).json({ 
+      message: "Server Timeout or Connectivity Error",
+      details: error.message 
+    });
   }
 }
