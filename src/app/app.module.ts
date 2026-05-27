@@ -13,10 +13,10 @@ import { ViewDetailsDialog } from './reservation/reservation.component';
 import { PlateExistExampleDialog } from './add-car/add-car.component';
 import { PizzaPartyComponent } from './add-car/add-car.component';
 import { MatFormFieldModule } from '@angular/material/form-field';
-import {MatIconModule, MatInputModule} from '@angular/material';
+import {MatIconModule, MatInputModule, MatSlideToggleModule} from '@angular/material';
 import { MatSelectModule } from '@angular/material';
 import { ReactiveFormsModule } from '@angular/forms';
-import { MatRadioModule } from '@angular/material';
+import { MatRadioModule } from '@angular/material/radio';
 import {MatSnackBarModule} from '@angular/material/snack-bar';
 import {MatTableModule} from '@angular/material/table';
 import {MatPaginatorModule} from '@angular/material';
@@ -135,7 +135,8 @@ import {MatButtonModule} from '@angular/material/button';
     AngularFireStorageModule,
     SidebarModule.forRoot(),
     NgxMaskModule.forRoot(),
-    OrderModule
+    OrderModule,
+    MatSlideToggleModule
   ],
   declarations: [
     AppComponent,

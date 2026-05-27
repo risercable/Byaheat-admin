@@ -13,6 +13,7 @@ import {ClientDetailsDialog, Perclient} from '../account/account.component';
 import * as firebase from "firebase";
 import { Car as PerCar } from '../shared/models/car.model';
 import {CarService as CarService2} from '../shared/car.service';
+import { FormControl } from '@angular/forms';
 
 declare var jsPDF: any; // Important
 
@@ -54,14 +55,17 @@ export class CarslistComponent implements OnInit, AfterViewInit {
     'carModel',
     'carType',
     'timestamp',
+    'carDriver',
   ];
   noRecords: boolean;
+  showOnlyUnassignedCars = { checked: true };
   // const
   carColumnsToDisplay: [
     'carBrand',
     'carModel',
     'carType'
   ];
+  carFilterControl = new FormControl('all');
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
 
@@ -92,7 +96,7 @@ export class CarslistComponent implements OnInit, AfterViewInit {
     private carService: CarService,
     private titleService: Title,
     public dialog: MatDialog,
-    private carService2: CarService2,
+    private carService2: CarService2
   ) {
     // MySQL Logic
     // this.carService2.getAll().subscribe(cars => {
@@ -149,8 +153,10 @@ export class CarslistComponent implements OnInit, AfterViewInit {
         // Unpack the array from the response
         this.carsFB = data;
 
+        this.carsFB.filter(car => car.carDriver ===  'none');
+
         // Assign the raw array to the .data property of MatTableDataSource
-        this.carSource.data = this.carsFB;
+        this.carSource.data = this.carsFB.filter(car => car.carDriver ===  'none');
 
         // Link paginator and sort after data is assigned
         this.carSource.paginator = this.paginator;
@@ -284,6 +290,24 @@ export class CarslistComponent implements OnInit, AfterViewInit {
 
   sendPlateNumber(element) {
     this.elementsCar = element;
+  }
+
+  applyFilterToTable(value: string) {
+    const filteredData = this.carsFB.filter(car => car.carDriver === value);
+
+    this.carSource.data = filteredData;
+
+    if (this.carSource.paginator) {
+      this.carSource.paginator.firstPage();
+    }
+  }
+  
+  onToggleCarDriver(event: any) {
+    this.showOnlyUnassignedCars = event.checked;
+    const newValue = this.showOnlyUnassignedCars ? 'none' : 'assigned';
+
+    this.carFilterControl.setValue(newValue); 
+    this.applyFilterToTable(newValue); 
   }
 }
 

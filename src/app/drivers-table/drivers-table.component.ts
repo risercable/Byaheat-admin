@@ -2,6 +2,7 @@
 import {map} from 'rxjs/operators';
 import {Component, OnInit, Inject, ViewChild, ChangeDetectorRef, ViewEncapsulation} from '@angular/core';
 import { DriverService } from '../shared/driver.service';
+import { DriverService as OldDriverSvc } from '../drivers/shared/driver.service';
 import { AngularFireList, AngularFireDatabase } from 'angularfire2/database';
 import { Driver } from '../drivers/shared/driver.model';
 import { NgForm } from '@angular/forms/src/directives/ng_form';
@@ -86,7 +87,7 @@ export class DriversTableComponent implements OnInit {
     public dialog: MatDialog,
     fb: FormBuilder,
     public router: Router,
-    private drvrService: DriverService,
+    private oldDriverSvc: OldDriverSvc,
     private cdr: ChangeDetectorRef
   ) {
     this.options = fb.group({
@@ -188,21 +189,21 @@ export class DriversTableComponent implements OnInit {
 
   onSubmit(form: NgForm) {
     if (form.value.$key == null)
-      this.driverService.insertDriver(form.value);
+      this.oldDriverSvc.insertDriver(form.value);
     else {
-      this.driverService.updateDriver(form.value);
+      this.oldDriverSvc.updateDriver(form.value);
     }
   }
 
   onSubmit2(form: NgForm) {
-    this.driverService.updateEmail(form.value);
+    this.oldDriverSvc.updateEmail(form.value);
     this.resetForm(form);
   }
 
   resetForm(form?: NgForm) {
     if (form != null)
       form.reset();
-    this.driverService.selectedDriver = {
+    this.oldDriverSvc.selectedDriver = {
       $key: null,
       email: '',
       password: '',
@@ -232,20 +233,20 @@ export class DriversTableComponent implements OnInit {
 
   onDelete(form: NgForm) {
     if (confirm('Are you sure to delete this record ?') == true) {
-      this.driverService.deleteDriver(form.value.$key);
+      this.oldDriverSvc.deleteDriver(form.value.$key);
       this.resetForm(form);
     }
   }
 
   onItemClick(drv : Driver){
-    this.driverService.selectedDriver = Object.assign({},drv);
+    this.oldDriverSvc.selectedDriver = Object.assign({},drv);
   }
 
   resetAlert() {
-    this.driverService.updriver = false;
-    this.driverService.deldriver = false;
-    this.driverService.indriver = false;
-    this.driverService.emailadded = false;
+    this.oldDriverSvc.updriver = false;
+    this.oldDriverSvc.deldriver = false;
+    this.oldDriverSvc.indriver = false;
+    this.oldDriverSvc.emailadded = false;
   }
 
   onPrint(){
@@ -316,7 +317,7 @@ export class DpDetailsDialog {
 
   constructor(
     public dialogRef: MatDialogRef<DpDetailsDialog>,
-    @Inject(MAT_DIALOG_DATA) public data: any, public driverService : DriverService, public db2: AngularFireDatabase) {
+    @Inject(MAT_DIALOG_DATA) public data: any, public oldDriverSvc : OldDriverSvc, public db2: AngularFireDatabase) {
 
     let dete = firebase.database().ref('dispatches').child(data.thedk);
 
@@ -345,7 +346,7 @@ export class DispatchDialog {
 
   constructor(
     public dialogRef: MatDialogRef<DispatchDialog>,
-    @Inject(MAT_DIALOG_DATA) public data: any, public driverService : DriverService, public db2: AngularFireDatabase, public snackBar: MatSnackBar) {
+    @Inject(MAT_DIALOG_DATA) public data: any, public oldDriverSvc : OldDriverSvc, public db2: AngularFireDatabase, public snackBar: MatSnackBar) {
 
     // let timestamp = +new Date();
 
@@ -413,16 +414,16 @@ export class DialogOverviewExampleDialog {
       this.dialogRef.close();
     }
 
-  onSubmit(form: NgForm) {
-    if (form.value.$key == null) {
-      this.driverService.insertDriver(form.value);
-      this.dialogRef.close();
-    }
-    else {
-      this.driverService.updateDriver(form.value);
-      this.dialogRef.close();
-    }
-  }
+  // onSubmit(form: NgForm) {
+  //   if (form.value.$key == null) {
+  //     this.oldDriverSvc.insertDriver(form.value);
+  //     this.dialogRef.close();
+  //   }
+  //   else {
+  //     this.oldDriverSvc.updateDriver(form.value);
+  //     this.dialogRef.close();
+  //   }
+  // }
 
   onCancel(form: NgForm) {
     this.dialogRef.close();

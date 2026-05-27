@@ -46,6 +46,16 @@
                             <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Search here..." maxlength="30" matTooltip="*Maximum character is 30" matTooltipPosition="after" style="width: 500px;">
                           </mat-form-field>
                         </div>
+                        <mat-slide-toggle
+                          aria-label="Show only cars with no driver"
+                          [(ngModel)]="showOnlyUnassignedCars"
+                          (change)="onToggleCarDriver($event)">
+                        </mat-slide-toggle>
+
+                        <!-- Optional helper text -->
+                        <div class="mt-1" *ngIf="!showFilterActive && !showNoFilter">
+                          Click to toggle <span style="color:#1976d2">“Show only cars with no driver”</span>.
+                        </div>
                       <mat-table #table [dataSource]="carSource" matSort matSortActive="timestamp" id="basic-table" matSortDirection="desc">
 
                         <!--- Note that these columns can be defined in any order.
@@ -84,8 +94,8 @@
 
                         <!-- "created" Column -->
                         <ng-container matColumnDef="timestamp">
-                          <th mat-header-cell *matHeaderCellDef mat-sort-header="timestamp"> Creation Date </th>
-                          <td mat-cell *matCellDef="let element"> {{ element.timestamp | date }} </td>
+                          <mat-header-cell mat-header-cell *matHeaderCellDef mat-sort-header="timestamp"> Creation Date </mat-header-cell>
+                          <mat-cell mat-cell *matCellDef="let element"> {{ element.timestamp | date }} </mat-cell>
                         </ng-container>
 
                         <ng-container matColumnDef="actions" class="hideX">
@@ -94,12 +104,12 @@
                             <button mat-icon-button style="color: #2d6987;"><i class="mdi mdi-open-in-new"></i> DETAILS</button>
                           </mat-cell>
                         </ng-container>
-                          <ng-container matColumnDef="unassign">
-                            <mat-header-cell *matHeaderCellDef mat-sort-header>*UNASSIGN*</mat-header-cell>
-                            <mat-cell *matCellDef="let element">
-                              <button *ngIf="element.carDriver != 'none' " href="" class="btn btn-mini btn-danger pull-right" (click)="passunKey(element.$key, element.carPlateNumber, element.carBrand, element.carModel, element.carCapacity, element.car_color, element.carType, element.carDriver)" data-toggle="modal" data-target="#unassignDriver" style="width: auto;"><i class="mdi mdi-alert"></i> UNASSIGN</button>
-                            </mat-cell>
-                          </ng-container>
+                        <ng-container matColumnDef="unassign">
+                          <mat-header-cell *matHeaderCellDef mat-sort-header>*UNASSIGN*</mat-header-cell>
+                          <mat-cell *matCellDef="let element">
+                            <button *ngIf="element.carDriver != 'none' " href="" class="btn btn-mini btn-danger pull-right" (click)="passunKey(element.$key, element.carPlateNumber, element.carBrand, element.carModel, element.carCapacity, element.car_color, element.carType, element.carDriver)" data-toggle="modal" data-target="#unassignDriver" style="width: auto;"><i class="mdi mdi-alert"></i> UNASSIGN</button>
+                          </mat-cell>
+                        </ng-container>
 
                         <!--<ng-container matColumnDef="actions" class="hideX">-->
                           <!--<mat-header-cell *matHeaderCellDef>*ACTION*</mat-header-cell>-->
@@ -111,11 +121,11 @@
                         <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
 
                       </mat-table>
-                    <mat-card  *ngIf="noRecords" style="padding:100px;">
-                      <h3 style="text-align:center">We couldn't find data for
-                        <span style="color:red">"{{dataSource.filter}}"</span>
-                      </h3>
-                    </mat-card>
+                      <mat-card  *ngIf="noRecords" style="padding:100px;">
+                        <h3 style="text-align:center">We couldn't find data for
+                          <span style="color:red">"{{dataSource.filter}}"</span>
+                        </h3>
+                      </mat-card>
                       <mat-paginator #paginator
                                       [pageSize]="5"
                                       [pageSizeOptions]="[5, 10, 20]"

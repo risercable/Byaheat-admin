@@ -17,11 +17,11 @@ export class CarService {
   }
 
   getAll(): Observable<CarModel[]> {
-    return this.api.get('/car/getAll');
+    return this.api.get('/car/all');
   }
 
   getCars(payload: CarModel): Observable<any> {
-    return this.api.request('POST', '/car/getAll', {
+    return this.api.request('POST', '/car/all', {
       body: payload
     });
   }
