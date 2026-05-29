@@ -89,3 +89,14 @@ ngb-popover-window {
   border: 1px solid #fafafa !important;
   max-width: none !important;
 }
+
+.modal-header-flex {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.modal-header-flex .close {
+  float: none;
+  margin: 0;
+}

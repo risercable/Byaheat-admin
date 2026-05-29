@@ -117,8 +117,8 @@
                             <!--<button mat-icon-button style="color: #2d6987;"><i class="mdi mdi-open-in-new" (click)="openDialog(element)"></i> DETAILS</button>-->
                           <!--</mat-cell>-->
                         <!--</ng-container>-->
-                        <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
-                        <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+                        <mat-header-row *matHeaderRowDef="visibleColumns"></mat-header-row>
+                        <mat-row *matRowDef="let row; columns: visibleColumns;"></mat-row>
 
                       </mat-table>
                       <mat-card  *ngIf="noRecords" style="padding:100px;">
@@ -146,8 +146,8 @@
     <!-- Modal content-->
     <div class="modal-content">
       <div class="modal-header">
+        <h4 class="modal-title">Select a Driver to Assign</h4>
         <button type="button" class="close" data-dismiss="modal">&times;</button>
-        <h4 class="modal-title">Select a Driver</h4>
       </div>
       <div class="modal-body">
         <table class="table table-bordered table-striped">
@@ -181,8 +181,8 @@
     <!-- Modal content-->
     <div class="modal-content">
       <div class="modal-header">
+        <h4 class="modal-title">Select a Driver to Unassign</h4>
         <button type="button" class="close" data-dismiss="modal">&times;</button>
-        <h4 class="modal-title">Select a Driver</h4>
       </div>
       <div class="modal-body">
         <table class="table table-bordered table-striped">

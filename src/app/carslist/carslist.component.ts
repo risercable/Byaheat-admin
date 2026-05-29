@@ -57,15 +57,20 @@ export class CarslistComponent implements OnInit, AfterViewInit {
     'timestamp',
     'carDriver',
   ];
-  noRecords: boolean;
-  showOnlyUnassignedCars = { checked: true };
-  // const
-  carColumnsToDisplay: [
-    'carBrand',
-    'carModel',
-    'carType'
-  ];
+  showOnlyUnassignedCars = true;
   carFilterControl = new FormControl('all');
+
+  get visibleColumns(): string[] {
+    const columns = this.displayedColumns.slice();
+
+    if (!this.showOnlyUnassignedCars) {
+      columns.push('unassign'); // Add the "unassigned" column if the toggle is off
+    }
+
+    columns.push('actions');
+
+    return columns;
+}
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
 
@@ -179,31 +184,30 @@ export class CarslistComponent implements OnInit, AfterViewInit {
   //   this.isGreen = value;
   // }
 
-  passKey(key: string, pnumber: string, brand: string, model: string, capacity: number, color: string, type: string, ){
-    this.keyToPass = key;
-    this.pnumberToPass = pnumber;
-    this.brand = brand;
-    this.model = model;
-    this.capacity = capacity;
-    this.color = color;
-    this.typeToPass = type;
+  assignDriver(driverObject: any){
+    this.setBaseValues(driverObject);
   }
 
-  passunKey(key: string, pnumber: string, brand: string, model: string, capacity: number, color: string, type: string, driver: string){
-    this.keyToPass = key;
-    this.pnumberToPass = pnumber;
-    this.brand = brand;
-    this.model = model;
-    this.capacity = capacity;
-    this.color = color;
-    this.typeToPass = type;
-    this.theDriver = driver;
+  unassignDriver(driverObject: any){
+    this.setBaseValues(driverObject);
 
     this.unDriverList = this.db.list('drivers', ref => ref.orderByChild('user_email').equalTo(this.theDriver));
 
     this.undrivers = this.unDriverList.snapshotChanges().pipe(map(changes => {
       return changes.map(c => ({ key: c.payload.key, ...c.payload.val() }));
     }));
+  }
+
+  setBaseValues(driverObject: any){
+    const { key, pnumber, brand, model, capacity, color, type } = driverObject;
+
+    this.keyToPass = key;
+    this.pnumberToPass = pnumber;
+    this.brand = brand;
+    this.model = model;
+    this.capacity = capacity;
+    this.color = color;
+    this.typeToPass = type;
   }
 
   assignNow(drkey: string, dremail: string, platenum: string, type: string) {
