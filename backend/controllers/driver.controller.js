@@ -79,9 +79,29 @@ exports.getDrivers = async (req, res) => {
     return res.status(200).json(driverArray);
   } catch (error) {
     console.error("DEBUG ERROR:", error); // Look for 'auth/network-error' or 'timeout'
-    res.status(500).json({ 
+    res.status(500).json({
       message: "Server Timeout or Connectivity Error",
-      details: error.message 
+      details: error.message
+    });
+  }
+}
+
+exports.getById = async (req, res) => {
+  try {
+    const id = req.params.id;
+    const db = admin.database();
+    const snapshot = await db.ref(`drivers/${id}`).once("value");
+    const data = snapshot.val();
+
+    if (!data) return res.status(200).json([]);
+
+    // Convert Object of Objects to Array of Objects
+    return res.status(200).json(data);
+  } catch (error) {
+    console.error("DEBUG ERROR:", error); // Look for 'auth/network-error' or 'timeout'
+    res.status(500).json({
+      message: "Server Timeout or Connectivity Error",
+      details: error.message
     });
   }
 }

@@ -58,6 +58,7 @@ export class DriversTableComponent implements OnInit {
   lat: number;
   lng: number;
   public markers: any;
+  private detailsCache: { [key: string]: Driver } = {};
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
 
@@ -126,12 +127,10 @@ export class DriversTableComponent implements OnInit {
     this.titleService.setTitle(newTitle);
   }
 
-  openDialog(f1: string, f2: string): void {
-    let dialogRef = this.dialog.open(DialogOverviewExampleDialog, {
+  openDialog(f1: object, f2: string): void {
+    const dialogRef = this.dialog.open(DialogOverviewExampleDialog, {
       width: '600px',
-      data: { theKey: f1,
-              theEmail: f2
-      }
+      data: { ...f1  }
     });
 
     dialogRef.afterClosed().subscribe(result => {
@@ -201,18 +200,19 @@ export class DriversTableComponent implements OnInit {
   }
 
   resetForm(form?: NgForm) {
-    if (form != null)
+    if (form != null) {
       form.reset();
+    }
+
     this.oldDriverSvc.selectedDriver = {
-      $key: null,
+      id: null,
       email: '',
       password: '',
-      user_firstname : '',
-      user_lastname : '',
-      user_birthdate: '',
-      user_mobile: 0,
-      user_address : '',
-    }
+      firstName : '',
+      lastName : '',
+      birthDate: '',
+      mobile: 0,
+    };
   }
 
   // signup(drv: Driver) {
@@ -293,6 +293,15 @@ export class DriversTableComponent implements OnInit {
     }
   }
 
+  preloadDetails(key: string) {
+    if (this.detailsCache[key]) {
+      return;
+    }
+
+    this.driverService.getDetails(key).subscribe(data => {
+      this.detailsCache[key] = data;
+    });
+  }
 }
 
 export interface Item {

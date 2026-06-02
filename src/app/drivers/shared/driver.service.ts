@@ -49,11 +49,10 @@ export class DriverService{
     this.driverList.push({
       email: driver.email,
       password: driver.password,
-      user_firstname : driver.user_firstname,
-      user_lastname : driver.user_lastname,
-      user_birthdate: driver.user_birthdate,
-      user_mobile: driver.user_mobile,
-      user_address : driver.user_address,
+      user_firstname : driver.firstName,
+      user_lastname : driver.lastName,
+      user_birthdate: driver.birthDate,
+      user_mobile: driver.mobile,
     });
 
     // this.authService.signup(driver.email, driver.password);
@@ -61,14 +60,15 @@ export class DriverService{
     this.indriver = true;
   }
 
-  updateDriver(drv : Driver){
-    this.driverList.update(drv.$key,{
-      user_firstname : drv.user_firstname,
-      user_lastname : drv.user_lastname,
-      user_birthdate: drv.user_birthdate,
-      user_mobile: drv.user_mobile,
-      user_address : drv.user_address,
-    })
+  updateDriver(updatedDriver: Driver) {
+    this.driverList.update(updatedDriver.id, {
+      email: updatedDriver.email,
+      password: updatedDriver.password,
+      user_firstname : updatedDriver.firstName,
+      user_lastname : updatedDriver.lastName,
+      user_birthdate: updatedDriver.birthDate,
+      user_mobile: updatedDriver.mobile,
+    });
 
     this.updriver = true;
 

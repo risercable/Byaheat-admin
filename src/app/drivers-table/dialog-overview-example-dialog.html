@@ -1,28 +1,24 @@
 <h1 mat-dialog-title>Details</h1>
 <div mat-dialog-content>
   <div class="example-container">
-    <!--<mat-form-field>-->
-    <!--<input matInput [(ngModel)]="f.user_firstname" name="user_firstname" placeholder="Firstname">-->
-    <!--<p>User Name: {{allData.user_email}}</p>-->
-    <!--</mat-form-field>-->
   </div>
   <form class="form-horizontal">
-    <input type="hidden" name="$key" #$key="ngModel" [(ngModel)]="driverService.selectedDriver.$key" readonly/>
+    <input type="hidden" name="id" #id="ngModel" [(ngModel)]="data.id" readonly/>
     <div class="control-group">
       <div class="controls">
         <!-- <label>First Name: </label> -->
-        <!-- <input type="text" name="user_firstname" #name="ngModel" [(ngModel)]="driverService.selectedDriver.user_firstname" placeholder="First Name" /> -->
+        <!-- <input type="text" name="firstName" #name="ngModel" [(ngModel)]="driverService.selectedDriver.firstName" placeholder="First Name" /> -->
         <div class="example-container">
           <mat-form-field>
-            <input matInput [(ngModel)]="data.theKey.user_firstname" name="user_firstname" placeholder="Firstname" readonly>
+            <input matInput [(ngModel)]="data.firstName" name="firstName" placeholder="Firstname" readonly>
             <mat-icon matSuffix><i class="mdi mdi-eye" style="font-size: small;"></i></mat-icon>
           </mat-form-field>
         </div>
         <!-- <label>Last Name: </label>
-        <input type="text" name="user_lastname" #name="ngModel" [(ngModel)]="driverService.selectedDriver.user_lastname" placeholder="Last Name" /> -->
+        <input type="text" name="lastName" #name="ngModel" [(ngModel)]="driverService.selectedDriver.lastName" placeholder="Last Name" /> -->
         <div class="example-container">
           <mat-form-field>
-            <input matInput name="user_lastname" [(ngModel)]="data.theKey.user_lastname" placeholder="Last Name" readonly>
+            <input matInput name="lastName" [(ngModel)]="data.lastName" placeholder="Last Name" readonly>
             <mat-icon matSuffix><i class="mdi mdi-eye" style="font-size: small;"></i></mat-icon>
           </mat-form-field>
         </div>
@@ -32,7 +28,7 @@
       <!-- <label class="control-label">Birthdate: </label> -->
       <div class="controls">
         <mat-form-field>
-          <input matInput name="user_birthdate" [ngModel]="data.theKey.user_birthdate | date:'MM/dd/yy'" (ngModelChange)="data.theKey.user_birthdate=$event" placeholder="Birthdate" readonly>
+          <input matInput name="birthDate" [ngModel]="data.birthDate | date:'MM/dd/yy'" (ngModelChange)="data.theKey.birthDate=$event" placeholder="Birthdate" readonly>
           <mat-icon matSuffix><i class="mdi mdi-eye" style="font-size: small;"></i></mat-icon>
         </mat-form-field>
       </div>
@@ -40,22 +36,15 @@
     <div class="control-group">
       <!-- <label class="control-label">Address: </label> -->
       <div class="controls">
-        <!-- <input type="text" class="form-control" name="user_address" #name="ngModel" [(ngModel)]="driverService.selectedDriver.user_address" placeholder="Address" /> -->
-        <div class="example-container">
-          <mat-form-field>
-            <input matInput name="user_address" [(ngModel)]="data.theKey.user_address" placeholder="Address" readonly>
-            <mat-icon matSuffix><i class="mdi mdi-eye" style="font-size: small;"></i></mat-icon>
-          </mat-form-field>
-        </div>
       </div>
     </div>
     <div class="control-group">
       <!-- <label class="control-label">Mobile: </label> -->
       <div class="controls">
-        <!-- <input type="number" class="form-control" name="user_mobile" #name="ngModel" [(ngModel)]="driverService.selectedDriver.user_mobile" placeholder="Salary" /> -->
+        <!-- <input type="number" class="form-control" name="mobile" #name="ngModel" [(ngModel)]="driverService.selectedDriver.mobile" placeholder="Salary" /> -->
         <div class="example-container">
           <mat-form-field>
-            <input matInput class="form-control" name="user_mobile" [(ngModel)]="data.theKey.user_mobile" placeholder="Mobile Number" readonly>
+            <input matInput class="form-control" name="mobile" [(ngModel)]="data.mobile" placeholder="Mobile Number" readonly>
             <mat-icon matSuffix><i class="mdi mdi-eye" style="font-size: small;"></i></mat-icon>
           </mat-form-field>
         </div>

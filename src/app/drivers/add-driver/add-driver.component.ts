@@ -63,14 +63,13 @@ export class AddDriverComponent implements OnInit {
     if (form != null)
       form.reset();
     this.driverService.selectedDriver = {
-      $key: null,
+      id: null,
       email: '',
       password: '',
-      user_firstname : '',
-      user_lastname : '',
-      user_birthdate: '',
-      user_mobile: 0,
-      user_address : '',
+      firstName : '',
+      lastName : '',
+      birthDate: '',
+      mobile: 0,
     }
   }
 

@@ -102,11 +102,10 @@ export class AuthService {
       this.usersRef.child(this.hUid).set({
         email: driver.email,
         password: driver.password,
-        user_firstname : driver.user_firstname,
-        user_lastname : driver.user_lastname,
-        user_birthdate: driver.user_birthdate,
-        user_mobile: driver.user_mobile,
-        user_address : driver.user_address,
+        user_firstname : driver.firstName,
+        user_lastname : driver.lastName,
+        user_birthdate: driver.birthDate,
+        user_mobile: driver.mobile
       });
     }
 
