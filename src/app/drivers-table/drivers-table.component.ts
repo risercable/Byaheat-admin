@@ -226,7 +226,7 @@ export class DriversTableComponent implements OnInit {
   // }
 
   updateDriver(drv : Driver){
-    this.driverList.update(drv.$key,{
+    this.driverList.update(drv.id,{
       email: drv.email,
       password: drv.password});
   }

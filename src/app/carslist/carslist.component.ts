@@ -14,6 +14,8 @@ import * as firebase from "firebase";
 import { Car as PerCar } from '../shared/models/car.model';
 import {CarService as CarService2} from '../shared/car.service';
 import { FormControl } from '@angular/forms';
+import {DriverService} from '../shared/driver.service';
+import {Driver} from '../drivers/shared/driver.model';
 
 declare var jsPDF: any; // Important
 
@@ -27,7 +29,7 @@ export class CarslistComponent implements OnInit, AfterViewInit {
   carList: AngularFireList<any>;
   cars: Observable<any>;
   adriversList: AngularFireList<any>;
-  adrivers: Observable<any>;
+  adrivers: Driver[];
   undrivers: Observable<any>;
   carlist: Car[];
   selectedCar: Car = new Car();
@@ -101,7 +103,8 @@ export class CarslistComponent implements OnInit, AfterViewInit {
     private carService: CarService,
     private titleService: Title,
     public dialog: MatDialog,
-    private carService2: CarService2
+    private carService2: CarService2,
+    private driverService: DriverService,
   ) {
     // MySQL Logic
     // this.carService2.getAll().subscribe(cars => {
@@ -126,10 +129,9 @@ export class CarslistComponent implements OnInit, AfterViewInit {
   }
 
   openAssign(i: any): void {
-    let dbRef = this.db.list('drivers', ref => ref.orderByChild('assigned_car').equalTo('none'));
     let dialogRef = this.dialog.open(AssignCarDialog, {
       width: 'auto',
-      data: { drarray: dbRef }
+      data: { drarray: this.adrivers }
     });
 
     dialogRef.afterClosed().subscribe(result => {
@@ -152,6 +154,13 @@ export class CarslistComponent implements OnInit, AfterViewInit {
     //     this.carlist.push(y as Car);
     //   });
     // });
+
+    this.driverService.getUndispatched().subscribe(
+      (data: Driver[]) => {
+        // Unpack the array from the response
+        // return data;
+        this.adrivers = data;
+      });
 
     this.carService2.getAll().subscribe(
       (data: PerCar[]) => {
@@ -305,13 +314,13 @@ export class CarslistComponent implements OnInit, AfterViewInit {
       this.carSource.paginator.firstPage();
     }
   }
-  
+
   onToggleCarDriver(event: any) {
     this.showOnlyUnassignedCars = event.checked;
     const newValue = this.showOnlyUnassignedCars ? 'none' : 'assigned';
 
-    this.carFilterControl.setValue(newValue); 
-    this.applyFilterToTable(newValue); 
+    this.carFilterControl.setValue(newValue);
+    this.applyFilterToTable(newValue);
   }
 }
 

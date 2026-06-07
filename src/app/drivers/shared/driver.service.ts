@@ -84,18 +84,18 @@ export class DriverService{
  }
 
   updateEmail(drv: Driver) {
-    this.driverList.update(drv.$key, {
+    this.driverList.update(drv.id, {
       email: drv.email,
   password: drv.password,
-    })
+    });
     // this.authService.signup(drv.email, drv.password);
     // drv.email = drv.password = '';
     //
     // this.emailadded = true;
   }
 
- deleteDriver(key : string){
-   this.driverList.remove(key);
+ deleteDriver(id: string) {
+   this.driverList.remove(id);
 
    this.deldriver = true;
  }

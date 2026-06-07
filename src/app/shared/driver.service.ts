@@ -27,4 +27,8 @@ export class DriverService {
       })
     );
   }
+
+  getUndispatched(): Observable<any[]> {
+    return this.api.get('/driver/getUndispatched');
+  }
 }

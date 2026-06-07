@@ -41,21 +41,25 @@
             <!-- Mat Table Starts here -->
               <div class="mat-app-background basic-container">
                   <div class="example-container mat-elevation-z8">
-                      <div class="example-header">
-                          <mat-form-field style="width: 400px">
-                            <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Search here..." maxlength="30" matTooltip="*Maximum character is 30" matTooltipPosition="after" style="width: 500px;">
+                      <div class=”example-header” style="display:flex; align-items:center; gap:24px; flex-wrap:wrap; padding: 12px 0;">
+                        <div class="col-1"> </div>
+                        <div style="display:flex; align-items:center; gap:10px; border:1px solid #dee2e6; border-radius:6px; padding: 8px 14px; background:#f8f9fa;">
+                          <mat-slide-toggle
+                            aria-label="Show only cars with no driver"
+                            [(ngModel)]="showOnlyUnassignedCars"
+                            (change)="onToggleCarDriver($event)">
+                          </mat-slide-toggle>
+                          <span style="font-size:13px; color:#495057;">Unassigned cars only</span>
+                        </div>
+
+                          <mat-form-field style="width: 320px; margin: 0 auto;">
+                            <mat-label>Search</mat-label>
+                            <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Brand, model, plate..." maxlength="30" matTooltip="Maximum 30 characters" matTooltipPosition="after">
+                            <mat-icon matSuffix>search</mat-icon>
                           </mat-form-field>
                         </div>
-                        <mat-slide-toggle
-                          aria-label="Show only cars with no driver"
-                          [(ngModel)]="showOnlyUnassignedCars"
-                          (change)="onToggleCarDriver($event)">
-                        </mat-slide-toggle>
-
-                        <!-- Optional helper text -->
-                        <div class="mt-1" *ngIf="!showFilterActive && !showNoFilter">
-                          Click to toggle <span style="color:#1976d2">“Show only cars with no driver”</span>.
-                        </div>
+                    </div>
+              </div>
                       <mat-table #table [dataSource]="carSource" matSort matSortActive="timestamp" id="basic-table" matSortDirection="desc">
 
                         <!--- Note that these columns can be defined in any order.
@@ -135,10 +139,7 @@
                 </div>
           </div>
         </div>
-  </div>
-</div>
-</div>
-      </div>
+
 <!-- Select Driver Modal -->
 <div id="selectDriverModal" class="modal fade" role="dialog">
   <div class="modal-dialog">
@@ -157,10 +158,10 @@
             <th>Assign Now</th>
           </tr>
           </thead>
-          <tbody *ngFor="let adriver of adrivers | async">
+          <tbody *ngFor="let adriver of adrivers">
           <tr class="odd gradeX">
-            <td>{{adriver.user_firstname + " " + adriver.user_lastname}}</td>
-            <td> <a class="btn btn-mini btn-primary" (click)="assignNow(adriver.key, adriver.user_email, this.pnumberToPass, this.typeToPass)" data-toggle="modal" data-target="#selectDriverModal">ASSIGN THIS DRIVER</a>
+            <td>{{adriver.firstName + " " + adriver.lastName}}</td>
+            <td> <a class="btn btn-mini btn-primary text-white-50" (click)="assignNow(adriver.id, adriver.email, this.pnumberToPass, this.typeToPass)" data-toggle="modal" data-target="#selectDriverModal">ASSIGN THIS DRIVER</a>
             </td>
           </tr>
           </tbody>
@@ -173,6 +174,7 @@
 
   </div>
 </div>
+
 
 <!-- Unassign Driver Modal -->
 <div id="unassignDriver" class="modal fade" role="dialog">

@@ -3,6 +3,7 @@ const router = express.Router();
 const driverController = require("../controllers/driver.controller");
 
 router.get('/getAll', driverController.getDrivers);
+router.get('/getUndispatched', driverController.getUndispatchedDrivers);
 router.get('/:id', driverController.getById);
 
 module.exports = router;

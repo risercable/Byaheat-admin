@@ -105,3 +105,27 @@ exports.getById = async (req, res) => {
     });
   }
 }
+
+exports.getUndispatchedDrivers = async (req, res) => {
+  try {
+    const db = admin.database();
+    const snapshot = await db.ref("drivers").orderByChild('dispatched').equalTo(false).once("value");
+    const data = snapshot.val();
+
+    if (!data) return res.status(200).json([]);
+
+    // Convert Object of Objects to Array of Objects
+    const driverArray = Object.keys(data).map(key => ({
+      id: key,       // Keep the Firebase ID if needed
+      ...data[key]   // Spread the car details
+    }));
+
+    return res.status(200).json(driverArray);
+  } catch (error) {
+    console.error("DEBUG ERROR:", error); // Look for 'auth/network-error' or 'timeout'
+    res.status(500).json({
+      message: "Server Timeout or Connectivity Error",
+      details: error.message
+    });
+  }
+}
