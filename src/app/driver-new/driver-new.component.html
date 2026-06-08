@@ -32,21 +32,68 @@
 
                   <!-- First Name Input -->
                   <mat-form-field class="full-width" appearance="fill">
-                    <mat-label>Email</mat-label>
+                    <mat-label>First Name</mat-label>
                     <input matInput type="text" name="firstName" [(ngModel)]="firstName" required>
-                    <mat-error *ngIf="registerForm.controls.email?.invalid">Please enter a valid email address.</mat-error>
+                    <mat-error *ngIf="registerForm.controls.firstName?.invalid">First name is required.</mat-error>
                   </mat-form-field>
 
                   <!-- Last Name Input -->
                   <mat-form-field class="full-width" appearance="fill">
-                    <mat-label>Email</mat-label>
+                    <mat-label>Last Name</mat-label>
                     <input matInput type="text" name="lastName" [(ngModel)]="lastName" required>
-                    <mat-error *ngIf="registerForm.controls.email?.invalid">Please enter a valid email address.</mat-error>
+                    <mat-error *ngIf="registerForm.controls.lastName?.invalid">Last name is required.</mat-error>
                   </mat-form-field>
 
+                  <!-- Driver's License Upload -->
+                  <div class="upload-field full-width">
+                    <label class="upload-label">
+                      <mat-icon>credit_card</mat-icon> Driver's License <span class="required-star">*</span>
+                    </label>
+                    <div class="upload-box"
+                         [class.upload-box--filled]="licenseFile"
+                         [class.upload-box--error]="submitAttempted && !licenseFile">
+                      <input type="file" id="licenseUpload" accept="image/*,.pdf"
+                             (change)="onFileChange($event, 'license')" hidden>
+                      <label for="licenseUpload" class="upload-trigger">
+                        <mat-icon>{{ licenseFile ? 'check_circle' : 'upload_file' }}</mat-icon>
+                        <span>{{ licenseFile ? licenseFile.name : 'Click to upload License' }}</span>
+                      </label>
+                    </div>
+                    <small class="upload-hint" *ngIf="!licenseFile && submitAttempted" style="color:#f44336;">
+                      Driver's license is required.
+                    </small>
+                    <small class="upload-hint" *ngIf="licenseFile" style="color:#388e3c;">
+                      ✓ {{ licenseFile.name }}
+                    </small>
+                  </div>
+
+                  <!-- Vehicle Registration Upload -->
+                  <div class="upload-field full-width">
+                    <label class="upload-label">
+                      <mat-icon>directions_car</mat-icon> Vehicle Registration <span class="required-star">*</span>
+                    </label>
+                    <div class="upload-box"
+                         [class.upload-box--filled]="registrationFile"
+                         [class.upload-box--error]="submitAttempted && !registrationFile">
+                      <input type="file" id="registrationUpload" accept="image/*,.pdf"
+                             (change)="onFileChange($event, 'registration')" hidden>
+                      <label for="registrationUpload" class="upload-trigger">
+                        <mat-icon>{{ registrationFile ? 'check_circle' : 'upload_file' }}</mat-icon>
+                        <span>{{ registrationFile ? registrationFile.name : 'Click to upload Registration' }}</span>
+                      </label>
+                    </div>
+                    <small class="upload-hint" *ngIf="!registrationFile && submitAttempted" style="color:#f44336;">
+                      Vehicle registration is required.
+                    </small>
+                    <small class="upload-hint" *ngIf="registrationFile" style="color:#388e3c;">
+                      ✓ {{ registrationFile.name }}
+                    </small>
+                  </div>
+
                   <!-- Submit Button -->
-                  <div class="text-center">
-                    <button mat-raised-button color="primary" type="submit" [disabled]="registerForm.invalid">Register</button>
+                  <div class="text-center" style="margin-top: 16px;">
+                    <button mat-raised-button color="primary" type="submit"
+                            [disabled]="registerForm.invalid">Register</button>
                   </div>
                 </form>
               </mat-card-content>

@@ -16,6 +16,9 @@ export class DriverNewComponent implements OnInit {
   successMessage: string = '';
   firstName: string = '';
   lastName: string = '';
+  licenseFile: File | null = null;
+  registrationFile: File | null = null;
+  submitAttempted: boolean = false;
 
   constructor(private appComponent: AppComponent, private authService: AuthService, private myAuthService: MyAuthService) {
     this.appComponent.showNavbar = false;
@@ -28,7 +31,26 @@ export class DriverNewComponent implements OnInit {
     this.isLoginOrRegister = false;
   }
 
+  onFileChange(event: Event, type: 'license' | 'registration') {
+    const input = event.target as HTMLInputElement;
+    const file = input.files && input.files[0];
+    if (!file) return;
+
+    if (type === 'license') {
+      this.licenseFile = file;
+    } else {
+      this.registrationFile = file;
+    }
+  }
+
   async onRegister () {
+    this.submitAttempted = true;
+
+    if (!this.licenseFile || !this.registrationFile) {
+      this.errorMessage = 'Please upload both your driver\'s license and vehicle registration.';
+      return;
+    }
+
     let variables = {
       email: this.email,
       password: this.password,
