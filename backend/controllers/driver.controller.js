@@ -27,7 +27,7 @@ exports.login = async (req, res) => {
 
 exports.registerDriver = async (req, res) => {
   try {
-    const { email, password, firstName, lastName } = req.body;
+    const { email, password, firstName, lastName } = req.body.data;
 
     if (!email || !password || !firstName || !lastName) {
       return res.status(400).json({ message: 'All fields are required.' });
@@ -48,9 +48,12 @@ exports.registerDriver = async (req, res) => {
       lastName,
       email,
       createdAt: new Date().toISOString(),
+      dispatched: false, // Default value for dispatched status
+      verified: false, // Default value for verification status
+      submittedRequirements: false, // Default value for requirements submission status
     });
 
-    res.status(201).json({
+    return res.status(201).json({
       message: 'Driver registered successfully',
       userId: userRecord.uid,
     });

@@ -1,12 +1,16 @@
 #!/usr/bin/env node
 
-const app = require('../backend/server'); // Express app
 const http = require('http');
+const firebaseApp = require('../backend/server');
+const sqlApp = require('../backend/mysqlserver');
 
-const port = process.env.PORT || 3000;
+const FIREBASE_PORT = process.env.PORT || 3000;
+const SQL_PORT = process.env.SQL_PORT || 3001;
 
-const server = http.createServer(app);
+http.createServer(firebaseApp).listen(FIREBASE_PORT, '0.0.0.0', () => {
+  console.log(`Firebase server running on port ${FIREBASE_PORT}`);
+});
 
-// server.listen(port, () => {
-//   console.log(`Server running on port ${port}`);
-// });
+http.createServer(sqlApp).listen(SQL_PORT, '0.0.0.0', () => {
+  console.log(`MySQL server running on port ${SQL_PORT}`);
+});

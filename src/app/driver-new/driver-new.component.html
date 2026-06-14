@@ -44,50 +44,54 @@
                     <mat-error *ngIf="registerForm.controls.lastName?.invalid">Last name is required.</mat-error>
                   </mat-form-field>
 
-                  <!-- Driver's License Upload -->
-                  <div class="upload-field full-width">
-                    <label class="upload-label">
-                      <mat-icon>credit_card</mat-icon> Driver's License <span class="required-star">*</span>
-                    </label>
-                    <div class="upload-box"
-                         [class.upload-box--filled]="licenseFile"
-                         [class.upload-box--error]="submitAttempted && !licenseFile">
-                      <input type="file" id="licenseUpload" accept="image/*,.pdf"
-                             (change)="onFileChange($event, 'license')" hidden>
-                      <label for="licenseUpload" class="upload-trigger">
-                        <mat-icon>{{ licenseFile ? 'check_circle' : 'upload_file' }}</mat-icon>
-                        <span>{{ licenseFile ? licenseFile.name : 'Click to upload License' }}</span>
-                      </label>
-                    </div>
-                    <small class="upload-hint" *ngIf="!licenseFile && submitAttempted" style="color:#f44336;">
-                      Driver's license is required.
-                    </small>
-                    <small class="upload-hint" *ngIf="licenseFile" style="color:#388e3c;">
-                      ✓ {{ licenseFile.name }}
-                    </small>
-                  </div>
+                  <mat-slide-toggle name="showUploadDocs" [(ngModel)]="showUploadDocs">Upload Verification Docs (can be done later)</mat-slide-toggle>
 
-                  <!-- Vehicle Registration Upload -->
-                  <div class="upload-field full-width">
-                    <label class="upload-label">
-                      <mat-icon>directions_car</mat-icon> Vehicle Registration <span class="required-star">*</span>
-                    </label>
-                    <div class="upload-box"
-                         [class.upload-box--filled]="registrationFile"
-                         [class.upload-box--error]="submitAttempted && !registrationFile">
-                      <input type="file" id="registrationUpload" accept="image/*,.pdf"
-                             (change)="onFileChange($event, 'registration')" hidden>
-                      <label for="registrationUpload" class="upload-trigger">
-                        <mat-icon>{{ registrationFile ? 'check_circle' : 'upload_file' }}</mat-icon>
-                        <span>{{ registrationFile ? registrationFile.name : 'Click to upload Registration' }}</span>
+                  <div *ngIf="showUploadDocs">
+                    <!-- Driver's License Upload -->
+                    <div class="upload-field full-width">
+                      <label class="upload-label">
+                        <mat-icon>credit_card</mat-icon> Driver's License
                       </label>
+                      <div class="upload-box"
+                           [class.upload-box--filled]="licenseFile"
+                           [class.upload-box--error]="submitAttempted && !licenseFile">
+                        <input type="file" id="licenseUpload" accept="image/*,.pdf"
+                               (change)="onFileChange($event, 'license')" hidden>
+                        <label for="licenseUpload" class="upload-trigger">
+                          <mat-icon>{{ licenseFile ? 'check_circle' : 'upload_file' }}</mat-icon>
+                          <span>{{ licenseFile ? licenseFile.name : 'Click to upload License' }}</span>
+                        </label>
+                      </div>
+                      <small class="upload-hint" *ngIf="!licenseFile && submitAttempted" style="color:#f44336;">
+                        Driver's license is required.
+                      </small>
+                      <small class="upload-hint" *ngIf="licenseFile" style="color:#388e3c;">
+                        ✓ {{ licenseFile.name }}
+                      </small>
                     </div>
-                    <small class="upload-hint" *ngIf="!registrationFile && submitAttempted" style="color:#f44336;">
-                      Vehicle registration is required.
-                    </small>
-                    <small class="upload-hint" *ngIf="registrationFile" style="color:#388e3c;">
-                      ✓ {{ registrationFile.name }}
-                    </small>
+
+                    <!-- Vehicle Registration Upload -->
+                    <div class="upload-field full-width">
+                      <label class="upload-label">
+                        <mat-icon>directions_car</mat-icon> Vehicle Registration
+                      </label>
+                      <div class="upload-box"
+                           [class.upload-box--filled]="registrationFile"
+                           [class.upload-box--error]="submitAttempted && !registrationFile">
+                        <input type="file" id="registrationUpload" accept="image/*,.pdf"
+                               (change)="onFileChange($event, 'registration')" hidden>
+                        <label for="registrationUpload" class="upload-trigger">
+                          <mat-icon>{{ registrationFile ? 'check_circle' : 'upload_file' }}</mat-icon>
+                          <span>{{ registrationFile ? registrationFile.name : 'Click to upload Registration' }}</span>
+                        </label>
+                      </div>
+                      <small class="upload-hint" *ngIf="!registrationFile && submitAttempted" style="color:#f44336;">
+                        Vehicle registration is required.
+                      </small>
+                      <small class="upload-hint" *ngIf="registrationFile" style="color:#388e3c;">
+                        ✓ {{ registrationFile.name }}
+                      </small>
+                    </div>
                   </div>
 
                   <!-- Submit Button -->
@@ -101,7 +105,7 @@
               <mat-card-actions class="text-center">
                 <!-- Already Have Account Link -->
                 <p class="mt-3">
-                  Already have an account? 
+                  Already have an account?
                   <a routerLink="/login" class="login-link">Login here</a>
                 </p>
               </mat-card-actions>

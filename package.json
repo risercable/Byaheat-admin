@@ -9,6 +9,7 @@
   "scripts": {
     "ng": "ng",
     "backend": "nodemon bin/www",
+    "mysqlend": "nodemon bin/www",
     "backend:debug": "nodemon --inspect-brk bin/www",
     "devstart": "concurrently \"npx ng serve\" \"npm run backend\"",
     "build": "ng build --prod",

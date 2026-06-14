@@ -9,9 +9,11 @@ const connection = mysql2.createConnection({
   
 // Establish a connection to the database
 connection.connect((err) => {
-    if (err) throw err;
-
-    console.log('Connected to the MySQL server.'); // Confirmation message
+    if (err) {
+        console.error('MySQL connection failed:', err.message);
+        return;
+    }
+    console.log('Connected to the MySQL server.');
 });
 
 module.exports = {

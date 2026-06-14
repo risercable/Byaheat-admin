@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import {AppComponent} from '../app.component';
 import { AuthService } from '../auth.service';
 import { MyAuthService } from '../sql-services/my-auth-service.service';
+import {MatSnackBar} from '@angular/material';
 
 @Component({
   selector: 'app-driver-new',
@@ -19,8 +20,14 @@ export class DriverNewComponent implements OnInit {
   licenseFile: File | null = null;
   registrationFile: File | null = null;
   submitAttempted: boolean = false;
+  showUploadDocs = true;
 
-  constructor(private appComponent: AppComponent, private authService: AuthService, private myAuthService: MyAuthService) {
+  constructor(
+    private appComponent: AppComponent,
+    private authService: AuthService,
+    private myAuthService: MyAuthService,
+    private snackBar: MatSnackBar,
+  ) {
     this.appComponent.showNavbar = false;
   }
 
@@ -47,8 +54,8 @@ export class DriverNewComponent implements OnInit {
     this.submitAttempted = true;
 
     if (!this.licenseFile || !this.registrationFile) {
-      this.errorMessage = 'Please upload both your driver\'s license and vehicle registration.';
-      return;
+      this.errorMessage = 'Please don\'t forget to upload both your driver\'s license and vehicle registration later :)';
+      this.openSnackBar(this.errorMessage, 'Ok');
     }
 
     let variables = {
@@ -72,6 +79,12 @@ export class DriverNewComponent implements OnInit {
         this.successMessage = '';
       }
     );
+  }
+
+  openSnackBar(message: string, action: string) {
+    this.snackBar.open(message, action, {
+      duration: 2000,
+    });
   }
 
 }

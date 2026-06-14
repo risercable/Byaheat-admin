@@ -7,10 +7,10 @@ import {HttpClient} from '@angular/common/http';
   providedIn: 'root'
 })
 export class MyAuthService {
-  private baseUrl = 'http://localhost:3000/api';
+  private baseUrl = 'http://localhost:3000/api/driver';
 
   constructor(private http: HttpClient,) { }
-  
+
   registerUser(objectVar): Observable<any> {
     const payload = {  objectVar };
     return this.http.post<any>(`${this.baseUrl}/register`, payload);
