@@ -195,7 +195,7 @@ export class AuthService {
   loginUser(objectVar): Observable<any> {
     const { email, password } = objectVar;
     const payload = {  email, password };
-    return this.http.post<any>(`${this.baseUrl}/driverlogin`, payload);
+    return this.http.post<any>(`${this.baseUrl}/driver/login`, payload);
   }
 
   adminLogin(objectVar): Observable<any> {

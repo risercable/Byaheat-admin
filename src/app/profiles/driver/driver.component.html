@@ -1,0 +1,129 @@
+<div class="driver-profile">
+  <mat-card class="profile-card">
+
+    <!-- Photo, name, status, edit toggle -->
+    <div class="profile-header">
+      <div class="avatar-wrap" [class.editable]="isEditing" (click)="triggerPhotoSelect()">
+        <img [src]="photoPreview" alt="Driver photo" class="avatar-img">
+        <div class="avatar-overlay" *ngIf="isEditing">
+          <mat-icon>photo_camera</mat-icon>
+        </div>
+      </div>
+      <input type="file" accept="image/*" #photoInput hidden (change)="onPhotoSelected($event)">
+
+      <div class="header-text">
+        <h2>{{ driver.fullName }}</h2>
+        <span class="status-badge" [class.verified]="driver.verified">
+          <mat-icon>{{ driver.verified ? 'verified' : 'hourglass_empty' }}</mat-icon>
+          {{ driver.verified ? 'Verified driver' : 'Pending verification' }}
+        </span>
+      </div>
+
+      <div class="header-actions" *ngIf="!isEditing">
+        <button mat-stroked-button color="primary" (click)="startEditing()">
+          <mat-icon>edit</mat-icon> Edit profile
+        </button>
+      </div>
+    </div>
+
+    <mat-divider></mat-divider>
+
+    <form [formGroup]="form" (ngSubmit)="saveProfile()">
+
+      <section class="form-section">
+        <h3>Personal details</h3>
+        <div class="field-grid">
+          <mat-form-field appearance="outline">
+            <mat-label>Full name</mat-label>
+            <input matInput formControlName="fullName">
+            <mat-error *ngIf="f.fullName.hasError('required')">Full name is required</mat-error>
+            <mat-error *ngIf="f.fullName.hasError('minlength')">Too short</mat-error>
+          </mat-form-field>
+
+          <mat-form-field appearance="outline">
+            <mat-label>Email</mat-label>
+            <input matInput type="email" formControlName="email">
+            <mat-error *ngIf="f.email.hasError('required')">Email is required</mat-error>
+            <mat-error *ngIf="f.email.hasError('email')">Enter a valid email</mat-error>
+          </mat-form-field>
+
+          <mat-form-field appearance="outline">
+            <mat-label>Phone</mat-label>
+            <input matInput formControlName="phone">
+            <mat-error *ngIf="f.phone.hasError('required')">Phone is required</mat-error>
+            <mat-error *ngIf="f.phone.hasError('pattern')">Enter a valid phone number</mat-error>
+          </mat-form-field>
+
+          <mat-form-field appearance="outline">
+            <mat-label>Address</mat-label>
+            <input matInput formControlName="address">
+            <mat-error *ngIf="f.address.hasError('required')">Address is required</mat-error>
+          </mat-form-field>
+        </div>
+      </section>
+
+      <section class="form-section">
+        <h3>License</h3>
+        <div class="field-grid">
+          <mat-form-field appearance="outline">
+            <mat-label>License number</mat-label>
+            <input matInput formControlName="licenseNumber">
+            <mat-error *ngIf="f.licenseNumber.hasError('required')">License number is required</mat-error>
+            <mat-error *ngIf="f.licenseNumber.hasError('minlength')">Too short</mat-error>
+          </mat-form-field>
+
+          <mat-form-field appearance="outline">
+            <mat-label>License expiry</mat-label>
+            <input matInput type="date" formControlName="licenseExpiry">
+            <mat-error *ngIf="f.licenseExpiry.hasError('required')">Expiry date is required</mat-error>
+            <mat-error *ngIf="f.licenseExpiry.hasError('expired')">This license has expired</mat-error>
+          </mat-form-field>
+        </div>
+      </section>
+
+      <section class="form-section">
+        <h3>Vehicle</h3>
+        <div class="field-grid">
+          <mat-form-field appearance="outline">
+            <mat-label>Make</mat-label>
+            <input matInput formControlName="vehicleMake">
+            <mat-error *ngIf="f.vehicleMake.hasError('required')">Required</mat-error>
+          </mat-form-field>
+
+          <mat-form-field appearance="outline">
+            <mat-label>Model</mat-label>
+            <input matInput formControlName="vehicleModel">
+            <mat-error *ngIf="f.vehicleModel.hasError('required')">Required</mat-error>
+          </mat-form-field>
+
+          <mat-form-field appearance="outline">
+            <mat-label>Color</mat-label>
+            <input matInput formControlName="vehicleColor">
+            <mat-error *ngIf="f.vehicleColor.hasError('required')">Required</mat-error>
+          </mat-form-field>
+
+          <mat-form-field appearance="outline">
+            <mat-label>Plate number</mat-label>
+            <input matInput formControlName="plateNumber">
+            <mat-error *ngIf="f.plateNumber.hasError('required')">Required</mat-error>
+            <mat-error *ngIf="f.plateNumber.hasError('pattern')">Enter a valid plate number</mat-error>
+          </mat-form-field>
+        </div>
+      </section>
+
+      <section class="form-section">
+        <h3>About</h3>
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>Bio</mat-label>
+          <textarea matInput rows="3" formControlName="bio" maxlength="300"></textarea>
+          <mat-hint align="end">{{ f.bio.value?.length || 0 }}/300</mat-hint>
+        </mat-form-field>
+      </section>
+
+      <div class="form-actions" *ngIf="isEditing">
+        <button mat-button type="button" (click)="cancelEditing()">Cancel</button>
+        <button mat-raised-button color="primary" type="submit">Save changes</button>
+      </div>
+    </form>
+  </mat-card>
+</div>

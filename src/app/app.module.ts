@@ -13,7 +13,7 @@ import { ViewDetailsDialog } from './reservation/reservation.component';
 import { PlateExistExampleDialog } from './add-car/add-car.component';
 import { PizzaPartyComponent } from './add-car/add-car.component';
 import { MatFormFieldModule } from '@angular/material/form-field';
-import {MatIconModule, MatInputModule, MatSlideToggleModule} from '@angular/material';
+import {MatDividerModule, MatIconModule, MatInputModule, MatSlideToggleModule} from '@angular/material';
 import { MatSelectModule } from '@angular/material';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MatRadioModule } from '@angular/material/radio';
@@ -97,6 +97,7 @@ import {HomeLayoutComponent} from './layouts/home-layout/home-layout.component';
 import { DriverNewComponent } from './driver-new/driver-new.component';
 import { DriverExistComponent } from './driver-exist/driver-exist.component';
 import {MatButtonModule} from '@angular/material/button';
+import { DriverComponent } from './profiles/driver/driver.component';
 
 @NgModule({
   imports: [
@@ -136,7 +137,8 @@ import {MatButtonModule} from '@angular/material/button';
     SidebarModule.forRoot(),
     NgxMaskModule.forRoot(),
     OrderModule,
-    MatSlideToggleModule
+    MatSlideToggleModule,
+    MatDividerModule
   ],
   declarations: [
     AppComponent,
@@ -185,7 +187,8 @@ import {MatButtonModule} from '@angular/material/button';
     NotcComponent,
     HomeLayoutComponent,
     DriverNewComponent,
-    DriverExistComponent
+    DriverExistComponent,
+    DriverComponent
   ],
   entryComponents: [
     DialogOverviewExampleDialog,
