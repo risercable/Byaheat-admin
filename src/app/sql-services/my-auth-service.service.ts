@@ -12,7 +12,6 @@ export class MyAuthService {
   constructor(private http: HttpClient,) { }
 
   registerUser(objectVar): Observable<any> {
-    const payload = {  objectVar };
-    return this.http.post<any>(`${this.baseUrl}/register`, payload);
+    return this.http.post<any>(`${this.baseUrl}/register`, objectVar);
   }
 }

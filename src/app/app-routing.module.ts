@@ -35,64 +35,66 @@ import {DispatchingComponent} from './dispatching/dispatching.component';
 import {ChatPageComponent} from './chat-page/chat-page.component';
 import {DriverNewComponent} from './driver-new/driver-new.component';
 import { DriverExistComponent } from './driver-exist/driver-exist.component';
+import {DriverComponent} from './profiles/driver/driver.component';
 
 const routes: Routes = [
-  {
-    path: '',
-    redirectTo: 'driver-register',
-    pathMatch: 'full',
-  },
-  {
-    path: 'login',
-    component: DriverExistComponent,
-    pathMatch: 'full',
-  },
-  {
-    path: 'driver-register',
-    component: DriverNewComponent,
-    pathMatch: 'full',
-  },
-  {
-      path: 'admin-login',
-      component: LoginComponent,
-      pathMatch: 'full',
-    },
-    { path: 'home', component: HomeComponent, pathMatch: 'full', },
-    { path: 'clients/table', component: AccountComponent, pathMatch: 'full', },
-    { path: 'clients/table/history/:key/:fullname', component: ClientHistoryComponent, pathMatch: 'full', },
-    { path: 'payments/table', component: ClientComponent, pathMatch: 'full', },
-    { path: 'payments/table/client/:key', component: TableComponent, pathMatch: 'full', },
-    { path: 'cars/table', component: CarslistComponent, pathMatch: 'full', },
-    { path: 'chatpage', component: ChatPageComponent, pathMatch: 'full', },
-    { path: 'reservations', component: ReservationComponent, pathMatch: 'full', },
-    { path: 'cars/add-car', component: AddCarComponent, pathMatch: 'full', },
-    { path: 'packages', component: PackagesComponent, pathMatch: 'full', },
-    { path: 'drivers/add-driver', component: DriversComponent, pathMatch: 'full', },
-    { path: 'assign', component: AssignDriverComponent, pathMatch: 'full', },
-    { path: 'drivers/dispatch', component: DispatchingComponent, pathMatch: 'full', },
-    { path: 'drivers/table', component: DriversTableComponent, pathMatch: 'full', },
-    { path: 'drivers/table/location/:key/:firstname', component: DriversMapComponent, pathMatch: 'full', },
-    { path: 'drivers/map', component: DriversMapComponent, pathMatch: 'full', },
-    { path: 'drivers/ratings', component: RatespageComponent, pathMatch: 'full', },
-    { path: 'remit-page', component: RemitsComponent, pathMatch: 'full', },
-    { path: 'remit-page/cash/by/:key/:fullname', component: RemitsHistoryComponent, pathMatch: 'full', },
-    { path: 'sendemail', component: SendEmailComponent, pathMatch: 'full', },
-    { path: 'this', component: ThisdriverComponent, pathMatch: 'full', },
-    { path: 'not-found', component: NotFoundComponent, pathMatch: 'full', },
-  {
-    path: 'signup',
-    component: SignupComponent,
-    pathMatch: 'full',
-  },
-  {
-    path: 'not-connected',
-    component: NotcComponent,
-    pathMatch: 'full',
-  },
-  {
-    path: '**',
-    component: NotFoundComponent,
-  },
+  // Default landing
+  { path: '', redirectTo: 'driver-register', pathMatch: 'full' },
+
+  // --- Driver-facing auth ---
+  { path: 'login', component: DriverExistComponent },
+  { path: 'driver-register', component: DriverNewComponent },
+  { path: 'signup', component: SignupComponent },
+
+  // --- Driver profile (protected) ---
+  { path: 'profile', component: DriverComponent, canActivate: [AuthGuard] },
+  { path: 'this', component: ThisdriverComponent, canActivate: [AuthGuard] },
+
+  // --- Admin auth ---
+  { path: 'admin-login', component: LoginComponent },
+
+  // --- Admin dashboard (protected) ---
+  { path: 'home', component: HomeComponent, canActivate: [AuthGuard] },
+
+  // --- Admin: clients ---
+  { path: 'clients/table', component: AccountComponent, canActivate: [AuthGuard] },
+  { path: 'clients/table/history/:key/:fullname', component: ClientHistoryComponent, canActivate: [AuthGuard] },
+
+  // --- Admin: payments ---
+  { path: 'payments/table', component: ClientComponent, canActivate: [AuthGuard] },
+  { path: 'payments/table/client/:key', component: TableComponent, canActivate: [AuthGuard] },
+
+  // --- Admin: cars ---
+  { path: 'cars/table', component: CarslistComponent, canActivate: [AuthGuard] },
+  { path: 'cars/add-car', component: AddCarComponent, canActivate: [AuthGuard] },
+
+  // --- Admin: drivers ---
+  { path: 'drivers/add-driver', component: DriversComponent, canActivate: [AuthGuard] },
+  { path: 'drivers/dispatch', component: DispatchingComponent, canActivate: [AuthGuard] },
+  { path: 'drivers/table', component: DriversTableComponent, canActivate: [AuthGuard] },
+  { path: 'drivers/table/location/:key/:firstname', component: DriversMapComponent, canActivate: [AuthGuard] },
+  { path: 'drivers/map', component: DriversMapComponent, canActivate: [AuthGuard] },
+  { path: 'drivers/ratings', component: RatespageComponent, canActivate: [AuthGuard] },
+
+  // --- Admin: assignment / dispatch ---
+  { path: 'assign', component: AssignDriverComponent, canActivate: [AuthGuard] },
+
+  // --- Admin: remittances ---
+  { path: 'remit-page', component: RemitsComponent, canActivate: [AuthGuard] },
+  { path: 'remit-page/cash/by/:key/:fullname', component: RemitsHistoryComponent, canActivate: [AuthGuard] },
+
+  // --- Admin: misc ---
+  { path: 'packages', component: PackagesComponent, canActivate: [AuthGuard] },
+  { path: 'reservations', component: ReservationComponent, canActivate: [AuthGuard] },
+  { path: 'chatpage', component: ChatPageComponent, canActivate: [AuthGuard] },
+  { path: 'sendemail', component: SendEmailComponent, canActivate: [AuthGuard] },
+
+  // --- Error / status pages ---
+  { path: 'not-connected', component: NotcComponent },
+  { path: 'not-found', component: NotFoundComponent },
+
+  // Wildcard MUST be last
+  { path: '**', component: NotFoundComponent },
 ];
 
 @NgModule({

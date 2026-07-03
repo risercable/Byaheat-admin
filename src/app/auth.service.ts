@@ -157,12 +157,14 @@ export class AuthService {
     return this.firebaseAuth.authState !== null;
   }
 
-  getUserData(email: string) {
-      firebase.database().ref('admin/email').once('value').then((snapshot) => {
-        var isEmail = snapshot.val();
-
-        return isEmail == email;
-      })
+  async getUserRole(uid: string): Promise<string> {
+    try {
+      const snapshot = await firebase.database().ref(`users/${uid}/role`).once('value');
+      return snapshot.val(); // returns the role string, or null if not found
+    } catch (error) {
+      console.error('Error fetching user role:', error);
+      return null;
+    }
   }
 
   private sAdmin(uid: string) {

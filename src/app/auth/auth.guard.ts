@@ -1,5 +1,5 @@
 
-import {take, map} from 'rxjs/operators';
+import {take, map, switchMap} from 'rxjs/operators';
 
 
 
@@ -9,6 +9,7 @@ import { CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot } from '@angul
 import { Observable } from 'rxjs';
 import { AuthService } from '../auth.service';
 import { Router } from '@angular/router';
+import {of} from 'rxjs/internal/observable/of';
 
 @Injectable()
 export class AuthGuard implements CanActivate {
@@ -18,18 +19,30 @@ export class AuthGuard implements CanActivate {
   canActivate(
     next: ActivatedRouteSnapshot,
     state: RouterStateSnapshot
-  ): Observable<boolean> | Promise<boolean> | boolean {
+  ): Observable<boolean> {
+    const requiredRole = next.data['role'];
+    const loginPath = next.data['loginPath'] || '/login';
+
     return this.authService.firebaseAuth.authState.pipe(
-      map(authState => {
-        // Check if the user is authenticated
+      take(1),
+      switchMap((authState): Observable<boolean> => {
         if (!authState) {
-          // Redirect if not authenticated
-          this.router.navigate(['/admin/login'], { queryParams: { returnUrl: state.url } });
-          return false;
+          this.router.navigate([loginPath], { queryParams: { returnUrl: state.url } });
+          return of(false);
         }
-        return true;
-      }),
-      take(1) // Ensure the observable completes after the first emission
+        if (requiredRole) {
+          return this.authService.getUserRole(authState.uid).pipe(
+            map((role: string): boolean => {
+              if (role !== requiredRole) {
+                this.router.navigate([loginPath]);
+                return false;
+              }
+              return true;
+            })
+          );
+        }
+        return of(true);
+      })
     );
   }
 }

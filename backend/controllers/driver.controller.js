@@ -7,18 +7,20 @@ exports.login = async (req, res) => {
     await firebase.auth().signInWithEmailAndPassword(email,password).then((userCredential) => {
       console.log(userCredential);
       // ...
-      res.status(201).json({
+      return res.status(201).json({
         result: true,
         message: 'success'
       });
     })
     .catch((error) => {
-      const errorCode = error.code;
-      const errorMessage = error.message;
-      // ...
+      return res.status(401).json({
+        result: false,
+        message: error.message,
+        code: error.code
+      });
     });
   } catch (error) {
-    res.status(500).json({
+    return res.status(500).json({
       message: 'Error registering driver',
       error: error.message,
     });
@@ -27,7 +29,7 @@ exports.login = async (req, res) => {
 
 exports.registerDriver = async (req, res) => {
   try {
-    const { email, password, firstName, lastName } = req.body.data;
+    const { email, password, firstName, lastName } = req.body;
 
     if (!email || !password || !firstName || !lastName) {
       return res.status(400).json({ message: 'All fields are required.' });
@@ -42,8 +44,17 @@ exports.registerDriver = async (req, res) => {
 
     // Add additional information in Firebase Realtime Database
     const db = admin.database();
-    const driversRef = db.ref('drivers'); // Adjust your database structure
-    await driversRef.child(userRecord.uid).set({
+
+    const updates = {};
+    const { uid } = userRecord;
+  
+    updates[`users/${uid}`] = {
+      role: 'driver',
+      email: email,
+      createdAt: admin.database.ServerValue.TIMESTAMP,
+    };
+    
+    updates[`drivers/${uid}`] = {
       firstName,
       lastName,
       email,
@@ -51,7 +62,11 @@ exports.registerDriver = async (req, res) => {
       dispatched: false, // Default value for dispatched status
       verified: false, // Default value for verification status
       submittedRequirements: false, // Default value for requirements submission status
-    });
+      // ...
+    };
+
+    // Single atomic call — both succeed or both fail, no partial state
+    await admin.database().ref().update(updates);
 
     return res.status(201).json({
       message: 'Driver registered successfully',
