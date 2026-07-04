@@ -6,7 +6,7 @@ import { Car as CarModel } from './models/car.model';
 @Injectable({
   providedIn: 'root'
 })
-export class CarService {
+export class UserService {
 
   constructor(private api: ApiService) {}
 

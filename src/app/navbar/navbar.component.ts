@@ -10,7 +10,6 @@ import { AuthService } from '../auth.service';
 import { StorageService } from '../storage.service';
 import { AngularFireDatabase, AngularFireList } from 'angularfire2/database';
 import { trigger, state, style, transition, animate } from '@angular/animations';
-import { BehaviorSubject, Subject } from 'rxjs';
 
 import 'firebase/auth';
 
@@ -46,8 +45,9 @@ export class NavbarComponent implements OnInit {
   @Input() isNavbarVisible: boolean = true; // Default: visible
 
   constructor(public authService: AuthService, public storage: StorageService, private db: AngularFireDatabase, public router: Router) {
-    this.getPending = db.list('reservations', ref => ref.orderByChild('assign').equalTo('not yet assigned'));
-    this.getPending.snapshotChanges().pipe(map(list => list.length)).subscribe(length => this.lpending = length);
+    // Temporarily disabled to isolate a "invalid stream" console error - see if it stops appearing.
+    // this.getPending = db.list('reservations', ref => ref.orderByChild('assign').equalTo('not yet assigned'));
+    // this.getPending.snapshotChanges().pipe(map(list => list.length)).subscribe(length => this.lpending = length);
    }
 
   // Function to check if the current route partially matches a given path

@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Router } from '@angular/router';
-import {Observable } from 'rxjs';
+import {Observable } from 'rxjs/internal/Observable';
 import {AngularFireAuth} from 'angularfire2/auth';
 import * as firebase from 'firebase/app';
 import { AngularFireAuthModule } from 'angularfire2/auth';
@@ -25,12 +25,12 @@ export class LoginComponent implements OnInit {
   items: Observable<any[]>;
 
   constructor(
-    public authService: AuthService, 
-    private route: ActivatedRoute, 
-    private router: Router, 
-    private titleService: Title, 
-    public afAuth: AngularFireAuth, 
-    db: AngularFireDatabase, 
+    public authService: AuthService,
+    private route: ActivatedRoute,
+    private router: Router,
+    private titleService: Title,
+    public afAuth: AngularFireAuth,
+    db: AngularFireDatabase,
     private appComponent: AppComponent,
     private globalDataService: GlobalDataService
   ) {

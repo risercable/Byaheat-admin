@@ -2,7 +2,7 @@
 import {map} from 'rxjs/operators';
 import { Component, OnInit } from '@angular/core';
 import {AngularFireDatabase,AngularFireList} from 'angularfire2/database';
-import { Observable ,  BehaviorSubject ,  Subscription } from 'rxjs';
+import { Observable , } from 'rxjs/internal/Observable';
 
 import { AngularFireAction } from 'angularfire2/database';
 import * as firebase from 'firebase/app';

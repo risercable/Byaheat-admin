@@ -4,7 +4,7 @@ import { Injectable, OnInit } from '@angular/core';
 import { AngularFireDatabase } from 'angularfire2/database';
 import { AuthService } from '../../auth.service';
 import { AngularFireList } from 'angularfire2/database';
-import { Observable } from 'rxjs';
+import { Observable } from 'rxjs/internal/Observable';
 import { Car } from './car.model';
 import * as firebase from 'firebase';
 

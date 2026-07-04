@@ -4,7 +4,7 @@ import { AuthService } from '../auth.service';
 import { Title }     from '@angular/platform-browser';
 import { AngularFireDatabase } from 'angularfire2/database';
 import { AngularFireList } from 'angularfire2/database';
-import { Observable } from 'rxjs';
+import { Observable } from 'rxjs/internal/Observable';
 import { ClientService } from '../drivers/shared/client.service';
 import { ClientService as ClientSvc } from '../shared/client.service';
 import { Client } from '../drivers/shared/client.model';
@@ -137,7 +137,7 @@ export class AccountComponent implements OnInit {
     });
     this.ipp = 10;
 
-    const showtblbtn = localStorage.getItem("showTableBtn"); // TODO: This is Buggy 
+    const showtblbtn = localStorage.getItem("showTableBtn"); // TODO: This is Buggy
 
     this.hideTableX = false;
 

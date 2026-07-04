@@ -2,7 +2,9 @@
 import {map, switchMap} from 'rxjs/operators';
 import * as firebase from 'firebase/app';
 import { Injectable } from '@angular/core';
-import { BehaviorSubject ,  Observable , of} from 'rxjs';
+import { BehaviorSubject } from 'rxjs/internal/BehaviorSubject';
+import { Observable } from 'rxjs/internal/Observable';
+import { of } from 'rxjs/internal/observable/of';
 import { AngularFireAuth } from 'angularfire2/auth';
 
 
@@ -146,6 +148,7 @@ export class AuthService {
         this.In.next(false);
         console.log(this.isLoggedIn);
         this.setLoggedIn(false);
+        this.globalDataService.clearUser();
         window.location.reload();
     }
 
@@ -157,10 +160,10 @@ export class AuthService {
     return this.firebaseAuth.authState !== null;
   }
 
-  async getUserRole(uid: string): Promise<string> {
+  getUserRole(uid: string): Observable<string> {
     try {
-      const snapshot = await firebase.database().ref(`users/${uid}/role`).once('value');
-      return snapshot.val(); // returns the role string, or null if not found
+      const payload = {  uid };
+      return this.http.post<any>(`${this.baseUrl}/user/getRole`, payload);
     } catch (error) {
       console.error('Error fetching user role:', error);
       return null;
@@ -214,7 +217,7 @@ export class AuthService {
       this.http.post(`${this.baseUrl}/logout`, { uid: user.uid }).subscribe(
         () => {
           firebase.auth().signOut().then(() => {
-            localStorage.removeItem('user'); // Clear stored user data
+            this.globalDataService.clearUser();
             sessionStorage.clear(); // Clear session storage
             this.router.navigate(['login']);
             alert('Successfully signed out!');

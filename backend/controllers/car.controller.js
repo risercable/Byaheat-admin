@@ -34,7 +34,7 @@ exports.getAll = async (req, res) => {
       ...data[key]   // Spread the car details
     }));
 
-    res.status(200).json(carArray);
+    return res.status(200).json(carArray);
   } catch (error) {
     res.status(500).send(error);
   }

@@ -3,7 +3,7 @@ import { map } from 'rxjs/operators';
 import {Component, OnInit, ViewChild, Inject, ViewEncapsulation} from '@angular/core';
 import { NgForm } from '@angular/forms/src/directives/ng_form';
 import {AngularFireDatabase,AngularFireList} from 'angularfire2/database';
-import { Observable } from 'rxjs';
+import { Observable } from 'rxjs/internal/Observable';
 
 import {MatPaginator, MatSort, MatTableDataSource, Sort, MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material';
 import { OrderPipe } from 'ngx-order-pipe';

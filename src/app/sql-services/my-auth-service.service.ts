@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 
-import { BehaviorSubject ,  Observable , of} from 'rxjs';
+import { Observable} from 'rxjs/internal/Observable';
 import {HttpClient} from '@angular/common/http';
 
 @Injectable({

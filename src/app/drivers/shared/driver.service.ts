@@ -3,7 +3,7 @@ import {map} from 'rxjs/operators';
 import { Injectable } from '@angular/core';
 import {AngularFireDatabase,AngularFireList} from 'angularfire2/database';
 import { Driver } from './driver.model';
-import { Observable } from 'rxjs';
+import { Observable } from 'rxjs/internal/Observable';
 import { AuthService } from '../../auth.service';
 import { AddDriverComponent } from '../add-driver/add-driver.component';
 import {HttpClient} from '@angular/common/http';

@@ -4,24 +4,31 @@ exports.login = async (req, res) => {
   try {
     const { email, password } = req.body;
 
-    await firebase.auth().signInWithEmailAndPassword(email,password).then((userCredential) => {
-      console.log(userCredential);
-      // ...
-      return res.status(201).json({
-        result: true,
-        message: 'success'
-      });
-    })
-    .catch((error) => {
-      return res.status(401).json({
-        result: false,
-        message: error.message,
-        code: error.code
-      });
+    const userCredential = await firebase.auth().signInWithEmailAndPassword(email, password);
+    const user = userCredential.user;
+    const uid = user.uid;
+
+    // Additional info (role, etc.) lives under users/{uid}, same node admin.controller.js reads from
+    const db = admin.database();
+    const snapshot = await db.ref(`users/${uid}`).once('value');
+    const driverData = snapshot.val();
+
+    return res.status(200).json({
+      message: 'Login successful',
+      user: {
+        uid,
+        email: user.email,
+        displayName: user.displayName,
+        emailVerified: user.emailVerified,
+        photoURL: user.photoURL,
+      },
+      driverData,
     });
   } catch (error) {
-    return res.status(500).json({
-      message: 'Error registering driver',
+    const isAuthError = error.code && error.code.indexOf('auth/') === 0;
+
+    res.status(isAuthError ? 401 : 500).json({
+      message: isAuthError ? 'Invalid email or password' : 'An unexpected error occurred',
       error: error.message,
     });
   }
@@ -47,13 +54,13 @@ exports.registerDriver = async (req, res) => {
 
     const updates = {};
     const { uid } = userRecord;
-  
+
     updates[`users/${uid}`] = {
       role: 'driver',
       email: email,
       createdAt: admin.database.ServerValue.TIMESTAMP,
     };
-    
+
     updates[`drivers/${uid}`] = {
       firstName,
       lastName,
@@ -145,5 +152,15 @@ exports.getUndispatchedDrivers = async (req, res) => {
       message: "Server Timeout or Connectivity Error",
       details: error.message
     });
+  }
+}
+
+exports.getRole = async (req, res) => {
+  try {
+    const snapshot = await firebase.database().ref(`users/${uid}/role`).once('value');
+    return  res.status(200).json(snapshot.val()); // returns the role string, or null if not found
+  } catch (error) {
+    console.error('Error fetching user role:', error);
+    return null;
   }
 }

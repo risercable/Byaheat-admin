@@ -66,34 +66,34 @@
                               The actual rendered columns are set as a property on the row definition" -->
                         <ng-container matColumnDef="in1">
                           <mat-header-cell *matHeaderCellDef mat-sort-header>*NO*</mat-header-cell>
-                          <mat-cell *matCellDef="let element; let i = index;"> {{element.$key}} </mat-cell>
+                          <mat-cell *matCellDef="let element; let i = index;"> {{ element.$key }} </mat-cell>
                         </ng-container>
 
                         <ng-container matColumnDef="carBrand">
                           <mat-header-cell *matHeaderCellDef mat-sort-header>*BRAND*</mat-header-cell>
-                          <mat-cell *matCellDef="let element; let i = index;"> {{element.carBrand}} </mat-cell>
+                          <mat-cell *matCellDef="let element; let i = index;"> {{ element.carBrand }} </mat-cell>
                         </ng-container>
 
                         <!-- Position Column -->
 
                         <ng-container matColumnDef="carModel">
                             <mat-header-cell *matHeaderCellDef mat-sort-header>*MODEL*</mat-header-cell>
-                            <mat-cell *matCellDef="let element"> {{element.carModel}} </mat-cell>
+                            <mat-cell *matCellDef="let element"> {{ element.carModel }} </mat-cell>
                           </ng-container>
 
                         <ng-container matColumnDef="carType">
                           <mat-header-cell *matHeaderCellDef mat-sort-header>*TYPE*</mat-header-cell>
-                          <mat-cell *matCellDef="let element"> {{element.carType}} </mat-cell>
+                          <mat-cell *matCellDef="let element"> {{ element.carType }} </mat-cell>
                         </ng-container>
 
                         <ng-container matColumnDef="carPlateNumber">
                           <mat-header-cell *matHeaderCellDef mat-sort-header>*PLATE NUMBER*</mat-header-cell>
-                          <mat-cell *matCellDef="let element"> {{element.carPlateNumber}} </mat-cell>
+                          <mat-cell *matCellDef="let element"> {{ element.carPlateNumber }} </mat-cell>
                         </ng-container>
 
                         <ng-container matColumnDef="carDriver">
                           <mat-header-cell *matHeaderCellDef mat-sort-header>*DRIVER*</mat-header-cell>
-                          <mat-cell *matCellDef="let element" [style.color]="(element.carDriver === 'none') ? 'red' : '' ">{{(element.carDriver | limitTo: 20) + (element.carDriver.length > 20 ? '...' : '')}} <br><a style="color: #2d6987" *ngIf="element.carDriver === 'none'" (click)="passKey(element.$key, element.carPlateNumber, element.carBrand, element.carModel, element.carCapacity, element.car_color, element.carType)" data-toggle="modal" data-target="#selectDriverModal" ><i class="mdi mdi-key-plus"></i> ASSIGN NOW</a></mat-cell>
+                          <mat-cell *matCellDef="let element" [style.color]="(element.carDriver === 'none') ? 'red' : '' ">{{ (element.carDriver | limitTo: 20) + (element.carDriver.length > 20 ? '...' : '') }} <br><a style="color: #2d6987" *ngIf="element.carDriver === 'none'" (click)="passKey(element.$key, element.carPlateNumber, element.carBrand, element.carModel, element.carCapacity, element.car_color, element.carType)" data-toggle="modal" data-target="#selectDriverModal" ><i class="mdi mdi-key-plus"></i> ASSIGN NOW</a></mat-cell>
                         </ng-container>
 
                         <!-- "created" Column -->
@@ -127,7 +127,7 @@
                       </mat-table>
                       <mat-card  *ngIf="noRecords" style="padding:100px;">
                         <h3 style="text-align:center">We couldn't find data for
-                          <span style="color:red">"{{dataSource.filter}}"</span>
+                          <span style="color:red">"{{ dataSource.filter }}"</span>
                         </h3>
                       </mat-card>
                       <mat-paginator #paginator
@@ -160,7 +160,7 @@
           </thead>
           <tbody *ngFor="let adriver of adrivers">
           <tr class="odd gradeX">
-            <td>{{adriver.firstName + " " + adriver.lastName}}</td>
+            <td>{{ adriver.firstName + " " + adriver.lastName }}</td>
             <td> <a class="btn btn-mini btn-primary text-white-50" (click)="assignNow(adriver.id, adriver.email, this.pnumberToPass, this.typeToPass)" data-toggle="modal" data-target="#selectDriverModal">ASSIGN THIS DRIVER</a>
             </td>
           </tr>
@@ -196,7 +196,7 @@
           </thead>
           <tbody *ngFor="let undriver of undrivers | async">
           <tr class="odd gradeX">
-            <td>{{undriver.user_firstname + " " + undriver.user_lastname}}</td>
+            <td>{{ undriver.user_firstname + " " + undriver.user_lastname }}</td>
             <td> <a class="btn btn-mini btn-danger" (click)="unassignNow(undriver.key, undriver.user_email)" data-toggle="modal" data-target="#unassignDriver">UNASSIGN THIS DRIVER</a>
             </td>
           </tr>

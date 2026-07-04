@@ -7,7 +7,7 @@ import { AngularFireList, AngularFireDatabase } from 'angularfire2/database';
 import { Driver } from '../drivers/shared/driver.model';
 import { NgForm } from '@angular/forms/src/directives/ng_form';
 import { AuthService } from '../auth.service';
-import { Observable } from 'rxjs';
+import { Observable } from 'rxjs/internal/Observable';
 import { Title } from '@angular/platform-browser';
 
 import {MatDatepickerModule} from '@angular/material/datepicker';

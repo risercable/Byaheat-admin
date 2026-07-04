@@ -3,14 +3,14 @@ import {map} from 'rxjs/operators';
 import {Component, Inject, OnInit, ViewChild, ViewEncapsulation, AfterViewInit} from '@angular/core';
 import { AngularFireDatabase } from 'angularfire2/database';
 import { AngularFireList } from 'angularfire2/database';
-import { Observable } from 'rxjs';
+import { Observable } from 'rxjs/internal/Observable';
 import { CarService } from '../drivers/shared/car.service';
 import { Car } from '../drivers/shared/car.model';
 import { NgForm } from '@angular/forms/src/directives/ng_form';
 import { Title } from '@angular/platform-browser';
 import {MatDialog, MatDialogRef, MAT_DIALOG_DATA, MatTableDataSource, MatPaginator, MatSort} from '@angular/material';
 import {ClientDetailsDialog, Perclient} from '../account/account.component';
-import * as firebase from "firebase";
+import * as firebase from 'firebase';
 import { Car as PerCar } from '../shared/models/car.model';
 import {CarService as CarService2} from '../shared/car.service';
 import { FormControl } from '@angular/forms';
@@ -25,7 +25,7 @@ declare var jsPDF: any; // Important
   styleUrls: ['./carslist.component.scss']
 })
 export class CarslistComponent implements OnInit, AfterViewInit {
-  p: number = 1;
+  p = 1;
   carList: AngularFireList<any>;
   cars: Observable<any>;
   adriversList: AngularFireList<any>;
@@ -49,7 +49,7 @@ export class CarslistComponent implements OnInit, AfterViewInit {
   notAssigned: AngularFireList<any[]>;
   length: number;
   itemList: PerCar[];
-  isGreen: boolean = false;
+  isGreen = false;
   carSource = new MatTableDataSource<PerCar>();
   carsFB: PerCar[] = [];
   displayedColumns = [
@@ -118,7 +118,7 @@ export class CarslistComponent implements OnInit, AfterViewInit {
    }
 
   openDialog(i: any): void {
-    let dialogRef = this.dialog.open(ClientDetailsDialog, {
+    const dialogRef = this.dialog.open(ClientDetailsDialog, {
       width: 'auto',
       data: { cararray: i }
     });
@@ -129,7 +129,7 @@ export class CarslistComponent implements OnInit, AfterViewInit {
   }
 
   openAssign(i: any): void {
-    let dialogRef = this.dialog.open(AssignCarDialog, {
+    const dialogRef = this.dialog.open(AssignCarDialog, {
       width: 'auto',
       data: { drarray: this.adrivers }
     });
@@ -144,7 +144,7 @@ export class CarslistComponent implements OnInit, AfterViewInit {
   // }
 
   ngOnInit() {
-    this.setTitle("Lakbay | Cars List");
+    this.setTitle('Lakbay | Cars List');
     // const x = this.carService.getData();
     // x.snapshotChanges().subscribe(item => {
     //   this.carlist = [];
@@ -225,8 +225,8 @@ export class CarslistComponent implements OnInit, AfterViewInit {
     this.cList.update(this.keyToPass, { car_driver: dremail });
 
     firebase.database().ref('reservation_dates').child(type).child(drkey).update({
-      nodate: "true"
-    })
+      nodate: 'true'
+    });
   }
 
   unassignNow(theKey: string, theEmail: string) {
@@ -252,13 +252,13 @@ export class CarslistComponent implements OnInit, AfterViewInit {
       form.reset();
     this.carService.selectedCar = {
       id: null,
-      carBrand: "",
+      carBrand: '',
       carCapacity: 0,
-      carType: "",
-      carColor: "",
-      carModel: "",
-      carPlateNumber: ""
-    }
+      carType: '',
+      carColor: '',
+      carModel: '',
+      carPlateNumber: ''
+    };
   }
 
   onDelete(form: NgForm) {
@@ -268,27 +268,27 @@ export class CarslistComponent implements OnInit, AfterViewInit {
     }
   }
 
-  onItemClick(carx : Car){
-    this.carService.selectedCar = Object.assign({},carx);
+  onItemClick(carx: Car){
+    this.carService.selectedCar = Object.assign({}, carx);
   }
 
   onPrint(){
-    var doc = new jsPDF('p', 'pt');
-  doc.text("Cars List", 40, 50);
-  var res = doc.autoTableHtmlToJson(document.getElementById("basic-table"));
-  var columns = [res.columns[0], res.columns[1], res.columns[2], res.columns[3], res.columns[4], res.columns[5], res.columns[6]];
+    const doc = new jsPDF('p', 'pt');
+  doc.text('Cars List', 40, 50);
+  const res = doc.autoTableHtmlToJson(document.getElementById('basic-table'));
+  const columns = [res.columns[0], res.columns[1], res.columns[2], res.columns[3], res.columns[4], res.columns[5], res.columns[6]];
   doc.autoTable(columns, res.data, {tableWidth: 'wrap', startY: false, margin: {top: 100}});
-  var pdfUrl = doc.output('datauri').substring(doc.output('datauri').indexOf(',')+1);
-  var binary = atob(pdfUrl.replace(/\s/g, ''));
-  var len = binary.length;
-  var buffer = new ArrayBuffer(len);
-  var view = new Uint8Array(buffer);
-  for (var i = 0; i < len; i++) {
+  const pdfUrl = doc.output('datauri').substring(doc.output('datauri').indexOf(',') + 1);
+  const binary = atob(pdfUrl.replace(/\s/g, ''));
+  const len = binary.length;
+  const buffer = new ArrayBuffer(len);
+  const view = new Uint8Array(buffer);
+  for (let i = 0; i < len; i++) {
       view[i] = binary.charCodeAt(i);
   }
 
-  var blob = new Blob( [view], { type: "application/pdf" });
-  var url = URL.createObjectURL(blob);
+  const blob = new Blob( [view], { type: 'application/pdf' });
+  const url = URL.createObjectURL(blob);
 
   window.open(url);
 }
@@ -297,7 +297,7 @@ export class CarslistComponent implements OnInit, AfterViewInit {
   }
 
   onOptionSelected(event){
-    console.log(event) //option value will be sent as event
+    console.log(event); //option value will be sent as event
     this.ipp = event;
    }
 

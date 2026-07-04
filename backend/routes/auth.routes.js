@@ -10,6 +10,7 @@ router.post('/lookingfor', lookingForController.create);
 router.get('/lookingfor/:uid', lookingForController.get);
 router.delete('/lookingfor/:uid', lookingForController.cancel);
 router.post('/driver/register', authController.registerDriver);
+router.post('/user/getRole', authController.getRole);
 router.post('/driver/login', authController.login);
 router.get('/driver/all', async (req, res) => {
   try {

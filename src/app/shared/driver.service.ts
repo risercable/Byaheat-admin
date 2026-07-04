@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
-import { Observable, of } from 'rxjs';
+import { Observable} from 'rxjs/internal/Observable';
+import { of } from 'rxjs/internal/observable/of';
 import ApiService from '../core/services/api.service';
 import {Driver} from '../drivers/shared/driver.model';
 import { tap } from 'rxjs/operators';

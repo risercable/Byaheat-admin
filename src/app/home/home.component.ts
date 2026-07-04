@@ -7,7 +7,7 @@ import { Location } from '@angular/common';
 import { AuthService } from '../auth.service';
 import { Title } from '@angular/platform-browser';
 import { AngularFireDatabase, AngularFireList } from 'angularfire2/database';
-import { Observable } from 'rxjs';
+import { Observable } from 'rxjs/internal/Observable';
 import { AssignDriverComponent } from '../assign-driver/assign-driver.component';
 import { StorageService } from '../storage.service';
 import * as firebase from 'firebase';

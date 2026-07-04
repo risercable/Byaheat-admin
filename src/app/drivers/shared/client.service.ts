@@ -4,7 +4,7 @@ import { Injectable } from '@angular/core';
 import { AngularFireDatabase } from 'angularfire2/database';
 import { AuthService } from '../../auth.service';
 import { AngularFireList } from 'angularfire2/database';
-import { Observable } from 'rxjs';
+import { Observable } from 'rxjs/internal/Observable';
 import { Client } from './client.model';
 
 @Injectable()
