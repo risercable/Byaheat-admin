@@ -43,6 +43,13 @@ export class AuthService {
   usersRef: any;
   user$: Observable<AppUser>;
 
+  private currentUserSubject = new BehaviorSubject<any | null>(null);
+  currentUser$ = this.currentUserSubject.asObservable();
+
+  get currentUserValue(): any | null {
+    return this.currentUserSubject.value;
+  }
+
     // store the URL so we can redirect after logging in
     redirectUrl: string;
 
@@ -56,9 +63,9 @@ export class AuthService {
       this.user = firebaseAuth.authState;
       this.usersRef = firebase.database().ref('drivers');
       this.driverList = db.list('drivers');
-    this.drivers = this.driverList.snapshotChanges().pipe(map(changes => {
-      return changes.map(c => ({ key: c.payload.key, ...c.payload.val() }));
-    }));
+      this.drivers = this.driverList.snapshotChanges().pipe(map(changes => {
+        return changes.map(c => ({ key: c.payload.key, ...c.payload.val() }));
+      }));
 
       this.user$ = firebaseAuth.authState
         .pipe(switchMap(user_ => {
@@ -68,6 +75,14 @@ export class AuthService {
             return of(null);
           }
         }));
+
+      this.afAuth.authState.subscribe(user => {
+        if (user) {
+          // fetch role/profile, then push into currentUserSubject
+        } else {
+          this.currentUserSubject.next(null);
+        }
+      });
      }
 
      ngOnInit() {
@@ -111,7 +126,7 @@ export class AuthService {
       });
     }
 
-    login(email: string, password: string){
+    login(email: string, password: string) {
       this.firebaseAuth
         .auth
         .signInWithEmailAndPassword(email, password)
@@ -135,9 +150,10 @@ export class AuthService {
           this.err = "Login Failed. Invalid email or password";
           console.log('Something went wrong:',err.message);
         });
-        this.setLoggedIn(true);
 
-      }
+      this.setLoggedIn(true);
+
+    }
 
     logout(){
       this.firebaseAuth
@@ -192,7 +208,7 @@ export class AuthService {
 
   // Call the backend to register the user
   registerUser(objectVar): Observable<any> {
-      const { email, password, firstName, lastName } = objectVar;
+    const { email, password, firstName, lastName } = objectVar;
     const payload = {  email, password, firstName, lastName };
     return this.http.post<any>(`${this.baseUrl}/drivernew`, payload);
   }
@@ -200,7 +216,13 @@ export class AuthService {
   loginUser(objectVar): Observable<any> {
     const { email, password } = objectVar;
     const payload = {  email, password };
-    return this.http.post<any>(`${this.baseUrl}/driver/login`, payload);
+
+    
+    const response = this.http.post<any>(`${this.baseUrl}/driver/login`, payload);
+
+    const { driverData: data }  = response
+
+    return response;
   }
 
   adminLogin(objectVar): Observable<any> {

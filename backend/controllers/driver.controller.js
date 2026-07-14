@@ -27,7 +27,7 @@ exports.login = async (req, res) => {
   } catch (error) {
     const isAuthError = error.code && error.code.indexOf('auth/') === 0;
 
-    res.status(isAuthError ? 401 : 500).json({
+    return res.status(isAuthError ? 401 : 500).json({
       message: isAuthError ? 'Invalid email or password' : 'An unexpected error occurred',
       error: error.message,
     });
